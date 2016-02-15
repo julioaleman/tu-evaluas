@@ -1,0 +1,10 @@
+
+
+#survey-add-question input:disabled{
+  background:#ccc;
+}
+
+
+input.error{
+  border:1px solid red;
+}

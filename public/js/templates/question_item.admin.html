@@ -1,0 +1,46 @@
+<!-- [ THE CLOSE BTN ] -->
+<p><a class="close-editor" href="#">cerrar</a></p>
+
+<!-- [ THE UPDATE FORM: QUESTION ] -->
+<div class="question-panel-editor" style="display:none">
+  <!-- [0] el loader -->
+  <div class="question-loader" style="display:none"></div>
+  <!-- [0] -->
+  <!-- [1] la pregunta -->
+  <p class="question_editor_question">
+    <label>pregunta:</label>
+    <input name="question_<%= id %>" type="text" value="<%= question %>">
+  </p>
+  <!-- [1] -->
+  <!-- [2] el tipo de pregunta -->
+  <p>
+    <label>la respuesta es:</label>
+    <label><input type="radio" name="type_<%= id %>" value="text">abierta</label>
+    <label><input type="radio" name="type_<%= id %>" value="number">numérica</label>
+    <label><input type="radio" name="type_<%= id %>" value="multiple">opción múltiple</label>
+    <label><input type="radio" name="type_<%= id %>" value="location">ubicación</label>
+  </p>
+  <!-- [2] define a la sección a la que pertenece la pregunta -->
+  <p id="survey-section-selector-<%= id %>" class="section-container" style="display:none">
+    <label>sección</label>
+    <select name="section_id-<%= id %>">
+      <option value="1" selected>sección 1</option>
+      <option value="0">nueva sección</option>
+    </select>
+  </p>
+  <!-- [2] -->
+  <!-- [3] agrega las respuestas para opción múltiple -->
+  <div id="survey-add-options-<%= id %>" class="options-container" style="display:none">
+    <h5>Respuestas:</h5>
+    <ul></ul>
+  </div>
+  <!-- [3] -->
+  <!-- [4] el botón para guardar -->
+  <p>
+    <a class="delete" href="#">eliminar</a> | 
+    <a class="cancel" href="#">cancelar</a> | 
+    <a class="save" href="#">actualizar</a>
+  </p>
+  <!-- [4] -->
+</div>
+
