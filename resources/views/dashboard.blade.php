@@ -7,29 +7,26 @@
   <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title><?php echo $title;?></title>
-  <meta name="description" content="<?php echo $description;?>">
+  <meta name="description" content="{{$description}}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="shortcut icon" href="{{url('img/favicon.ico')}}">
+    <link rel="stylesheet" type="text/css" href="{{url('css/normalize.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url('css/styles.css')}}">
 
     <!-- NEW CSS -->
-    <link rel="stylesheet" type="text/css" href="/js/bower_components/sweetalert/dist/sweetalert.css">
-    <link rel="stylesheet" type="text/css" href="/css/dev.css">
+    <link rel="stylesheet" type="text/css" href="{{url('js/bower_components/sweetalert/dist/sweetalert.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url('css/dev.css')}}">
 </head>
 <body class="backend">
-
 
 <header class="pg">
   <div class="clearfix">
     <nav class="col-sm-3 col-sm-offset-1">
-      <a href="/" class="tuevaluas">Tú evalúas</a>
+      <a href="{{url('/')}}" class="tuevaluas">Tú evalúas</a>
     </nav>
     <nav class="col-sm-1 col-sm-offset-7">
       <ul>
-        <li>
-          <?php echo anchor('adios','Salir');?>
-        </li>
+        <li><a href="{{url('logout')}}">Salir</a></li>
       </ul>
     </nav>
   </div>  
@@ -38,38 +35,50 @@
   <div class="container">
     <div class="row">
         <ul>
-        <li <?php echo (isset($body_class) && ($body_class == "dash")) ? 'class="current"' : '';?>>
-          <a href="<?= site_url("bienvenido/tuevaluas"); ?>">Dashboard</a>
+        <li class="{{$body_class == 'dash' ? 'current' : ''}}">
+          <a href="{{url("dashboard")}}">Dashboard</a>
         </li>
 
-          <li <?php echo (isset($body_class) && ($body_class == "surveys")) ? 'class="current"' : '';?>>
-            <a href="<?= site_url("bienvenido/encuestas"); ?>">Encuestas</a>
+          <li class="{{$body_class == 'surveys' ? 'current' : ''}}">
+            <a href="{{url("dashboard/encuestas")}}">Encuestas</a>
           </li>
 
-          <li <?php echo (isset($body_class) && ($body_class == "users")) ? 'class="current"' : '';?>>
-            <?php if($user->level >= 5): ?>
-            <a href="<?= site_url("bienvenido/usuarios"); ?>">Usuarios</a>
-            <?php else: ?>
-            <a href="<?= site_url("bienvenido/usuarios/" . $user->id); ?>">Cuenta</a>
-            <?php endif; ?>
+          <li class="{{$body_class == 'users' ? 'current' : ''}}">
+            @if($user->level == 3)
+            <a href="{{url('dashboard/usuarios')}}">Usuarios</a>
+            @else
+            <a href="{{url('dashboard/perfil')}}">Cuenta</a>
+            @endif
           </li>
 
-          <li <?php echo (isset($body_class) && ($body_class == "applicants")) ? 'class="current"' : '';?>>
-          <a href="<?= site_url("bienvenido/cuestionarios"); ?>">Cuestionarios</a>
+          <li class="{{$body_class == 'applicants' ? 'current' : ''}}">
+          <a href="{{url('dashboard/cuestionarios')}}">Cuestionarios</a>
         </li>
-         <!-- <li><a href="<?= site_url("wackyland/opendata"); ?>">Datos abiertos</a></li>
-          <li><a href="<?= site_url("wackyland/lists"); ?>">Correos</a></li>-->
+         <!-- <li><a href="{{url('dashboard/datos')}}">Datos abiertos</a></li>
+          <li><a href="{{url('dashboard/correos')}}">Correos</a></li>-->
         </ul>
     </div>
   </div>
 </nav>
 
 <!-- ERROR / SUCCESS MESSAGE -->
+<?php /*
 <?php $m = $this->session->flashdata('sys_message'); if($m): ?>
   <div class="<?php echo $m["type"]; ?>"><?php echo $m["message"]; ?></div>
 <?php endif; ?>
+*/ ?>
+
+
+
+
+
 
 <!-- HEADER TEMPLATE ENDS -->
+
+
+
+
+
 
 <div class="container dashboard">
   <div class="row">
@@ -77,24 +86,34 @@
       <h1 class="title">Dashboard</h1>
     </div>
     <div class="col-sm-4 col-sm-offset-2 box">
-      <h3><a href="<?= site_url("bienvenido/encuestas"); ?>"><strong><?php echo count($surveys);?></strong> 
-        <?php echo count($surveys) == 1 ? 'Encuesta' :'Encuestas';?> &gt;</a></a>
+      <h3><a href="{{url('dashboard/encuestas')}}"><strong>{{$surveys->count()}}</strong> 
+        {{$surveys->count() == 1 ? 'Encuesta' :'Encuestas'}} &gt;</a></a>
       </h3>
-      <p> <a href="<?= site_url("bienvenido/encuestas"); ?>">Crear Encuesta</a></p>
+      <p> <a href="{{url('dashboard/encuestas')}}">Crear Encuesta</a></p>
     </div>
-    <?php if($user->level >= 5): ?>
+    @if($user->level == 3)
     <div class="col-sm-4 col-sm-offset-1 box">
-      <h3><a href="<?= site_url("bienvenido/usuarios"); ?>"><strong><?php echo count($admins);?></strong> 
-        <?php echo count($admins) == 1 ? 'Usuario' :'Usuarios';?> &gt;</a>
+      <h3><a href="{{url('dashboard/usuarios')}}"><strong>{{$admins->count()}}</strong> 
+        {{ $admins->count() == 1 ? 'Usuario' :'Usuarios'}} &gt;</a>
       </h3>
-      <p> <a href="<?= site_url("bienvenido/usuarios"); ?>">Crear Usuario</a></p>
+      <p> <a href="{{url('dashboard/usuarios')}}">Crear Usuario</a></p>
     </div>
-  <?php endif; ?>
+    @endif
   </div>
   </div>
 </div>
 
+
+
+
+
+
 <!-- MAIN DASHBOARD ENDS -->
+
+
+
+
+
 
 <footer>
 
@@ -103,7 +122,7 @@
     <div class="container">
       <div class="row">
       <div class="col-sm-3">
-        <p><span class="tu_evaluas">Tú Evalúas</span> ©2015</p>
+        <p><span class="tu_evaluas">Tú Evalúas</span> ©2016</p>
       </div>
       <div class="col-sm-9">
         <ul>

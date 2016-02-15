@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Auth;
+
+use App\User;
+use App\models\Blueprint;
 
 class HomeController extends Controller
 {
@@ -24,8 +28,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        echo ":D";
-        die();
-        return view('home');
+      $user                = Auth::user();
+
+      $data['title']       = 'Dashboard Tú Evalúas';
+      $data['description'] = '';
+      $data['body_class']  = 'dash';
+      $data['user']        = $user;
+      $data['admins']      = $user->level == 3 ? User::all() : [];
+      $data['surveys']     = $user->level == 3 ? Blueprint::all() : $user->blueprints;
+
+      return view('dashboard')->with($data);
     }
 }
