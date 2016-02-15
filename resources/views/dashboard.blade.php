@@ -36,11 +36,11 @@
     <div class="row">
         <ul>
         <li class="{{$body_class == 'dash' ? 'current' : ''}}">
-          <a href="{{url("dashboard")}}">Dashboard</a>
+          <a href="{{url('dashboard')}}">Dashboard</a>
         </li>
 
           <li class="{{$body_class == 'surveys' ? 'current' : ''}}">
-            <a href="{{url("dashboard/encuestas")}}">Encuestas</a>
+            <a href="{{url('dashboard/encuestas')}}">Encuestas</a>
           </li>
 
           <li class="{{$body_class == 'users' ? 'current' : ''}}">
