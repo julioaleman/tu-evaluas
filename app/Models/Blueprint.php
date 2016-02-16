@@ -15,4 +15,12 @@ class Blueprint extends Model
   public function questions(){
     return $this->hasMany('App\Models\Question');
   }
+
+  public function rules(){
+    return $this->hasMany('App\Models\Rule');
+  }
+
+  public function options(){
+    return $this->hasMany('App\Models\Option');
+  }
 }

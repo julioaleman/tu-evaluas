@@ -13,6 +13,10 @@ use App\models\Blueprint;
 
 class Blueprints extends Controller
 {
+  //
+  // [ L I S T ]
+  //
+  //
   public function index(Request $request){
     $user = Auth::user();
     $data = [];
@@ -27,6 +31,10 @@ class Blueprints extends Controller
     return view("blueprints")->with($data);
   }
 
+  //
+  // [ C R E A T E ]
+  //
+  //
   public function create(Request $request){
     $user  = Auth::user();
     $title = $request->input("title");
@@ -43,6 +51,10 @@ class Blueprints extends Controller
     return redirect('dashboard/encuestas');
   }
 
+  //
+  // [ E D I T O R ]
+  //
+  //
   public function blueprint($id){
     $user = Auth::user();
     $blueprint = $user->level == 3 ? Blueprint::find($id) : $user->blueprints->find($id);
@@ -54,15 +66,19 @@ class Blueprints extends Controller
     $data['description'] = '';
     $data['body_class']  = 'surveys';
     $data['user']        = $user;
-    $data['blueprint'] = $blueprint;
+    $data['blueprint']   = $blueprint;
 
-    $data['questions'] = $this->question_model->get($data['blueprint']->id);
-    $data['rules']     = $this->rules_model->get($data['blueprint']->id);
-    $data['options']   = $this->question_options_model->get($data['blueprint']->id);
+    $data['questions'] = $blueprint->questions;
+    $data['rules']     = $blueprint->rules;
+    $data['options']   = $blueprint->options;
     //$data['csv_file']  = $csv;
     return view("blueprint")->with($data);
   }
 
+  //
+  // [ D E L E T E ]
+  //
+  //
   public function delete(Request $request, $id){
     $user = Auth::user();
     $blueprint = Blueprint::find($id);
