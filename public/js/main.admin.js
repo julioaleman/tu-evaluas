@@ -7,7 +7,7 @@
 // @url     : http://gobiernofacil.com
 
 require.config({
-  baseUrl : '/js',
+  baseUrl : BASE_PATH  + "/js",
   paths : {
     jquery     : 'bower_components/jquery/dist/jquery.min',
     backbone   : "bower_components/backbone/backbone",
@@ -25,6 +25,7 @@ require.config({
 });
 
  var app;
+
 
 require(['controller.admin'], function(controller){ 
   app = new controller();

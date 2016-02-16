@@ -34,10 +34,10 @@ define(function(require){
       // [ SURVEY NAVIGATION ]
       'click #survey-navigation-menu a' : 'render_section',
       // [ UPDATE BLUEPRINT ]
-      'focus #survey-app-title input[type="text"]'       : '_enable_save',
-      'blur #survey-app-title input[type="text"]'        : '_disable_save',
-      'change #survey-app-title input[name="is_closed"]' : '_update_bluprint',
-      'change #survey-app-title input[name="is_public"]' : '_update_bluprint',
+      //'focus #survey-app-title input[type="text"]'       : '_enable_save',
+      //'blur #survey-app-title input[type="text"]'        : '_disable_save',
+      //'change #survey-app-title input[name="is_closed"]' : '_update_bluprint',
+      //'change #survey-app-title input[name="is_public"]' : '_update_bluprint',
       'click #survey-app-title .create-survey-btn'       : '_save_csv',
       // [ ADD QUESTION ]
       'change #survey-add-question input[name="type"]' : '_set_is_type',
@@ -81,11 +81,11 @@ define(function(require){
 
       // [ THE MODEL ]
       this.model         = new Backbone.Model(SurveySettings.blueprint);
-      this.model.url     = "/index.php/surveys/blueprint/update";
+      this.model.url     = BASE_PATH + "/dashboard/encuesta/actualizar";// "/index.php/surveys/blueprint/update";
       this.model.set({current_section : 0}); // show all
       // [ THE COLLECTION ]
      this.collection            = new Backbone.Collection(SurveySettings.questions);
-     this.collection.url        = '/index.php/surveys/question';
+     this.collection.url        = BASE_PATH + "/dashboard/preguntas";//'/index.php/surveys/question';
      this.collection.comparator = function(m){ return Number(m.get('section_id'));};
      this.collection.sort();
       // [ THE OTHER COLLECTIONS ]
@@ -93,7 +93,7 @@ define(function(require){
       this.q_options      = new Backbone.Collection(SurveySettings.options);
       //this.sections       = new Backbone.Collection(SurveySettings.sections);
       this.rules          = new Backbone.Collection(SurveySettings.rules);
-      this.rules.url      = '/index.php/surveys/rule';
+      this.rules.url      = BASE_PATH + "/dashboard/reglas";//'/index.php/surveys/rule';
       // [ MAP THE OPTIONS FOR EACH QUESTION ]
       this.collection.each(function(el, ind, col){
         el.set({
@@ -130,13 +130,14 @@ define(function(require){
     render : function(){
       // [1] agrega el título al campo de input y asigna el valor a los
       //     checkboxs "is_public", "is_closed"
+      /*
       var container = document.getElementById('survey-app-title'),
           model     = this.model.attributes;
 
       container.querySelector('input[type="text"]').value        = model.title;
       container.querySelector('input[name="is_closed"]').checked = Number(model.is_closed);
       container.querySelector('input[name="is_public"]').checked = Number(model.is_public);
-
+      */
       // [2] agrega todas las preguntas a la lista. Esta función ejecuta lo siguiente:
       //     - this.model.set({current_section : section});
       //     - this.sub_collection.set(questions);

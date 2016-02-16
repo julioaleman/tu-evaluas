@@ -78,37 +78,76 @@
     </div>
   </div>
   <!-- [[   T H E   A P P   ]] -->
-  <form name="survey-app">
+  
   <div class="row">
-    
     <!-- [ THE BLUEPRINT ] -->
     <div class="col-sm-4">
       <section id="survey-app-title" class="box">
         <h2>Datos</h2>
-        <!-- THE TITLE -->
-        <div class="row">
-          <div class="col-sm-10 col-sm-offset-1">
-            <p><input type="text" name="survey-title"></p>
+        <form name="update-blueprint" action="post" enctype="multipart/form-data" method="{{url('dashboard/cuestionarios/editar/' . $blueprint->id)}}">
+          <!-- THE TITLE -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p>Título</p>
+              <p><input type="text" name="survey-title" value="{{$blueprint->title}}"></p>
+            </div>
           </div>
-        </div>
-        <!-- IS VISIBLE -->
-        <div class="row">
-          <div class="col-sm-10 col-sm-offset-1">
-            <p><label>
-              <input type="checkbox" name="is_public">
-              Es pública
-            </label></p>
+
+          <!-- CATEGORY / DEPENDENCY? -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p>Categoría</p>
+              <p><input type="text" name="survey-category" value="{{$blueprint->category}}"></p>
+            </div>
           </div>
-        </div>
-        <!-- IS CLOSED -->
-        <div class="row">
-          <div class="col-sm-10 col-sm-offset-1">
-            <p><label>
-              <input type="checkbox" name="is_closed">
-              Ya terminó
-            </label></p>
+
+          <!-- BANNER -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p>Selecciona la portada</p>
+              <p><input type="file" name="survey-banner"></p>
+            </div>
           </div>
-        </div>
+
+          <!-- TAGS -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p>Tags</p>
+              <p><textarea name="survey-tags">{{$blueprint->tags}}</textarea></p>
+            </div>
+          </div>
+
+          <!-- IS VISIBLE -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p><label><input type="checkbox" name="is_public" {{$blueprint->is_public ? 'checked' : ''}}>Es pública</label></p>
+            </div>
+          </div>
+
+          <!-- IS CLOSED -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p><label><input type="checkbox" name="is_closed" {{$blueprint->is_closed ? 'checked' : ''}}>Ya terminó</label></p>
+            </div>
+          </div>
+
+          <!-- THE CSV -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p>Sube tus propios resultados</p>
+              <p id="sending-label" style="display:none;">"enviado documento"</p>
+              <p id="send-file-button"><input type="file" name="results" id="results-file"></p>
+            </div>
+          </div>
+
+          <!-- SUBMIT -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p><input type="submit" value="actualizar"></p>
+            </div>
+          </div>
+        </form>
+
         <!-- CREATE/GET CSV -->
         <div class="row">
           <div class="col-sm-10 col-sm-offset-1">
@@ -130,6 +169,7 @@
         </div>
 
         <!-- PUT YOUR OWN FILE CSV -->
+        <!--
         <div class="row">
           <div class="col-sm-10 col-sm-offset-1">
           <p>Sube tus propios resultados</p>
@@ -137,11 +177,14 @@
           <p id="send-file-button"><input type="file" name="results" id="results-file"></p>
           </div>
         </div>
+        -->
       </section>
     </div>
     <!-- { THE BLUEPRINT ENDS } -->
-    
+    </div>
 
+
+    <form name="survey-app">
     <div class="col-sm-8">  
     <!-- [ THE CONTENT CREATOR ] -->
     <section id="survey-app-questions" class="box">
@@ -267,7 +310,9 @@
 </div>
     <!-- THE INITIAL DATA -->
     <script>
-      var SurveySettings = {
+
+      var BASE_PATH  = "{{url('/')}}",
+      SurveySettings = {
         blueprint : <?= json_encode($blueprint); ?>,
         questions : <?= json_encode($questions); ?>,
         options   : <?= json_encode($options); ?>,
@@ -276,7 +321,7 @@
 
     </script>
     <!-- DEVELOPMENT SOURCE -->
-    <!--<script data-main="/js/main.admin" src="/js/bower_components/requirejs/require.js"></script>-->
+    <script data-main="/js/main.admin" src="/js/bower_components/requirejs/require.js"></script>
 
 
 
