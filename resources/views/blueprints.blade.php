@@ -61,12 +61,6 @@
   </div>
 </nav>
 
-<!-- ERROR / SUCCESS MESSAGE -->
-<?php /*
-<?php $m = $this->session->flashdata('sys_message'); if($m): ?>
-  <div class="<?php echo $m["type"]; ?>"><?php echo $m["message"]; ?></div>
-<?php endif; ?>
-*/ ?>
 
 
 
@@ -78,6 +72,19 @@
 
 
 
+<!-- ERROR / SUCCESS MESSAGE -->
+@if($status)
+  <div class="{{$status->type}}"> 
+  @if($status->type == "delete")
+    <p>Se ha eliminado "{{$status->name}}"</p>  
+  @elseif($status->type == "create")
+    <p>Se ha creado "{{$status->name}}"</p>  
+  @else
+    <p>Se actualizó "{{$status->name}}"</p> 
+  @endif
+  </div>
+@endif
+<!-- ERROR / SUCCESS MESSAGE -->
 
 
 <div class="container">
@@ -280,7 +287,7 @@
 
 
 
-<pre><?php var_dump($status); ?></pre>
+
 <!-- MAIN DASHBOARD ENDS -->
 
 

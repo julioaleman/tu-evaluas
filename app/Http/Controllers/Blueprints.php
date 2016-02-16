@@ -43,6 +43,26 @@ class Blueprints extends Controller
     return redirect('dashboard/encuestas');
   }
 
+  public function blueprint($id){
+    $user = Auth::user();
+    $blueprint = $user->level == 3 ? Blueprint::find($id) : $user->blueprints->find($id);
+
+    if(!$blueprint) return redirect("dashboard/encuestas");
+
+    $data = [];
+    $data['title']       = 'Editar encuesta Tú Evalúas';
+    $data['description'] = '';
+    $data['body_class']  = 'surveys';
+    $data['user']        = $user;
+    $data['blueprint'] = $blueprint;
+
+    $data['questions'] = $this->question_model->get($data['blueprint']->id);
+    $data['rules']     = $this->rules_model->get($data['blueprint']->id);
+    $data['options']   = $this->question_options_model->get($data['blueprint']->id);
+    //$data['csv_file']  = $csv;
+    return view("blueprint")->with($data);
+  }
+
   public function delete(Request $request, $id){
     $user = Auth::user();
     $blueprint = Blueprint::find($id);

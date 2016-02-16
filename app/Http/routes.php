@@ -44,11 +44,12 @@ Route::get('que-es', "Frontend@about");
 Route::group(['middleware' => 'web'], function () {
   Route::auth();
   Route::get('home', 'HomeController@index');
-  Route::get('dashboard', 'HomeController@index');
+  Route::get('dashboard', 'HomeControidller@index');
 
   Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard/encuestas', 'Blueprints@index');
+    Route::get('dashboard/encuestas/{id}', 'Blueprints@blueprint')->where('id', '[0-9]+');;
     Route::post('dashboard/encuestas/crear', 'Blueprints@create');
-    Route::get('dashboard/encuestas/eliminar/{id}', 'Blueprints@delete')->where('id', '[0-9]+');;
+    Route::get('dashboard/encuestas/eliminar/{id}', 'Blueprints@delete')->where('id', '[0-9]+');
   });
 });
