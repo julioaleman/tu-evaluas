@@ -14,3 +14,4 @@ storage/
 .env
 .env.example
 .DS_Store
+agentes_key.pem
