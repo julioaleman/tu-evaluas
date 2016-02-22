@@ -73,15 +73,17 @@
 
 
 <!-- ERROR / SUCCESS MESSAGE -->
-@if($status)
-  <div class="{{$status->type}}"> 
-  @if($status->type == "delete")
-    <p>Se ha eliminado "{{$status->name}}"; Si tenía cuestionarios, 
+@if($status)  
+  <div class="{{$status['type']}}"> 
+  @if($status['type'] == "delete")
+    <p>Se ha eliminado "{{$status['name']}}"; Si tenía cuestionarios, 
     estos son visibles por cualquier adminsitrador.</p>  
-  @elseif($status->type == "create")
-    <p>Se ha creado "{{$status->name}}"</p>  
+  @elseif($status['type'] == "create")
+    <p>has agregado a "{{$status['name']}}" al sistema :D</p>  
+  @elseif($status['type'] == "update")
+    <p>has editado los datos de "{{$status['name']}}" :)</p>  
   @else
-    <p>Hubo un error al crear "{{$status->name}}"</p> 
+    <p>Hubo un error al crear "{{$status['name']}}"</p> 
   @endif
   </div>
 @endif
@@ -95,7 +97,8 @@
       <div class="col-sm-4">  
         <section class="box">
 
-          <form name="add-admin" method="post" class="row" id="add-admin-form" action="dashboard/usuarios/crear">
+          <form name="add-admin" method="post" class="row" id="add-admin-form" action="{{url('dashboard/usuarios/crear')}}">
+            {!! csrf_field() !!}
             <h2>Crear usuario</h2>
             <div class="col-sm-12">
             <p><label>nombre</label><input id="the-new-name" type="text" name="name" value="{{old('name')}}"></p>

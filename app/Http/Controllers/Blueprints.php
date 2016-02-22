@@ -47,6 +47,7 @@ class Blueprints extends Controller
     $blueprint->is_public  = 0;
     $blueprint->is_visible = 1;
     $blueprint->save();
+    $request->session()->flash('status', ['type' => 'create', 'name' => $blueprint->title]);
 
     return redirect('dashboard/encuestas');
   }

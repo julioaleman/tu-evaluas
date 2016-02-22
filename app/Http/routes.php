@@ -49,6 +49,8 @@ Route::group(['middleware' => 'web'], function () {
   Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard/usuarios', 'Users@index');
     Route::post('dashboard/usuarios/crear', 'Users@store');
+    Route::get('dashboard/usuario/{id}', 'Users@update');
+    Route::post('dashboard/usuario/{id}', 'Users@change');
 
     Route::get('dashboard/encuestas', 'Blueprints@index');
     Route::get('dashboard/encuestas/{id}', 'Blueprints@blueprint')->where('id', '[0-9]+');;

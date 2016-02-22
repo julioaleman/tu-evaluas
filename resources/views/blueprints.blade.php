@@ -22,7 +22,7 @@
 <header class="pg">
   <div class="clearfix">
     <nav class="col-sm-3 col-sm-offset-1">
-      <a href="{{url('/')}}" class="tuevaluas">Tú evalúas</a>
+      <a href="{{url('')}}" class="tuevaluas">Tú evalúas</a>
     </nav>
     <nav class="col-sm-1 col-sm-offset-7">
       <ul>
@@ -74,13 +74,13 @@
 
 <!-- ERROR / SUCCESS MESSAGE -->
 @if($status)
-  <div class="{{$status->type}}"> 
-  @if($status->type == "delete")
-    <p>Se ha eliminado "{{$status->name}}"</p>  
-  @elseif($status->type == "create")
-    <p>Se ha creado "{{$status->name}}"</p>  
+  <div class="{{$status['type']}}"> 
+  @if($status['type'] == "delete")
+    <p>Se ha eliminado "{{$status['name']}}"</p>  
+  @elseif($status['type'] == "create")
+    <p>Se ha creado "{{$status['name']}}"</p>  
   @else
-    <p>Se actualizó "{{$status->name}}"</p> 
+    <p>Se actualizó "{{$status['name']}}"</p> 
   @endif
   </div>
 @endif
