@@ -14,7 +14,7 @@ use Mail;
 
 // MODELS
 use App\User;
-use App\models\Blueprint;
+use App\Models\Blueprint;
 
 class Users extends Controller
 {

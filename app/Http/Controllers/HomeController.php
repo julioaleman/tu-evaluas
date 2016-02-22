@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 
 use App\User;
-use App\models\Blueprint;
+use App\Models\Blueprint;
 
 class HomeController extends Controller
 {

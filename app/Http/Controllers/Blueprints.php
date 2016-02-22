@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 
 use App\User;
-use App\models\Blueprint;
+use App\Models\Blueprint;
 
 class Blueprints extends Controller
 {
