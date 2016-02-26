@@ -122,6 +122,7 @@
           <!-- SEARCH USERS ENDS -->
 
 
+          <!-- CREATE SURVEY -->
           <form name="add-survey" method="post" class="row" action="{{url('dashboard/encuestas/crear')}}">
             {!! csrf_field() !!}
             <div class="col-sm-12">
@@ -133,6 +134,27 @@
              <p><input type="submit" value="crear encuesta"></p>
             </div>
           </form>
+          <!-- CREATE SURVEY -->
+
+
+          <!-- CREATE SURVEY FROM CSV -->
+          <form name="add-survey-from-csv" method="post" enctype="multipart/form-data" class="row" action="{{url('dashboard/encuestas/crear/csv')}}">
+            {!! csrf_field() !!}
+            <div class="col-sm-12">
+              <p>
+                <label>Título: </label> 
+                <input type="text" name="title">
+              </p>
+              <p>
+                <label>Archivo CSV</label>
+                <input type="file" name="the-csv">
+              </p>
+            </div>
+            <div class="col-sm-12">
+             <p><input type="submit" value="crear encuesta"></p>
+            </div>
+          </form>
+          <!-- CREATE SURVEY FROM CSV -->
           </section>
         </div>
         
