@@ -27,4 +27,8 @@ class Frontend extends Controller
     $data['body_class']  = 'about';
     return view("about")->with($data);
   }
+
+  function blueprintDocsCSV(){
+    echo ":D";
+  }
 }

@@ -1,9 +1,8 @@
-id,pregunta,seccion,tipo,respuestas
 1,"hola qué hace", "1","number", "nada|todo|soy chairo"
 2,"hola qué hace", "1","number", "nada|todo|soy chairo"
 3,"hola qué hace", "1","number", "nada|todo|soy chairo"
 4,"hola qué hace", "2","number", "nada|todo|soy chairo"
-5,"hola qué hace", "2","number", "nada|todo|soy chairo"
-6,"hola qué hace", "2","number", "nada|todo|soy chairo"
+5,"hola qué hace", "2","number"
+6,"hola qué hace", "2","number", "nada"
 7,"hola qué hace", "2","number", "nada|todo|soy chairo"
 8,"hola qué hace", "3","text", ""

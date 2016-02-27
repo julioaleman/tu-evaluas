@@ -96,7 +96,24 @@
         <div class="col-sm-4">
           <section class="box">
             <h2>Crear encuesta</h2>
+          <!-- CREATE SURVEY -->
+          <form name="add-survey" method="post" class="row" action="{{url('dashboard/encuestas/crear')}}">
+            {!! csrf_field() !!}
+            <div class="col-sm-12">
+              <p><label>Título: </label> 
+                <input type="text" name="title">
+              </p>
+            </div>
+            <div class="col-sm-12">
+             <p><input type="submit" value="crear encuesta"></p>
+            </div>
+          </form>
+          <!-- CREATE SURVEY -->
+          </section>
 
+
+          <section class="box">
+            <h2>Buscar</h2>
             <!-- SEARCH SURVEY -->
             <form id="search-survey" name="search-survey" method="post" class="row" action="{{url('dashboard/encuestas/buscar/json')}}">
             {!! csrf_field() !!}
@@ -120,26 +137,20 @@
           </form>
           @endif
           <!-- SEARCH USERS ENDS -->
+          </section>
 
 
-          <!-- CREATE SURVEY -->
-          <form name="add-survey" method="post" class="row" action="{{url('dashboard/encuestas/crear')}}">
-            {!! csrf_field() !!}
-            <div class="col-sm-12">
-              <p><label>Título: </label> 
-                <input type="text" name="title">
-              </p>
-            </div>
-            <div class="col-sm-12">
-             <p><input type="submit" value="crear encuesta"></p>
-            </div>
-          </form>
-          <!-- CREATE SURVEY -->
-
-
+          <section class="box">
+            <h2>Crear encuesta desde un archivo</h2>
           <!-- CREATE SURVEY FROM CSV -->
           <form name="add-survey-from-csv" method="post" enctype="multipart/form-data" class="row" action="{{url('dashboard/encuestas/crear/csv')}}">
             {!! csrf_field() !!}
+            
+            @if(count($errors))
+            <!-- La validación -->
+            <p>Debes escribir el título del cuestionario y agregar un archivo CSV válido</p>
+            @endif
+
             <div class="col-sm-12">
               <p>
                 <label>Título: </label> 
@@ -149,6 +160,7 @@
                 <label>Archivo CSV</label>
                 <input type="file" name="the-csv">
               </p>
+              <p><a href="{{url('el-csv-para-preguntas')}}" target="_blank">Cómo debe ser el CSV</a></p>
             </div>
             <div class="col-sm-12">
              <p><input type="submit" value="crear encuesta"></p>

@@ -28,6 +28,8 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 // FRONT END
 Route::get('que-es', "Frontend@about");
 
+Route::get("el-csv-para-preguntas", "Frontend@blueprintDocsCSV");
+
 
 
 /*
