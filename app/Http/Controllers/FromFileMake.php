@@ -13,6 +13,7 @@ use League\Csv\Reader;
 use App\User;
 use App\Models\Blueprint;
 use App\Models\Question;
+use App\Models\Option;
 
 class FromFileMake extends Controller
 {
@@ -24,8 +25,8 @@ class FromFileMake extends Controller
   public function questions(Request $request){
     // [1] validate the title and the CSV
     $this->validate($request, [
-        'title' => 'bail|required|max:255',
-        'photo' => 'required|mimes:csv'
+        'title'   => 'bail|required|max:255',
+        'the-csv' => 'required|mimes:csv,txt'
     ]);
 
     // [2] save the quiz blueprint
@@ -38,36 +39,39 @@ class FromFileMake extends Controller
     $blueprint->is_visible = 1;
     $blueprint->save();
 
+    
     // [3] add the questions
     $file = $request->file("the-csv");
     $reader = Reader::createFromPath($file->getPathName());
-    $keys = ["id","question","section","type","answers"];
+    $keys = ["id","question","section","type","options"];
     $results = $reader->fetchAssoc($keys);
     foreach($results as $q){
-      /*
-
-  id             | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
-| section_id     | int(11)          | NO   |     | NULL    |                |
-| blueprint_id   | int(11)          | NO   |     | NULL    |                |
-| question       | text             | YES  |     | NULL    |                |
-| is_description | tinyint(1)       | NO   |     | 0       |                |
-| is_location    | tinyint(1)       | NO   |     | 0       |                |
-| type           | varchar(255)     | YES  |     | NULL    |                |
-| order_num      | int(11)          | YES  |     | NULL    |                |
-| default_value  | int(11)          | YES  |     | NULL    |                |
-| created_at     | timestamp        | YES  |     | NULL    |                |
-| updated_at     | timestamp        | YES  |     | NULL    |                |
-| local_id       | varchar(255)     | YES  |     | NULL    |                |
-      */
       $question = new Question;
-      $options  = $q['section'] ? 
+      $options  = $q['section'] ? $q['section'] : 1;
       $question->blueprint_id = $blueprint->id;
       $question->local_id     = $q['id'];
       $question->question     = $q['question'];
       $question->section_id   = $q['section'] ? $q['section'] : 1;
-      if($q['section']){
+      $question->type         = empty($q['options']) ? "string" : "integer";
+      $question->save();
 
-      }
-    }
-  }
+      // [4] add the options if required
+      if(!empty($q['options'])){
+        $options = explode("|", $q['options']);
+        for($i = 0; $i < count($options); $i++){
+          $option = new Option;
+          $option->question_id  = $question->id;
+          $option->blueprint_id = $blueprint->id;
+          $option->description  = $options[$i];
+          $option->value        = $i+1;
+          $option->name         = uniqid();
+          $option->order_num    = $i;
+          $option->save();
+        } // for
+      } // if
+    } // foreach
+    
+    $request->session()->flash('status', ['type' => 'create', 'name' => $blueprint->title]);
+    return redirect("dashboard/encuestas");
+  } // function
 }
