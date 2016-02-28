@@ -31,9 +31,12 @@ define(function(require){
     // 
     //
     events :{
+      
       // [ SURVEY NAVIGATION ]
       'click #survey-navigation-menu a' : 'render_section',
       // [ UPDATE BLUEPRINT ]
+
+      /*
       //'focus #survey-app-title input[type="text"]'       : '_enable_save',
       //'blur #survey-app-title input[type="text"]'        : '_disable_save',
       //'change #survey-app-title input[name="is_closed"]' : '_update_bluprint',
@@ -58,6 +61,7 @@ define(function(require){
       'click .create-survey-btn' : '_generate_csv', 
       // [ UPLOAD RESULTS ]
       'change #results-file' : '_upload_results'
+      */
     },
 
     // 
@@ -78,7 +82,15 @@ define(function(require){
     //
     //
     initialize : function(){
+      this.blueprint  = SurveySettings.blueprint;
+      this.collection = new Backbone.Collection(this.blueprint.questions);
+      this.collection.comparator = function(m){ return m.get("section_id")};
+      this.collection.sort();
 
+      this.current_section = 0; // show all questions
+
+      this.render_section(this.current_section);
+      /*
       // [ THE MODEL ]
       this.model         = new Backbone.Model(SurveySettings.blueprint);
       this.model.url     = BASE_PATH + "/dashboard/encuesta/actualizar";// "/index.php/surveys/blueprint/update";
@@ -117,6 +129,7 @@ define(function(require){
       };
       // [ RENDER ]
       this.render();
+      */
     },
 
     //
@@ -151,13 +164,16 @@ define(function(require){
     render_section : function(e){
       if(typeof e !== "number") e.preventDefault();
       // [1] genera las variables de inicio
-      var section   = typeof e === "number" ? String(e) : e.currentTarget.getAttribute('data-section'),
-          coll      = this.collection,
-          questions = section === "0" ? coll.models : coll.where({section_id : section});
+      var section   = typeof e === "number" ? e : +e.currentTarget.getAttribute('data-section'),
+          questions = !section ? this.collection.models : this.collection.where({section_id : section});
       // [2] actualiza la sección en el modelo de la app
-      this.model.set({current_section : section});
+      this.current_section = section;
       // [3] crea la lista de preguntas
-      this.sub_collection.set(questions);
+      //this.sub_collection.set(questions);
+      this.$("#survey-question-list").html("");
+      questions.forEach(function(q){
+        this._render_question(q);
+      }, this);
       // [4] genera el navegador de secciones. Esta función ejectua lo siguiente:
       //     - this._render_rules_panel();
       this.render_section_menu();
@@ -172,7 +188,7 @@ define(function(require){
       var menu     = document.getElementById('survey-navigation-menu'),
           nav      = document.getElementById('survey-app-navigation'),
           sections = _.uniq(this.collection.pluck('section_id')),
-          section  = this.model.get('current_section'),
+          section  = this.current_section,
           content  = '';
       // [2] si hay menos de dos secciones, el menú para navegar
       //     entre secciones desaparece
@@ -204,7 +220,7 @@ define(function(require){
       this.$('#survey-navigation-menu a[data-section="' + section + '"]').addClass('current');
 
       // [6] genera el menú para crear/ver las reglas de navegación
-      this._render_rules_panel();
+      //this._render_rules_panel();
     },
 
     // [ RENDER RULES PANEL ]
@@ -316,12 +332,13 @@ define(function(require){
     // [ RENDER SINGLE QUESTION ]
     //
     //
-    _render_question : function(model, collection){
-      var container = this.$('#survey-question-list'),
+    _render_question : function(model){
+      var container      = this.$('#survey-question-list'),
           is_description = Number(model.get('is_description')),
-          item = ! is_description ? new Question({model : model}) : new Description({model : model});
+          item           = ! is_description ? new Question({model : model}) : new Description({model : model});
+
       container.append(item.render().el);
-      this.render_section_menu();
+      // this.render_section_menu();
     },
 
     // [ SHOW THE ADD QUESTION FORM ]

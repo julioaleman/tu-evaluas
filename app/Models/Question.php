@@ -10,5 +10,9 @@ class Question extends Model
   public function blueprint(){
     return $this->belongsTo('App\Models\Blueprint');
   }
+
+  public function options(){
+    return $this->hasMany('App\Models\Option');
+  }
 }
 

@@ -10,4 +10,8 @@ class Option extends Model
   public function blueprint(){
     return $this->belongsTo('App\Models\Blueprint');
   }
+
+  public function question(){
+    return $this->belongsTo('App\Models\Question');
+  }
 }
