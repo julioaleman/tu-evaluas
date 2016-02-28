@@ -58,7 +58,7 @@ class Blueprints extends Controller
   //
   public function blueprint($id){
     $user = Auth::user();
-    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules"])->find($id) : $user->blueprints->with(with(["questions.options", "rules"]))->find($id);
+    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : $user->blueprints->with(with(["questions.options", "rules.question"]))->find($id);
 
     if(!$blueprint) return redirect("dashboard/encuestas");
 

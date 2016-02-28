@@ -82,12 +82,13 @@ define(function(require){
     //
     //
     initialize : function(){
-      this.blueprint  = SurveySettings.blueprint;
-      this.collection = new Backbone.Collection(this.blueprint.questions);
+      this.blueprint       = SurveySettings.blueprint;
+      this.collection      = new Backbone.Collection(this.blueprint.questions);
+      this.rules           = new Backbone.Collection(this.blueprint.rules);
+      this.current_section = 0; // show all questions
       this.collection.comparator = function(m){ return m.get("section_id")};
       this.collection.sort();
 
-      this.current_section = 0; // show all questions
 
       this.render_section(this.current_section);
       /*
@@ -220,7 +221,7 @@ define(function(require){
       this.$('#survey-navigation-menu a[data-section="' + section + '"]').addClass('current');
 
       // [6] genera el menú para crear/ver las reglas de navegación
-      //this._render_rules_panel();
+      this._render_rules_panel();
     },
 
     // [ RENDER RULES PANEL ]
@@ -232,11 +233,12 @@ define(function(require){
           list     = document.getElementById('survey-navigation-rules'),
           q_select = menu.querySelector('.select-question'),
       // [1] crea las variables de inicio
-          section          = this.model.get('current_section'),
+          section          = this.current_section,
           rules            = this.rules.where({section_id : section}),
           sections         = _.uniq(this.collection.pluck('section_id')),
           low_sections     = null,
           low_questions    = [],
+          questions        = null,
           q_select_content = "";
       // [2] vacía la lista de reglas
       list.innerHTML = "";
@@ -244,6 +246,7 @@ define(function(require){
       _.each(rules, function(rule){
         this._render_rule(rule);
       }, this);
+      
       // [4] obtiene las secciones anteriores a la actual para 
       //     buscar en ellas preguntas de opción múltiple de las
       //     cuales pueda depender si se ve o no.
@@ -254,14 +257,15 @@ define(function(require){
       //     anteriores para el <select> de crear nueva regla.
       _.each(low_sections, function(section_id){
         questions = this.collection.where({
-          is_description : '0', 
+          is_description : 0, 
           section_id     : section_id, 
-          type           : "number"
+          type           : "integer"
         });
         Array.prototype.push.apply(low_questions, questions);
       }, this);
       // [6] si hay preguntas de opción múltiple anteriores,
       //     llena el <select> de preguntas
+      console.log(questions);
       if(low_questions.length){
         this.$('.rule-answer').remove();
         _.each(low_questions, function(q){
@@ -276,6 +280,7 @@ define(function(require){
       else{
         menu.style.display = "none";
       }
+      /**/
     },
 
     // [ ADD NEW RULE TO THE LIST ]
