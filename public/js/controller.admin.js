@@ -44,13 +44,13 @@ define(function(require){
       
       //'click #survey-app-title .create-survey-btn'       : '_save_csv',
       // [ ADD QUESTION ]
-      //'change #survey-add-question input[name="type"]' : '_set_is_type',
+      'change #survey-add-question input[name="type"]' : '_set_is_type',
       'click #survey-add-buttons a.add-question'       : 'render_question_form',
       'click #survey-add-question-btn'                 : '_save_question',
       // [ ADD OPTION ]
-      //'click #survey-add-options li a'  : '_remove_option',
-      //'focus #survey-add-options input' : '_enable_save_option',
-      //'blur #survey-add-options input'  : '_disable_save_option',
+      'click #survey-add-options li a'  : '_remove_option',
+      'focus #survey-add-options input' : '_enable_save_option',
+      'blur #survey-add-options input'  : '_disable_save_option',
       // [ ADD HTML ] 
       'click #survey-add-buttons a.add-text' : 'render_content_form',
       //'click #survey-add-content-btn'        : '_save_content',
@@ -91,7 +91,10 @@ define(function(require){
       this.collection.comparator = function(m){ return m.get("section_id")};
       this.collection.sort();
 
+      // [ FIX THE SCOPES ]
+      this._render_new_option = $.proxy(this._render_new_option, this);
 
+      // [ DISPLAY THE FULL QUESTION LIST ]
       this.render_section(this.current_section);
       /*
       // [ THE MODEL ]
@@ -427,15 +430,23 @@ define(function(require){
     // [ ADD NEW ANSWER OPTION ]
     //
     //
+    /*
+    this.html = {
+        navigation_menu : this.$('#survey-navigation-menu'),
+        question_form   : this.$('#survey-add-question'),
+        content_form    : this.$('#survey-add-content'),
+        answers_form    : this.$('#survey-add-options')
+      };
+    */
     _render_new_option : function(e){
       if(e.keyCode === 13 && e.target.value){
         var name = _.uniqueId('lp');
-        this.html.answers_form.children('ul').append(this.answer_template({
+        this.$('#survey-add-options ul').append(this.answer_template({
           name     : name, 
           value    : '',
           is_first : false
         }));
-        this.html.answers_form.find('input[name="' + name + '"]')[0].focus();
+        document.querySelector('#survey-add-options input[name="' + name + '"]').focus();
       }
     },
 
@@ -507,7 +518,7 @@ define(function(require){
     },
 
     _set_is_type : function(e){
-      var container = this.html.answers_form.children('ul')[0];
+      var container = document.querySelector("#survey-add-options ul");
       if(e.currentTarget.value === 'multiple'){
         if(! container.getElementsByTagName('li').length){
           this.$(container).append(this.answer_template({
@@ -516,10 +527,10 @@ define(function(require){
             is_first : 1
           }));
         }
-        this.html.answers_form.show();
+        this.$('#survey-add-options').show();
       }
       else{
-        this.html.answers_form.hide();
+        this.$('#survey-add-options').hide();
       }
     },
 

@@ -43,9 +43,9 @@ class BlueprintApi extends Controller
     $options = [];
 
     // [3] IF THE QUESTION HAS OPTIONS, CREATE THEM
-    if(empty($request->options)){
+    if(!empty($request->input('options'))){
       $val = 1;
-      foreach($request->options as $opt){
+      foreach($request->input('options') as $opt){
         $option = new Option;
         $option->question_id  = $question->id;
         $option->blueprint_id = $blueprint->id;
@@ -53,7 +53,7 @@ class BlueprintApi extends Controller
         $option->value        = $val;
         $option->name         = uniqid();
         $option->order_num    = $val;
-        $option->save;
+        $option->save();
         $options[] = $option;
         $val++;
       }
