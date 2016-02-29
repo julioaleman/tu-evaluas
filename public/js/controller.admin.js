@@ -443,7 +443,7 @@ define(function(require){
     //
     //
     clear_question_form : function(){
-      var form    = this.html.question_form[0],
+      var form    = document.getElementById('survey-add-question'),
           options = document.getElementById('survey-add-options'),
           keep_op = document.getElementById('keep-options'),
           ul      = options.querySelector('ul');
@@ -569,14 +569,6 @@ define(function(require){
     //
     //
     _save_question : function(e){
-       /*
-      this.html = {
-        navigation_menu : this.$('#survey-navigation-menu'),
-        question_form   : this.$('#survey-add-question'),
-        content_form    : this.$('#survey-add-content'),
-        answers_form    : this.$('#survey-add-options')
-      };
-      */
       e.preventDefault();
       var form        = document.getElementById("survey-add-question"),//this.html.question_form[0],
           type        = form.querySelector('input[name="type"]:checked').value,
@@ -603,13 +595,10 @@ define(function(require){
 
       question.save(null, {
         success : function(model, response, options){
-          console.log(model, response, options);
-          /*
-          that.collection.add(model);
+          that.collection.add(model); 
           that.render_section_selector();
           that.clear_question_form();
           that.render_section(Number(model.get('section_id')));
-          */
         }
       });
     },
