@@ -85,6 +85,7 @@
       <section id="survey-app-title" class="box">
         <h2>Datos</h2>
         <form name="update-blueprint" action="post" enctype="multipart/form-data" method="{{url('dashboard/cuestionarios/editar/' . $blueprint->id)}}">
+        {!! csrf_field() !!}
           <!-- THE TITLE -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">

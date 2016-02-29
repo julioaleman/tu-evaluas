@@ -36,32 +36,33 @@ define(function(require){
       'click #survey-navigation-menu a' : 'render_section',
       // [ UPDATE BLUEPRINT ]
 
-      /*
+      
       //'focus #survey-app-title input[type="text"]'       : '_enable_save',
       //'blur #survey-app-title input[type="text"]'        : '_disable_save',
       //'change #survey-app-title input[name="is_closed"]' : '_update_bluprint',
       //'change #survey-app-title input[name="is_public"]' : '_update_bluprint',
-      'click #survey-app-title .create-survey-btn'       : '_save_csv',
+      
+      //'click #survey-app-title .create-survey-btn'       : '_save_csv',
       // [ ADD QUESTION ]
-      'change #survey-add-question input[name="type"]' : '_set_is_type',
+      //'change #survey-add-question input[name="type"]' : '_set_is_type',
       'click #survey-add-buttons a.add-question'       : 'render_question_form',
       'click #survey-add-question-btn'                 : '_save_question',
       // [ ADD OPTION ]
-      'click #survey-add-options li a'  : '_remove_option',
-      'focus #survey-add-options input' : '_enable_save_option',
-      'blur #survey-add-options input'  : '_disable_save_option',
+      //'click #survey-add-options li a'  : '_remove_option',
+      //'focus #survey-add-options input' : '_enable_save_option',
+      //'blur #survey-add-options input'  : '_disable_save_option',
       // [ ADD HTML ] 
       'click #survey-add-buttons a.add-text' : 'render_content_form',
-      'click #survey-add-content-btn'        : '_save_content',
+      //'click #survey-add-content-btn'        : '_save_content',
       // [ ADD RULE ]
-      'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
-      'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule',
-      'click #survey-navigation-rules-container .remove-rule-btn'  : '_remove_rule',
+      //'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
+      //'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule',
+      //'click #survey-navigation-rules-container .remove-rule-btn'  : '_remove_rule',
       // [ CREATE CSV ]
-      'click .create-survey-btn' : '_generate_csv', 
+      //'click .create-survey-btn' : '_generate_csv', 
       // [ UPLOAD RESULTS ]
-      'change #results-file' : '_upload_results'
-      */
+      //'change #results-file' : '_upload_results'
+      
     },
 
     // 
@@ -84,6 +85,7 @@ define(function(require){
     initialize : function(){
       this.blueprint       = SurveySettings.blueprint;
       this.collection      = new Backbone.Collection(this.blueprint.questions);
+      this.collection.url  = BASE_PATH + "/dashboard/preguntas";//'/index.php/surveys/question';
       this.rules           = new Backbone.Collection(this.blueprint.rules);
       this.current_section = 0; // show all questions
       this.collection.comparator = function(m){ return m.get("section_id")};
@@ -351,17 +353,38 @@ define(function(require){
     //
     render_question_form : function(e){
       e.preventDefault();
-      var q_form = this.html.question_form[0].querySelector('.survey-section-selector-container'),
-          c_form = this.html.content_form[0].querySelector('.survey-section-selector-container');
-
-      var selector = c_form.querySelector('.survey-section-selector');
+      var q_form   = document.querySelector('#survey-add-question .survey-section-selector-container'),
+          c_form   = document.querySelector('#survey-add-content .survey-section-selector-container'),
+          selector = c_form.querySelector('.survey-section-selector');
       if(selector){
         q_form.appendChild(c_form.removeChild(selector));
       }
 
-      this.html.question_form.find('input[value="text"]')[0].checked = true;
-      this.html.content_form.hide();
-      this.html.question_form.show();
+      document.querySelectorAll('#survey-add-question input[value="text"]')[0].checked = true;
+      this.$('#survey-add-content').hide();
+      this.$('#survey-add-question').show();
+
+      if(this.collection.length){
+        this.render_section_selector();
+      }
+    },
+
+    // [ SHOW THE ADD HTML FORM ]
+    //
+    //
+    render_content_form : function(e){
+      e.preventDefault();
+      var q_form   = document.querySelector('#survey-add-question .survey-section-selector-container'),
+          c_form   = document.querySelector('#survey-add-content .survey-section-selector-container'),
+          selector = q_form.querySelector('.survey-section-selector');
+      
+      if(selector){
+        c_form.appendChild(q_form.removeChild(selector));
+      }
+
+      this.$('#survey-add-content').show();
+      this.$('#survey-add-options').hide();
+      this.$('#survey-add-question').hide();
 
       if(this.collection.length){
         this.render_section_selector();
@@ -399,28 +422,6 @@ define(function(require){
       }
       el.innerHTML = content;
       el.children[el.children.length - 2].selected = true;
-    },
-
-    // [ SHOW THE ADD HTML FORM ]
-    //
-    //
-    render_content_form : function(e){
-      e.preventDefault();
-      var q_form = this.html.question_form[0].querySelector('.survey-section-selector-container'),
-          c_form = this.html.content_form[0].querySelector('.survey-section-selector-container');
-
-      var selector = q_form.querySelector('.survey-section-selector');
-      if(selector){
-        c_form.appendChild(q_form.removeChild(selector));
-      }
-
-      this.html.content_form.show();
-      this.html.answers_form.hide();
-      this.html.question_form.hide();
-
-      if(this.collection.length){
-        this.render_section_selector();
-      }
     },
 
     // [ ADD NEW ANSWER OPTION ]
@@ -568,8 +569,16 @@ define(function(require){
     //
     //
     _save_question : function(e){
+       /*
+      this.html = {
+        navigation_menu : this.$('#survey-navigation-menu'),
+        question_form   : this.$('#survey-add-question'),
+        content_form    : this.$('#survey-add-content'),
+        answers_form    : this.$('#survey-add-options')
+      };
+      */
       e.preventDefault();
-      var form        = this.html.question_form[0],
+      var form        = document.getElementById("survey-add-question"),//this.html.question_form[0],
           type        = form.querySelector('input[name="type"]:checked').value,
           title_input = form.querySelector('input[name="question"]'),
           title       = title_input.value,
@@ -577,25 +586,30 @@ define(function(require){
           question    = new Backbone.Model(null, {collection : this.collection}),
           that        = this;
       if(! title){
-        title_input.addClass('error');
+        this.$(title_input).addClass('error');
         return;
       }
       question.set({
         section_id     : section,
-        blueprint_id   : this.model.id,
+        blueprint_id   : this.blueprint.id,
         question       : title, 
         is_description : 0,
         is_location    : type === 'location',
-        type           : type === 'text' || type === 'location' ? 'text' : 'number',
-        options        : type !== 'multiple' ? [] : this._get_options()
+        // aquí puede cambiar la lógica para tener más tipos de respuesta
+        type           : type === 'text' || type === 'location' ? 'text' : 'integer',
+        options        : type !== 'multiple' ? [] : this._get_options(),
+        _token         : document.querySelector("input[name='_token']").value
       });
 
       question.save(null, {
         success : function(model, response, options){
+          console.log(model, response, options);
+          /*
           that.collection.add(model);
           that.render_section_selector();
           that.clear_question_form();
           that.render_section(Number(model.get('section_id')));
+          */
         }
       });
     },
