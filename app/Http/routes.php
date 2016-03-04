@@ -46,7 +46,7 @@ Route::group(['middleware' => 'web'], function () {
   // LOGIN & DASHBOARD
   Route::auth();
   Route::get('home', 'HomeController@index');
-  Route::get('dashboard', 'HomeControidller@index');
+  Route::get('dashboard', 'HomeController@index');
 
   Route::group(['middleware' => 'auth'], function () {
     // USERS CRUD
