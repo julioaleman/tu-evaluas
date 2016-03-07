@@ -1,6 +1,7 @@
 vendor/
 node_modules/
 public/js/bower_components
+public/css/src_sass
 
 # Laravel 4 specific
 bootstrap/compiled.php
