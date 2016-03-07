@@ -25,7 +25,47 @@ class Frontend extends Controller
     $data['title']       = 'Qué es Tú Evalúas';
     $data['description'] = 'Tú evalúas es una iniciativa dirigida a los beneficiarios de los programas públicos federales.';
     $data['body_class']  = 'about';
-    return view("about")->with($data);
+    return view("frontend.about")->with($data);
+  }
+  
+  function faqs(){
+    $data = [];
+    $data['title']       = 'Preguntas Frecuentes | Tú Evalúas';
+    $data['description'] = 'Algunas de las preguntas frecuentes de la plataforma Tú Evalúas';
+    $data['body_class']  = 'faqs';
+    return view("frontend.faqs")->with($data);
+  }
+  
+  function results(){
+    $data = [];
+    $data['title']       = 'Resultados | Tú Evalúas';
+    $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
+    $data['body_class']  = 'results';
+    return view("frontend.results")->with($data);
+  }
+  
+  function terms(){
+    $data = [];
+    $data['title']       = 'Términos y condiciones de la plataforma | Tú Evalúas';
+    $data['description'] = 'Términos y condiciones de la plataforma Tú Evalúas';
+    $data['body_class']  = 'terms';
+    return view("frontend.terms")->with($data);
+  }
+  
+  function privacy(){
+    $data = [];
+    $data['title']       = 'Aviso de Privacidad | Tú Evalúas';
+    $data['description'] = 'Aviso de Privacidad de la plataforma Tú Evalúas';
+    $data['body_class']  = 'privacy';
+    return view("frontend.privacy")->with($data);
+  }
+  
+  function contact(){
+    $data = [];
+    $data['title']       = 'Contacto | Tú Evalúas';
+    $data['description'] = 'Envía un mensaje a la plataforma Tú Evalúas';
+    $data['body_class']  = 'contact';
+    return view("frontend.contact")->with($data);
   }
 
   function blueprintDocsCSV(){
