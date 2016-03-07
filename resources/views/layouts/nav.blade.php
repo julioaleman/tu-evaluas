@@ -39,7 +39,7 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
 				<li <?php echo (isset($body_class) && ($body_class == "about")) ? 'class="current"' : '';?>>
 					<a href="{{url('que-es')}}">¿Qué es?</a>
 				</li>
-				<li <?php echo (isset($body_class) && ($body_class == "data")) ? 'class="current"' : '';?>>
+				<li <?php echo (isset($body_class) && ($body_class == "results")) ? 'class="current"' : '';?>>
 					<a href="{{url('resultados')}}">Resultados</a>
 				</li>
 				<li <?php echo (isset($body_class) && ($body_class == "faqs")) ? 'class="current"' : '';?>>

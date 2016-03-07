@@ -42,8 +42,8 @@
 					<li><a href="{{url('que-es')}}">¿Qué es?</a></li>					
 					<li><a href="{{url('resultados')}}">Resultados</a></li>
 					<li><a href="{{url('preguntas-frecuentes')}}">Preguntas Frecuentes</a></li>
-					<li><a href="{{url('terminos')}}">Términos y Condiciones</a></li>
-					<li><a href="{{url('privacidad')}}">Privacidad</a></li>
+					<li><a href="{{url('terminos-condiciones')}}">Términos y Condiciones</a></li>
+					<li><a href="{{url('aviso-privacidad')}}">Privacidad</a></li>
 					<li><a href="{{url('contacto')}}">Contacto</a></li>
 				</ul>
 			</div>
