@@ -69,6 +69,16 @@
 <!-- HEADER TEMPLATE ENDS -->
 
 <!-- ERROR / SUCCESS MESSAGE -->
+@if(count($errors) > 0)
+  <div class="alert">
+    <ul>
+    @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+    </ul>
+  </div>
+@endif
+
 @if($status)
   <div class="{{$status['type']}}"> 
   @if($status['type'] == "delete")
@@ -98,7 +108,7 @@
     <div class="col-sm-4">
       <section id="survey-app-title" class="box">
         <h2>Datos</h2>
-        <form name="update-blueprint" action="post" enctype="multipart/form-data" method="{{url('dashboard/encuestas/' . $blueprint->id)}}">
+        <form name="update-blueprint" action="{{url('dashboard/encuestas/' . $blueprint->id)}}" enctype="multipart/form-data" method="post">
         {!! csrf_field() !!}
           <!-- THE TITLE -->
           <div class="row">

@@ -10,6 +10,7 @@ use Auth;
 
 use App\User;
 use App\Models\Blueprint;
+use Image;
 
 class Blueprints extends Controller
 {
@@ -36,9 +37,13 @@ class Blueprints extends Controller
   //
   //
   public function create(Request $request){
+    // validate the title
+    $this->validate($request, [
+      'title' => 'required|max:255'
+    ]);
+
     $user  = Auth::user();
     $title = $request->input("title");
-    if(empty($title)) return redirect('dashboard/encuestas');
 
     $blueprint = new Blueprint;
     $blueprint->title      = $title;
@@ -57,6 +62,23 @@ class Blueprints extends Controller
   //
   //
   public function update(Request $request, $id){
+    // 
+    $messages = [
+      'required' => 'El título del formulario es un campo necesario',
+      'image'    => 'El banner debe ser una imagen'
+    ];
+    // validate the title && file type
+    $this->validate($request, [
+      'survey-title'  => 'required|max:255',
+      'survey-banner' => 'image'
+    ], $messages);
+
+    //
+    if ($request->hasFile('survey-banner')) {
+      $img = Image::make($request->file("survey-banner"))->widen(2560, function ($constraint) {
+        $constraint->upsize();
+      })->save(public_path() . '/img/programas/' . uniqid() . "." . $request->file("survey-banner")->guessExtension());
+    }
   }
 
   //
@@ -79,6 +101,7 @@ class Blueprints extends Controller
     $data['questions'] = $blueprint->questions;
     $data['rules']     = $blueprint->rules;
     $data['options']   = $blueprint->options;
+    $data['status']    = session('status');
     //$data['csv_file']  = $csv;
     return view("blueprint")->with($data);
   }
