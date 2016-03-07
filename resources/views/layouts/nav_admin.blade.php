@@ -29,11 +29,11 @@
             <a href="{{url('dashboard/perfil')}}">Cuenta</a>
             @endif
           </li>
-
+		  <!-- 
           <li class="{{$body_class == 'applicants' ? 'current' : ''}}">
-          <a href="{{url('dashboard/cuestionarios')}}">Cuestionarios</a>
+          <a href="{{url('dashboard/cuestionarios')}}">Enviar encuestas</a>
         </li>
-         <!-- <li><a href="{{url('dashboard/datos')}}">Datos abiertos</a></li>
+         <li><a href="{{url('dashboard/datos')}}">Datos abiertos</a></li>
           <li><a href="{{url('dashboard/correos')}}">Correos</a></li>-->
         </ul>
     </div>
