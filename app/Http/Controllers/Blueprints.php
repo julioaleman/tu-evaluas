@@ -53,6 +53,13 @@ class Blueprints extends Controller
   }
 
   //
+  // [ U P D A T E   B L U E P R I N T ]
+  //
+  //
+  public function update(Request $request, $id){
+  }
+
+  //
   // [ E D I T O R ]
   //
   //
