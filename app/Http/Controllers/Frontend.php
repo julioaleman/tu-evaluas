@@ -35,6 +35,14 @@ class Frontend extends Controller
     $data['body_class']  = 'faqs';
     return view("faqs")->with($data);
   }
+  
+  function results(){
+    $data = [];
+    $data['title']       = 'Resultados | Tú Evalúas';
+    $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
+    $data['body_class']  = 'results';
+    return view("results")->with($data);
+  }
 
   function blueprintDocsCSV(){
     echo ":D";
