@@ -20,7 +20,7 @@
         <p>La meta es que <strong>Tú Evalúas</strong> reúna toda la información referente a la satisfacción de la ciudadanía 
           con respecto a los programas públicos federales para que quien lo desee (ciudadanos, 
           asociaciones, gobierno o la comunidad en conjunto) pueda dar seguimiento al pulso ciudadano.
-        
+        </p>
         <h2>Nosotros</h2>
         <p>Esta iniciativa nace como parte del proyecto <a href="http://www.presidencia.gob.mx/agentesdeinnovacion/">Agentes de Innovación</a> 
           de la <a href="http://www.presidencia.gob.mx/edn/">Coordinación de la Estrategia Digital Nacional de 
