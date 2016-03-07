@@ -64,7 +64,7 @@ Route::group(['middleware' => 'web'], function () {
     // BLUEPRINT CRUD
     Route::get('dashboard/encuestas', 'Blueprints@index');
     Route::get('dashboard/encuestas/{id}', 'Blueprints@blueprint')->where('id', '[0-9]+');
-    Route::post('dashboard/encuestas/{id}', 'Blueprints@update')->where('id', '[0-9]+');;
+    Route::post('dashboard/encuestas/{id}', 'Blueprints@update')->where('id', '[0-9]+');
     Route::post('dashboard/encuestas/crear', 'Blueprints@create');
     Route::get('dashboard/encuestas/eliminar/{id}', 'Blueprints@delete')->where('id', '[0-9]+');
 

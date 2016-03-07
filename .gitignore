@@ -16,3 +16,6 @@ storage/
 .env.example
 .DS_Store
 agentes_key.pem
+
+# BANNER FILES
+public/img/programas
