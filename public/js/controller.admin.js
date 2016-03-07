@@ -31,6 +31,8 @@ define(function(require){
     // 
     //
     events :{
+      // [ DISPLAY THE BANNER ]
+      'change #survey-banner' : 'display_banner',
       
       // [ SURVEY NAVIGATION ]
       'click #survey-navigation-menu a' : 'render_section',
@@ -769,7 +771,28 @@ define(function(require){
       // sending-label
       // send-file-button
       // get-csv-btn
-    }
+    },
+
+    //
+    // O T H E R   S T U F F
+    // --------------------------------------------------------------------------------
+    //
+
+    // [ SHOW THE NEW BANNER ]
+    //
+    //
+    display_banner : function(e){
+      // http://stackoverflow.com/questions/17138244/how-to-display-selected-image-without-sending-data-to-server
+      // [1] crea el FileReader y una referencia para el input de archivo y el <img>.
+      //     Esto no debería generarse para cada llamada, pero pues, no-big-deal.
+      var fr     = new FileReader(),
+          src    = e.currentTarget,
+          target = document.getElementById("target");
+
+      // [2] se define la interacción del FileReader
+      fr.onload = function(e) { target.src = this.result; };
+      fr.readAsDataURL(src.files[0]);
+    },
 
   });
 

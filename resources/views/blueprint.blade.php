@@ -68,6 +68,20 @@
 
 <!-- HEADER TEMPLATE ENDS -->
 
+<!-- ERROR / SUCCESS MESSAGE -->
+@if($status)
+  <div class="{{$status['type']}}"> 
+  @if($status['type'] == "delete")
+    <p>Se ha eliminado "{{$status['name']}}"</p>  
+  @elseif($status['type'] == "create")
+    <p>Se ha creado "{{$status['name']}}"</p>  
+  @else
+    <p>Se actualizó "{{$status['name']}}"</p> 
+  @endif
+  </div>
+@endif
+<!-- ERROR / SUCCESS MESSAGE -->
+
 
 
 
@@ -84,7 +98,7 @@
     <div class="col-sm-4">
       <section id="survey-app-title" class="box">
         <h2>Datos</h2>
-        <form name="update-blueprint" action="post" enctype="multipart/form-data" method="{{url('dashboard/cuestionarios/editar/' . $blueprint->id)}}">
+        <form name="update-blueprint" action="post" enctype="multipart/form-data" method="{{url('dashboard/encuestas/' . $blueprint->id)}}">
         {!! csrf_field() !!}
           <!-- THE TITLE -->
           <div class="row">
@@ -106,7 +120,8 @@
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
               <p>Selecciona la portada</p>
-              <p><input type="file" name="survey-banner"></p>
+              <img id="target"/>
+              <p><input type="file" name="survey-banner" id="survey-banner"></p>
             </div>
           </div>
 
