@@ -75,10 +75,32 @@ class Blueprints extends Controller
 
     //
     if ($request->hasFile('survey-banner')) {
-      $img = Image::make($request->file("survey-banner"))->widen(2560, function ($constraint) {
+      $name = uniqid() . "." . $request->file("survey-banner")->guessExtension();
+      $path = "/img/programas/";
+      $img  = Image::make($request->file("survey-banner"))->widen(2560, function ($constraint) {
         $constraint->upsize();
-      })->save(public_path() . '/img/programas/' . uniqid() . "." . $request->file("survey-banner")->guessExtension());
+      })->save(public_path() . $path . $name);
     }
+
+    //
+    $user = Auth::user();
+    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : $user->blueprints->with(with(["questions.options", "rules.question"]))->find($id);
+
+    //
+    if(!$blueprint) return redirect("dashboard/encuestas");
+
+    //
+    $blueprint->title     = $request->input("survey-title");
+    $blueprint->category  = $request->input("survey-category");
+    $blueprint->tags      = $request->input("survey-tags");
+    $blueprint->is_public = $request->input("is_public") ? 1 : 0; 
+    $blueprint->is_closed = $request->input("is_closed") ? 1 : 0; 
+    $blueprint->banner    = isset($name) ? $name : $blueprint->banner;
+    $blueprint->save();
+
+    //
+    $request->session()->flash('status', ['type' => 'update', 'name' => $blueprint->title]);
+    return redirect("dashboard/encuestas/" . $blueprint->id);
   }
 
   //
