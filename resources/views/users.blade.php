@@ -27,22 +27,39 @@
 		<!-- add users-->
 		<div class="col-sm-4">  
         	<section class="box">
+				<h2>Buscar Usuario</h2>
+				<!-- SEARCH USERS -->
+				@if($user->level == 3)
+				<form id="search-user" name="search-user" method="post" class="row" action="{{url('dashboard/usuarios/buscar/json')}}">
+				  {!! csrf_field() !!}
+				  <div class="col-sm-12">
+				    <p><label>Buscar usuario (email): </label> 
+				      <input type="text" name="query" class="typeahead">
+				    </p>
+				  </div>
+				</form>
+				@endif
+				<!-- SEARCH USERS ENDS -->
+			</section>
+
+        	<section class="box">
 				<form name="add-admin" method="post" class="row" id="add-admin-form" action="{{url('dashboard/usuarios/crear')}}">
           		  {!! csrf_field() !!}
           		  <h2>Crear usuario</h2>
           		  <div class="col-sm-12">
-          		  <p><label>nombre</label><input id="the-new-name" type="text" name="name" value="{{old('name')}}"></p>
-          		  <p><label>correo</label><input id="the-new-email" type="text" name="email" value="{{old('email')}}"></p>
-          		  <p><label>contraseña</label><input id="the-new-pass" type="password" name="password"></p>
+          		  <p><label>Nombre</label><input id="the-new-name" type="text" name="name" value="{{old('name')}}"></p>
+          		  <p><label>Correo</label><input id="the-new-email" type="text" name="email" value="{{old('email')}}"></p>
+          		  <p><label>Contraseña</label><input id="the-new-pass" type="password" name="password"></p>
           		  <p>Tipo de usuario</p>
           		  <ul class="options">
-          		    <li><label><input type="radio" name="level" value="2">funcionario</label></li>
-          		    <li><label><input type="radio" name="level" value="3">administrador</label></li>
+          		    <li><label><input type="radio" name="level" value="2">Funcionario</label></li>
+          		    <li><label><input type="radio" name="level" value="3">Administrador</label></li>
           		  </ul>
           		  <p><input type="submit" value="crear usuario"></p>
           		  </div>
           		</form>
 			</section>
+			
       </div>
       @endif
       
@@ -123,6 +140,61 @@
     </div>
   </div>
 </div>
+
+<script src="/js/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/js/bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
+<script src="/js/bower_components/typeahead.js/dist/bloodhound.min.js"></script>
+<script src="/js/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+  /*
+   * ENABLE THE USERS AND SURVEY SEARCH
+   *
+   */
+  $(document).ready(function(){
+
+    // THE USERS SEARCH
+    //
+    //
+    //
+    var users = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      // prefetch: $("#search-survey").attr("action"),
+      
+      remote: {
+        url: $("#search-user").attr("action"),
+        prepare : function(a, b){
+          var base = $("#search-user").attr("action"),
+              full = base + "?query=" + a;
+
+          b.url = full;
+          return b;
+        }
+
+      }
+      
+    });
+
+    $('#search-user .typeahead').typeahead(null, {
+      name: 'query',
+      display: 'email',
+      source: users
+    });
+
+    $('.typeahead').bind('typeahead:select', function(ev, suggestion){
+      console.log(suggestion);
+      if(suggestion.email){
+        window.location.href = "{{url('dashboard/usuario')}}/" + suggestion.id;
+      }
+      else{
+        window.location.href = "{{url('dashboard/encuestas')}}/" + suggestion.id;
+      }
+    });
+  });
+</script>
+
+
 <script>
 /*
   // more crapy validation
