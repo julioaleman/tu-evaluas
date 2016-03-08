@@ -265,6 +265,16 @@ input[type="search"]::-webkit-search-decoration {
       .login form input[type="submit"]:hover {
         background: #23272d; }
 
+.tt-menu {
+  background: rgba(0, 0, 0, 0.9);
+  color: #ccc;
+  width: 100%;
+  padding: 10px; }
+  .tt-menu .tt-suggestion.tt-selectable {
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.9);
+    color: white; }
+
 .backend form {
   margin: 0; }
   .backend form input[type="text"], .backend form input[type="password"] {
