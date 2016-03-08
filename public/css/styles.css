@@ -1123,6 +1123,16 @@ strong {
   .home nav ul li {
     padding-top: 0; }
 
+div.alert li {
+  background: red;
+  color: white;
+  padding: 5px; }
+
+div.delete p, div.update div.create p {
+  background: #2FBC75;
+  color: white;
+  padding: 5px; }
+
 header.pg {
   background: #f9f9f9; }
   header.pg nav {

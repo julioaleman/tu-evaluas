@@ -2,7 +2,9 @@
 
 @section('content')
 
-
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
 <!-- ERROR / SUCCESS MESSAGE -->
 @if(count($errors) > 0)
   <div class="alert">
@@ -28,9 +30,7 @@
 <!-- ERROR / SUCCESS MESSAGE -->
 
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
+
     	<h1 class="title">Editar Encuesta</h1>
     </div>
   </div>

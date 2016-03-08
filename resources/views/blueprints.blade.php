@@ -1,6 +1,9 @@
 @extends('layouts.master_admin')
 
 @section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
 
 <!-- ERROR / SUCCESS MESSAGE -->
 @if(count($errors) > 0)
@@ -27,9 +30,7 @@
 <!-- ERROR / SUCCESS MESSAGE -->
 
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
+
       <h1 class="title">Encuestas</h1>
       <div class="row">
         <!-- add survey-->

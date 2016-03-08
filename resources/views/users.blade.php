@@ -2,6 +2,8 @@
 
 @section('content')
 
+<div class="container">
+  <div class="row">
 <!-- ERROR / SUCCESS MESSAGE -->
 @if($status)  
   <div class="{{$status['type']}}"> 
@@ -19,8 +21,7 @@
 @endif
 <!-- ERROR / SUCCESS MESSAGE -->
 
-<div class="container">
-  <div class="row">
+
       <h1 class="title">Usuarios</h1>
     <div class="row">
       <!-- add users-->
