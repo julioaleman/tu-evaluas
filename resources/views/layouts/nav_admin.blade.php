@@ -19,7 +19,7 @@
         </li>
 
           <li class="{{$body_class == 'surveys' ? 'current' : ''}}">
-            <a href="{{url('dashboard/encuestas')}}">Encuestas</a>
+            <a href="{{url('dashboard/encuestas')}}">{{$user->level == 3 ? "Encuestas" : "Mis encuestas"}}</a>
           </li>
 
           <li class="{{$body_class == 'users' ? 'current' : ''}}">
