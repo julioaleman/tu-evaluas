@@ -71,6 +71,7 @@ Route::group(['middleware' => 'web'], function () {
 
     // SEARCH
     Route::get('dashboard/encuestas/buscar/json', 'Blueprints@search');
+    Route::get('dashboard/usuarios/buscar/json', 'Users@search');
 
     // FILE GENERATOR
     Route::post('dashboard/encuestas/crear/csv', 'FromFileMake@questions');

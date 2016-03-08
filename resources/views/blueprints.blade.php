@@ -248,7 +248,7 @@
     $('.typeahead').bind('typeahead:select', function(ev, suggestion){
       console.log(suggestion);
       if(suggestion.email){
-        window.location.href = "{{url('dashboard/usuarios')}}/" + suggestion.id;
+        window.location.href = "{{url('dashboard/usuario')}}/" + suggestion.id;
       }
       else{
         window.location.href = "{{url('dashboard/encuestas')}}/" + suggestion.id;
