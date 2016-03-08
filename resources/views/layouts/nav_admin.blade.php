@@ -26,7 +26,7 @@
             @if($user->level == 3)
             <a href="{{url('dashboard/usuarios')}}">Usuarios</a>
             @else
-            <a href="{{url('dashboard/perfil')}}">Cuenta</a>
+            <a href="{{url('dashboard/usuarios')}}">Cuenta</a>
             @endif
           </li>
 		  <!-- 
