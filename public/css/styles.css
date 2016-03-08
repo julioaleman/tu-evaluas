@@ -284,6 +284,13 @@ input[type="search"]::-webkit-search-decoration {
     border-color: #EEE;
     min-height: 70px;
     width: 100%; }
+  .backend form label {
+    display: block; }
+  .backend form .twitter-typeahead {
+    display: block !important; }
+  .backend form .typeahead.tt-input {
+    border: 1px solid #cccccc;
+    width: 100%; }
 .backend #survey-question-list > li {
   border-top: 1px solid #eee;
   padding: 10px; }
