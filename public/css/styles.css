@@ -1434,6 +1434,23 @@ article {
     color: white;
     font-size: 13px;
     padding: 2px 5px; }
+  .box a:link.btn_test, .box a:visited.btn_test {
+    background: #011C26;
+    color: white;
+    font-size: 13px;
+    padding: 2px 5px;
+    margin-right: 10px; }
+    .box a:link.btn_test:hover, .box a:visited.btn_test:hover {
+      background: #777; }
+    .box a:link.btn_test.preview, .box a:visited.btn_test.preview {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-right: 0;
+      padding: 10px;
+      text-align: center; }
+      .box a:link.btn_test.preview:hover, .box a:visited.btn_test.preview:hover {
+        border: 0; }
   .box a:link.btn_add, .box a:visited.btn_add {
     background: #011C26;
     color: white;

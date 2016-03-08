@@ -31,7 +31,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-    <h1 class="title">Editar Encuesta</h1>
+    	<h1 class="title">Editar Encuesta</h1>
     </div>
   </div>
   <!-- [[   T H E   A P P   ]] -->
@@ -40,6 +40,7 @@
     <!-- [ THE BLUEPRINT ] -->
     <div class="col-sm-4">
       <section id="survey-app-title" class="box">
+		<a href="{{url('dashboard/encuestas/test/' . $blueprint->id)}}" class="btn_test preview">Previsualizar encuesta</a>
         <h2>Datos</h2>
         <form name="update-blueprint" action="{{url('dashboard/encuestas/' . $blueprint->id)}}" enctype="multipart/form-data" method="post">
         {!! csrf_field() !!}
@@ -150,10 +151,10 @@
     <!-- [ ADD CONTENT BUTTONS ] -->
     <div class="row">
       <div class="col-sm-10 col-sm-offset-1">
-    <p id="survey-add-buttons">
-      <a href="#" class="add-question">Agrega pregunta</a> | 
-      <a href="#" class="add-text">Agrega texto(HTML)</a>
-    </p>
+	  	<p id="survey-add-buttons">
+	  	  <a href="#" class="add-question">Agrega pregunta</a> | 
+	  	  <a href="#" class="add-text">Agrega texto(HTML)</a>
+	  	</p>
       
       <!-- [ NEW QUESTION FORM ] -->
       <div id="survey-add-question" class="new_question" style="display:none">

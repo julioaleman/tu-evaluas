@@ -120,19 +120,20 @@
             
             <ul class="list">
               <li class="row los_titles">
-                 <div class="col-sm-10">
+                 <div class="col-sm-8">
                    <h4>Nombre</h4>
                  </div>
-                 <div class="col-sm-2">
+                 <div class="col-sm-4">
                     <h4>Acciones</h4>
                  </div>
               </li>
             <?php foreach($surveys as $survey): ?>
               <li class="row">
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                 <a href="{{url('dashboard/encuestas/' . $survey->id)}}">{{$survey->title}}</a>
                 </div>
-                 <div class="col-sm-2">
+                 <div class="col-sm-4">
+                  <a href="{{url('dashboard/encuestas/test/' . $survey->id)}}" class="btn_test">Previsualizar</a>
                   <a data-title="{{$survey->title}}" href="{{url('dashboard/encuestas/eliminar/' . $survey->id)}}" class="danger">Eliminar</a>
                  </div>
               </li>
