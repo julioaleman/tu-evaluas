@@ -134,6 +134,28 @@ class Blueprints extends Controller
   }
 
   //
+  // [ S I M U L A T O R ]
+  //
+  //
+  public function show($id){
+    $user = Auth::user();
+    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : $user->blueprints->with(with(["questions.options", "rules.question"]))->find($id);
+
+    if(!$blueprint) die("Este formulario no existe!");
+
+    $data = [];
+   
+    $data['applicant'] = $user;
+    $data['blueprint'] = $blueprint;
+    $data['questions'] = $blueprint->questions;
+    $data['rules']     = $blueprint->rules;
+    $data['options']   = $blueprint->options;
+    $data['answers']   = [];
+    $data['is_test']   = true;
+    return view("test-form")->with($data);
+  }
+
+  //
   // [ D E L E T E ]
   //
   //

@@ -149,17 +149,7 @@ define(function(require){
     //
     //
     render : function(){
-      // [1] agrega el título al campo de input y asigna el valor a los
-      //     checkboxs "is_public", "is_closed"
-      /*
-      var container = document.getElementById('survey-app-title'),
-          model     = this.model.attributes;
-
-      container.querySelector('input[type="text"]').value        = model.title;
-      container.querySelector('input[name="is_closed"]').checked = Number(model.is_closed);
-      container.querySelector('input[name="is_public"]').checked = Number(model.is_public);
-      */
-      // [2] agrega todas las preguntas a la lista. Esta función ejecuta lo siguiente:
+      // [1] agrega todas las preguntas a la lista. Esta función ejecuta lo siguiente:
       //     - this.model.set({current_section : section});
       //     - this.sub_collection.set(questions);
       //     - this.render_section_menu();
@@ -432,14 +422,6 @@ define(function(require){
     // [ ADD NEW ANSWER OPTION ]
     //
     //
-    /*
-    this.html = {
-        navigation_menu : this.$('#survey-navigation-menu'),
-        question_form   : this.$('#survey-add-question'),
-        content_form    : this.$('#survey-add-content'),
-        answers_form    : this.$('#survey-add-options')
-      };
-    */
     _render_new_option : function(e){
       if(e.keyCode === 13 && e.target.value){
         var name = _.uniqueId('lp');
@@ -626,14 +608,6 @@ define(function(require){
     // [ SAVE CONTENT ] 
     //
     //
-    /*
-    this.html = {
-        navigation_menu : this.$('#survey-navigation-menu'),
-        question_form   : this.$('#survey-add-question'),
-        content_form    : this.$('#survey-add-content'),
-        answers_form    : this.$('#survey-add-options')
-      };
-    */
     _save_content : function(e){
       e.preventDefault();
       var html    = this.$('#survey-add-content textarea').val(),
@@ -656,17 +630,6 @@ define(function(require){
         options        : [],
         _token         : document.querySelector("input[name='_token']").value
       });
-
-      /*
-      question.save(null, {
-        success : function(model, response, options){
-          that.collection.add(model); 
-          that.render_section_selector();
-          that.clear_question_form();
-          that.render_section(Number(model.get('section_id')));
-        }
-      });
-      */
 
       content.save(null, {
         success : function(model, response, options){

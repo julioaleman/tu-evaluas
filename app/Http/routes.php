@@ -67,6 +67,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('dashboard/encuestas/{id}', 'Blueprints@update')->where('id', '[0-9]+');
     Route::post('dashboard/encuestas/crear', 'Blueprints@create');
     Route::get('dashboard/encuestas/eliminar/{id}', 'Blueprints@delete')->where('id', '[0-9]+');
+    Route::get('dashboard/encuestas/test/{id}', 'Blueprints@show')->where('id', '[0-9]+');
 
     // FILE GENERATOR
     Route::post('dashboard/encuestas/crear/csv', 'FromFileMake@questions');
