@@ -20,32 +20,33 @@
   </div>
 @endif
 <!-- ERROR / SUCCESS MESSAGE -->
-
-
-      <h1 class="title">Usuarios</h1>
+	
+	<h1 class="title">{{$user->level == 3 ? "Usuarios" : "Tu Información" }}</h1>
     <div class="row">
-      <!-- add users-->
-      <div class="col-sm-4">  
-        <section class="box">
-
-          <form name="add-admin" method="post" class="row" id="add-admin-form" action="{{url('dashboard/usuarios/crear')}}">
-            {!! csrf_field() !!}
-            <h2>Crear usuario</h2>
-            <div class="col-sm-12">
-            <p><label>nombre</label><input id="the-new-name" type="text" name="name" value="{{old('name')}}"></p>
-            <p><label>correo</label><input id="the-new-email" type="text" name="email" value="{{old('email')}}"></p>
-            <p><label>contraseña</label><input id="the-new-pass" type="password" name="password"></p>
-            <p>Tipo de usuario</p>
-            <ul class="options">
-              <li><label><input type="radio" name="level" value="2">funcionario</label></li>
-              <li><label><input type="radio" name="level" value="3">administrador</label></li>
-            </ul>
-            <p><input type="submit" value="crear usuario"></p>
-            </div>
-          </form>
-
-        </section>
+    	@if($user->level == 3)
+		<!-- add users-->
+		<div class="col-sm-4">  
+        	<section class="box">
+				<form name="add-admin" method="post" class="row" id="add-admin-form" action="{{url('dashboard/usuarios/crear')}}">
+          		  {!! csrf_field() !!}
+          		  <h2>Crear usuario</h2>
+          		  <div class="col-sm-12">
+          		  <p><label>nombre</label><input id="the-new-name" type="text" name="name" value="{{old('name')}}"></p>
+          		  <p><label>correo</label><input id="the-new-email" type="text" name="email" value="{{old('email')}}"></p>
+          		  <p><label>contraseña</label><input id="the-new-pass" type="password" name="password"></p>
+          		  <p>Tipo de usuario</p>
+          		  <ul class="options">
+          		    <li><label><input type="radio" name="level" value="2">funcionario</label></li>
+          		    <li><label><input type="radio" name="level" value="3">administrador</label></li>
+          		  </ul>
+          		  <p><input type="submit" value="crear usuario"></p>
+          		  </div>
+          		</form>
+			</section>
       </div>
+      @endif
+      
+      @if($user->level == 3)
       <!--  admins list-->
       <div class="col-sm-8">  
         <section class="box">
@@ -74,14 +75,20 @@
           </ul>
         </section>
       </div>
-
+	  @endif
+	  
       <!--  users list-->
       <div class="col-sm-8">  
         <section class="box">
-          <h2>Funcionarios</h2>
-          <h3>Total
-              <strong>{{$users->count()}}</strong>
-            </h3>
+	        @if($user->level == 3)
+			<h2>Funcionarios</h2>
+			<h3>Total
+			    <strong>{{$users->count()}}</strong>
+			  </h3>
+            @else
+            <h2>Tu Perfil</h2>
+			
+            @endif
            <ul class="list">
             <li class="row los_titles">
                <div class="col-sm-8">
@@ -91,15 +98,23 @@
                     <h4>Correo</h4>
                </div>
             </li>
-
-          @foreach($users as $user)
+		  @if($user->level == 3)
+          @foreach($users as $user_fun)
             <li class="row">
+              <div class="col-sm-8">
+               <a href="{{url('dashboard/usuario/' . $user_fun->id)}}">{{$user_fun->name}}</a>
+              </div>
+              <div class="col-sm-4">{{$user_fun->email}}</div>
+            </li>
+          @endforeach
+          @else
+          	<li class="row">
               <div class="col-sm-8">
                <a href="{{url('dashboard/usuario/' . $user->id)}}">{{$user->name}}</a>
               </div>
               <div class="col-sm-4">{{$user->email}}</div>
             </li>
-          @endforeach
+          @endif
           </ul>
         </section>
       </div>

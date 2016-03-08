@@ -12,14 +12,19 @@
       </h3>
       <p> <a href="{{url('dashboard/encuestas')}}">Crear Encuesta</a></p>
     </div>
-    @if($user->level == 3)
+    
     <div class="col-sm-4 col-sm-offset-1 box">
+	    @if($user->level == 3)
       <h3><a href="{{url('dashboard/usuarios')}}"><strong>{{$admins->count()}}</strong> 
         {{ $admins->count() == 1 ? 'Usuario' :'Usuarios'}} &gt;</a>
       </h3>
       <p> <a href="{{url('dashboard/usuarios')}}">Crear Usuario</a></p>
+       @else 
+	   <h3><a href="{{url('dashboard/usuarios')}}"><strong>Tu</strong> información &gt;</a>
+      </h3>
+      <p> <a href="{{url('dashboard/usuario/' . $user->id)}}">Editar</a></p>
+	   @endif
     </div>
-    @endif
   </div>
   </div>
 </div>
