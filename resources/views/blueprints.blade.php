@@ -31,7 +31,7 @@
 
 
 
-      <h1 class="title">Encuestas</h1>
+      <h1 class="title">{{ $user->level == 3 ? "Todas las Encuestas" : "Mis Encuestas"}}</h1>
       <div class="row">
         <!-- add survey-->
         <div class="col-sm-4">
