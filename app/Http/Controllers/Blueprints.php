@@ -172,4 +172,14 @@ class Blueprints extends Controller
       return redirect('dashboard/encuestas');
     }
   }
+
+  //
+  // [ S E A R C H ]
+  //
+  //
+  public function search(Request $request){
+    $query = $request->input("query");
+    $response = Blueprint::where("title", "like", "%{$query}%")->get();
+    return response()->json($response)->header('Access-Control-Allow-Origin', '*');
+  }
 }
