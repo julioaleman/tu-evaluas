@@ -37,10 +37,15 @@ class Blueprints extends Controller
   //
   //
   public function create(Request $request){
+    // 
+    $messages = [
+      'required' => 'El título del formulario es un campo necesario'
+    ];
+
     // validate the title
     $this->validate($request, [
       'title' => 'required|max:255'
-    ]);
+    ], $messages);
 
     $user  = Auth::user();
     $title = $request->input("title");

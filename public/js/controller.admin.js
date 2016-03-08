@@ -55,7 +55,7 @@ define(function(require){
       'blur #survey-add-options input'  : '_disable_save_option',
       // [ ADD HTML ] 
       'click #survey-add-buttons a.add-text' : 'render_content_form',
-      //'click #survey-add-content-btn'        : '_save_content',
+      'click #survey-add-content-btn'        : '_save_content',
       // [ ADD RULE ]
       //'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
       //'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule',
@@ -626,35 +626,54 @@ define(function(require){
     // [ SAVE CONTENT ] 
     //
     //
+    /*
+    this.html = {
+        navigation_menu : this.$('#survey-navigation-menu'),
+        question_form   : this.$('#survey-add-question'),
+        content_form    : this.$('#survey-add-content'),
+        answers_form    : this.$('#survey-add-options')
+      };
+    */
     _save_content : function(e){
       e.preventDefault();
-      var html    = this.html.content_form.find('textarea').val(),
+      var html    = this.$('#survey-add-content textarea').val(),
           section = this.$('.survey-section-selector select').val(),
           content = new Backbone.Model(null, {collection : this.collection}),
           that    = this;
 
       if(! html){
-        this.html.content_form.find('textarea').addClass('error');
+        this.$('#survey-add-content textarea').addClass('error');
         return;
       }
 
       content.set({
         section_id     : section,
-        blueprint_id   : this.model.id,
+        blueprint_id   : this.blueprint.id,
         question       : html, 
         is_description : 1,
         is_location    : 0,
         type           : 'text',
-        options        : []
+        options        : [],
+        _token         : document.querySelector("input[name='_token']").value
       });
+
+      /*
+      question.save(null, {
+        success : function(model, response, options){
+          that.collection.add(model); 
+          that.render_section_selector();
+          that.clear_question_form();
+          that.render_section(Number(model.get('section_id')));
+        }
+      });
+      */
 
       content.save(null, {
         success : function(model, response, options){
           that.collection.add(model);
           that.render_section_selector();
-          //that.render_section(that.model.get('current_section'));
-          that.html.content_form[0].querySelector('textarea').value = "";
-          that.render_section(0);
+          that.$('#survey-add-content textarea').val("");
+          that.render_section( Number(model.get('section_id'))  );
         }
       });
     },
