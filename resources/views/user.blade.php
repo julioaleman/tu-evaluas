@@ -14,7 +14,7 @@
             <p>Correo: <em>{{$_user->email}}</em></p>
             <p><label>nombre</label><input id="the-new-name" type="text" name="name" value="{{$_user->name}}"></p>
             <p><label>contraseña</label><input id="the-new-pass" type="password" name="password"></p>
-
+			@if($user->level == 3)
             <p>Tipo de usuario</p>
             <ul class="options">
               <li><label>
@@ -24,6 +24,7 @@
               <input type="radio" name="level" value="3" {{$_user->level >= '3' ? 'checked' : ''}}>administrador
               </label></li>
             </ul>
+            @endif
             <p><input type="submit" value="editar"></p>
             </div>
   </form>
