@@ -9,7 +9,6 @@
 				<section>
 					@if ($surveys->count() > 0)
 						@foreach($surveys as $survey)
-						 @if ($survey->is_public == 1)
 							<h2><a href="{{ url('resultados/'. $survey->id)}}">{{ $survey->title}}</h2>
 							<?php 
 								switch($survey->id){
@@ -32,7 +31,6 @@
 								<!-- aquí se agregará la descripción de cada encuesta-->
 								<a href="{{ url('resultados/'.$survey->id)}}" class="btn"> Consulta los resultados</a>
 							</p>
-							@endif
 						@endforeach
 					@else 
 						<h2>Aún no hay encuestas para descargar</h2>

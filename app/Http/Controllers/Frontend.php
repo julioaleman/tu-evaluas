@@ -38,7 +38,7 @@ class Frontend extends Controller
   
   function results(){
     $data = [];
-    $data['surveys']     = Blueprint::all() ;
+    $data['surveys']     = Blueprint::where('is_public',1)->get();
     $data['title']       = 'Resultados | Tú Evalúas';
     $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
     $data['body_class']  = 'results';
