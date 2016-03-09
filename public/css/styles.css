@@ -265,6 +265,16 @@ input[type="search"]::-webkit-search-decoration {
       .login form input[type="submit"]:hover {
         background: #23272d; }
 
+.tt-menu {
+  background: rgba(0, 0, 0, 0.9);
+  color: #ccc;
+  width: 100%;
+  padding: 10px; }
+  .tt-menu .tt-suggestion.tt-selectable {
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.9);
+    color: white; }
+
 .backend form {
   margin: 0; }
   .backend form input[type="text"], .backend form input[type="password"] {
@@ -283,6 +293,13 @@ input[type="search"]::-webkit-search-decoration {
   .backend form textarea {
     border-color: #EEE;
     min-height: 70px;
+    width: 100%; }
+  .backend form label {
+    display: block; }
+  .backend form .twitter-typeahead {
+    display: block !important; }
+  .backend form .typeahead.tt-input {
+    border: 1px solid #cccccc;
     width: 100%; }
 .backend #survey-question-list > li {
   border-top: 1px solid #eee;
@@ -1106,6 +1123,16 @@ strong {
   .home nav ul li {
     padding-top: 0; }
 
+div.alert li {
+  background: red;
+  color: white;
+  padding: 5px; }
+
+div.delete p, div.update div.create p {
+  background: #2FBC75;
+  color: white;
+  padding: 5px; }
+
 header.pg {
   background: #f9f9f9; }
   header.pg nav {
@@ -1417,6 +1444,23 @@ article {
     color: white;
     font-size: 13px;
     padding: 2px 5px; }
+  .box a:link.btn_test, .box a:visited.btn_test {
+    background: #011C26;
+    color: white;
+    font-size: 13px;
+    padding: 2px 5px;
+    margin-right: 10px; }
+    .box a:link.btn_test:hover, .box a:visited.btn_test:hover {
+      background: #777; }
+    .box a:link.btn_test.preview, .box a:visited.btn_test.preview {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-right: 0;
+      padding: 10px;
+      text-align: center; }
+      .box a:link.btn_test.preview:hover, .box a:visited.btn_test.preview:hover {
+        border: 0; }
   .box a:link.btn_add, .box a:visited.btn_add {
     background: #011C26;
     color: white;

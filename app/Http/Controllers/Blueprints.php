@@ -37,10 +37,15 @@ class Blueprints extends Controller
   //
   //
   public function create(Request $request){
+    // 
+    $messages = [
+      'required' => 'El título del formulario es un campo necesario'
+    ];
+
     // validate the title
     $this->validate($request, [
       'title' => 'required|max:255'
-    ]);
+    ], $messages);
 
     $user  = Auth::user();
     $title = $request->input("title");
@@ -129,6 +134,28 @@ class Blueprints extends Controller
   }
 
   //
+  // [ S I M U L A T O R ]
+  //
+  //
+  public function show($id){
+    $user = Auth::user();
+    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : $user->blueprints->with(with(["questions.options", "rules.question"]))->find($id);
+
+    if(!$blueprint) die("Este formulario no existe!");
+
+    $data = [];
+   
+    $data['applicant'] = $user;
+    $data['blueprint'] = $blueprint;
+    $data['questions'] = $blueprint->questions;
+    $data['rules']     = $blueprint->rules;
+    $data['options']   = $blueprint->options;
+    $data['answers']   = [];
+    $data['is_test']   = true;
+    return view("test-form")->with($data);
+  }
+
+  //
   // [ D E L E T E ]
   //
   //
@@ -144,5 +171,15 @@ class Blueprints extends Controller
     else{
       return redirect('dashboard/encuestas');
     }
+  }
+
+  //
+  // [ S E A R C H ]
+  //
+  //
+  public function search(Request $request){
+    $query = $request->input("query");
+    $response = Blueprint::where("title", "like", "%{$query}%")->get();
+    return response()->json($response)->header('Access-Control-Allow-Origin', '*');
   }
 }

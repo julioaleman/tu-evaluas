@@ -18,6 +18,10 @@ use App\Models\Blueprint;
 
 class Users extends Controller
 {
+  //
+  // [ U S E R   L I S T ]
+  //
+  //
   public function index(){
     $user   = Auth::user();
     $admins = User::where("level", 3)->get(); 
@@ -35,6 +39,10 @@ class Users extends Controller
     return view("users")->with($data);
   }
 
+  //
+  // [ C R E A T E   U S E R ]
+  //
+  //
   public function store(Request $request){
     // fix posible trail spaces on the email
     $email = trim($request->input('email'));
@@ -58,6 +66,10 @@ class Users extends Controller
     return redirect("dashboard/usuarios");
   }
 
+  //
+  // [ U P D A T E   U S E R   F O R M ]
+  //
+  //
   public function update($id = false){
     $user  = Auth::user();
     $_user = User::find($id);
@@ -72,6 +84,10 @@ class Users extends Controller
     return view("user")->with($data);
   }
 
+  //
+  // [ U P D A T E   U S E R ]
+  //
+  //
   public function change(Request $request, $id = false){
     $user  = User::find($id);
     $rules = ['name' => 'required|max:255'];
@@ -87,5 +103,15 @@ class Users extends Controller
     $user->update();
     $request->session()->flash('status', ['type' => 'update', 'name' => $user->name]);
     return redirect("dashboard/usuarios");
+  }
+
+  //
+  // [ S E A R C H ]
+  //
+  //
+  public function search(Request $request){
+    $query = $request->input("query");
+    $response = User::where("email", "like", "%{$query}%")->orWhere("name", "like", "%{$query}%")->get();
+    return response()->json($response)->header('Access-Control-Allow-Origin', '*');
   }
 }

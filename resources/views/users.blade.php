@@ -1,77 +1,9 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="es" class="no-js"> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{{$title}}</title>
-  <meta name="description" content="{{$description}}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{{url('img/favicon.ico')}}">
-    <link rel="stylesheet" type="text/css" href="{{url('css/normalize.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url('css/styles.css')}}">
+@extends('layouts.master_admin')
 
-    <!-- NEW CSS -->
-    <link rel="stylesheet" type="text/css" href="{{url('js/bower_components/sweetalert/dist/sweetalert.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url('css/dev.css')}}">
-</head>
-<body class="backend">
+@section('content')
 
-<header class="pg">
-  <div class="clearfix">
-    <nav class="col-sm-3 col-sm-offset-1">
-      <a href="{{url('/')}}" class="tuevaluas">Tú evalúas</a>
-    </nav>
-    <nav class="col-sm-1 col-sm-offset-7">
-      <ul>
-        <li><a href="{{url('logout')}}">Salir</a></li>
-      </ul>
-    </nav>
-  </div>  
-</header> 
-<nav class="nav_back">
-  <div class="container">
-    <div class="row">
-        <ul>
-        <li class="{{$body_class == 'dash' ? 'current' : ''}}">
-          <a href="{{url('dashboard')}}">Dashboard</a>
-        </li>
-
-          <li class="{{$body_class == 'surveys' ? 'current' : ''}}">
-            <a href="{{url('dashboard/encuestas')}}">Encuestas</a>
-          </li>
-
-          <li class="{{$body_class == 'users' ? 'current' : ''}}">
-            @if($user->level == 3)
-            <a href="{{url('dashboard/usuarios')}}">Usuarios</a>
-            @else
-            <a href="{{url('dashboard/perfil')}}">Cuenta</a>
-            @endif
-          </li>
-
-          <li class="{{$body_class == 'applicants' ? 'current' : ''}}">
-          <a href="{{url('dashboard/cuestionarios')}}">Cuestionarios</a>
-        </li>
-         <!-- <li><a href="{{url('dashboard/datos')}}">Datos abiertos</a></li>
-          <li><a href="{{url('dashboard/correos')}}">Correos</a></li>-->
-        </ul>
-    </div>
-  </div>
-</nav>
-
-
-
-
-
-
-
-<!-- HEADER TEMPLATE ENDS -->
-
-
-
-
+<div class="container">
+  <div class="row">
 <!-- ERROR / SUCCESS MESSAGE -->
 @if($status)  
   <div class="{{$status['type']}}"> 
@@ -88,33 +20,50 @@
   </div>
 @endif
 <!-- ERROR / SUCCESS MESSAGE -->
-
-<div class="container">
-  <div class="row">
-      <h1 class="title">Usuarios</h1>
+	
+	<h1 class="title">{{$user->level == 3 ? "Usuarios" : "Tu Información" }}</h1>
     <div class="row">
-      <!-- add users-->
-      <div class="col-sm-4">  
-        <section class="box">
+    	@if($user->level == 3)
+		<!-- add users-->
+		<div class="col-sm-4">  
+        	<section class="box">
+				<h2>Buscar Usuario</h2>
+				<!-- SEARCH USERS -->
+				@if($user->level == 3)
+				<form id="search-user" name="search-user" method="post" class="row" action="{{url('dashboard/usuarios/buscar/json')}}">
+				  {!! csrf_field() !!}
+				  <div class="col-sm-12">
+				    <p><label>Buscar usuario (email): </label> 
+				      <input type="text" name="query" class="typeahead">
+				    </p>
+				  </div>
+				</form>
+				@endif
+				<!-- SEARCH USERS ENDS -->
+			</section>
 
-          <form name="add-admin" method="post" class="row" id="add-admin-form" action="{{url('dashboard/usuarios/crear')}}">
-            {!! csrf_field() !!}
-            <h2>Crear usuario</h2>
-            <div class="col-sm-12">
-            <p><label>nombre</label><input id="the-new-name" type="text" name="name" value="{{old('name')}}"></p>
-            <p><label>correo</label><input id="the-new-email" type="text" name="email" value="{{old('email')}}"></p>
-            <p><label>contraseña</label><input id="the-new-pass" type="password" name="password"></p>
-            <p>Tipo de usuario</p>
-            <ul class="options">
-              <li><label><input type="radio" name="level" value="2">funcionario</label></li>
-              <li><label><input type="radio" name="level" value="3">administrador</label></li>
-            </ul>
-            <p><input type="submit" value="crear usuario"></p>
-            </div>
-          </form>
-
-        </section>
+        	<section class="box">
+				<form name="add-admin" method="post" class="row" id="add-admin-form" action="{{url('dashboard/usuarios/crear')}}">
+          		  {!! csrf_field() !!}
+          		  <h2>Crear usuario</h2>
+          		  <div class="col-sm-12">
+          		  <p><label>Nombre</label><input id="the-new-name" type="text" name="name" value="{{old('name')}}"></p>
+          		  <p><label>Correo</label><input id="the-new-email" type="text" name="email" value="{{old('email')}}"></p>
+          		  <p><label>Contraseña</label><input id="the-new-pass" type="password" name="password"></p>
+          		  <p>Tipo de usuario</p>
+          		  <ul class="options">
+          		    <li><label><input type="radio" name="level" value="2">Funcionario</label></li>
+          		    <li><label><input type="radio" name="level" value="3">Administrador</label></li>
+          		  </ul>
+          		  <p><input type="submit" value="crear usuario"></p>
+          		  </div>
+          		</form>
+			</section>
+			
       </div>
+      @endif
+      
+      @if($user->level == 3)
       <!--  admins list-->
       <div class="col-sm-8">  
         <section class="box">
@@ -143,14 +92,20 @@
           </ul>
         </section>
       </div>
-
+	  @endif
+	  
       <!--  users list-->
       <div class="col-sm-8">  
         <section class="box">
-          <h2>Funcionarios</h2>
-          <h3>Total
-              <strong>{{$users->count()}}</strong>
-            </h3>
+	        @if($user->level == 3)
+			<h2>Funcionarios</h2>
+			<h3>Total
+			    <strong>{{$users->count()}}</strong>
+			  </h3>
+            @else
+            <h2>Tu Perfil</h2>
+			
+            @endif
            <ul class="list">
             <li class="row los_titles">
                <div class="col-sm-8">
@@ -160,15 +115,23 @@
                     <h4>Correo</h4>
                </div>
             </li>
-
-          @foreach($users as $user)
+		  @if($user->level == 3)
+          @foreach($users as $user_fun)
             <li class="row">
+              <div class="col-sm-8">
+               <a href="{{url('dashboard/usuario/' . $user_fun->id)}}">{{$user_fun->name}}</a>
+              </div>
+              <div class="col-sm-4">{{$user_fun->email}}</div>
+            </li>
+          @endforeach
+          @else
+          	<li class="row">
               <div class="col-sm-8">
                <a href="{{url('dashboard/usuario/' . $user->id)}}">{{$user->name}}</a>
               </div>
               <div class="col-sm-4">{{$user->email}}</div>
             </li>
-          @endforeach
+          @endif
           </ul>
         </section>
       </div>
@@ -177,6 +140,61 @@
     </div>
   </div>
 </div>
+
+<script src="/js/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/js/bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
+<script src="/js/bower_components/typeahead.js/dist/bloodhound.min.js"></script>
+<script src="/js/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+  /*
+   * ENABLE THE USERS AND SURVEY SEARCH
+   *
+   */
+  $(document).ready(function(){
+
+    // THE USERS SEARCH
+    //
+    //
+    //
+    var users = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      // prefetch: $("#search-survey").attr("action"),
+      
+      remote: {
+        url: $("#search-user").attr("action"),
+        prepare : function(a, b){
+          var base = $("#search-user").attr("action"),
+              full = base + "?query=" + a;
+
+          b.url = full;
+          return b;
+        }
+
+      }
+      
+    });
+
+    $('#search-user .typeahead').typeahead(null, {
+      name: 'query',
+      display: 'email',
+      source: users
+    });
+
+    $('.typeahead').bind('typeahead:select', function(ev, suggestion){
+      console.log(suggestion);
+      if(suggestion.email){
+        window.location.href = "{{url('dashboard/usuario')}}/" + suggestion.id;
+      }
+      else{
+        window.location.href = "{{url('dashboard/encuestas')}}/" + suggestion.id;
+      }
+    });
+  });
+</script>
+
+
 <script>
 /*
   // more crapy validation
@@ -209,45 +227,4 @@
 </script>
 
 
-
-
-
-<!-- MAIN DASHBOARD ENDS -->
-
-
-
-
-
-
-<footer>
-
-  
-  <div class="links_bottom">
-    <div class="container">
-      <div class="row">
-      <div class="col-sm-3">
-        <p><span class="tu_evaluas">Tú Evalúas</span> ©2016</p>
-      </div>
-      <div class="col-sm-9">
-        <ul>
-          <li>Forjado Artesanalmente por <a href="http://gobiernofacil.com" class="gobiernofacil" title="Gobierno Fácil">Gobierno Fácil</a></li>
-        </ul>
-      </div>
-    </div>
-    </div>
-  </div>
-</footer>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-45473222-7', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-</body>
-</html>
+@endsection
