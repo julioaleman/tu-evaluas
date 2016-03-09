@@ -38,10 +38,32 @@ class Frontend extends Controller
   
   function results(){
     $data = [];
+    $data['surveys']     = Blueprint::all() ;
     $data['title']       = 'Resultados | Tú Evalúas';
     $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
     $data['body_class']  = 'results';
     return view("frontend.results")->with($data);
+  }
+  
+  function result($id){
+    $blueprint =Blueprint::with(["questions.options", "rules.question"])->find($id);
+
+    if(!$blueprint) die("Este formulario no existe!");
+
+    $data = [];
+   
+  //  $data['applicant'] = $user;
+    $data['blueprint'] = $blueprint;
+    $data['questions'] = $blueprint->questions;
+    $data['rules']     = $blueprint->rules;
+    $data['options']   = $blueprint->options;
+    $data['answers']   = [];
+    $data['is_test']   = true;
+
+    $data['title']       = 'Resultados | Tú Evalúas';
+    $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
+    $data['body_class']  = 'results';
+    return view("frontend.result_survey")->with($data);
   }
   
   function terms(){
