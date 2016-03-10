@@ -64,7 +64,10 @@ define(function(require){
       // [ CREATE CSV ]
       //'click .create-survey-btn' : '_generate_csv', 
       // [ UPLOAD RESULTS ]
-      //'change #results-file' : '_upload_results'
+      //'change #results-file' : '_upload_results',
+
+      // [ UPDATE CATEGORY ]
+      "change #survey-category" : 'update_category'
       
     },
 
@@ -171,16 +174,45 @@ define(function(require){
       // RENDER SUBCATEGORY
       if(category){
         category.attributes.sub.forEach(function(sub){
-          this.$("#survey-subcategory").append("<option>" + sub + "</option>");
+          if(sub == this.blueprint.subcategory){
+            this.$("#survey-subcategory").append("<option class='extra' selected>" + sub + "</option>");
+          }
+          else{
+            this.$("#survey-subcategory").append("<option class='extra'>" + sub + "</option>");
+          }
         }, this);
       }
 
       // RENDER  TAGS
       if(category){
         category.attributes.tags.forEach(function(tag){
-          this.$("#tag-list").append("<li><input type='checkbox' value='" + tag + "' name='survey-tags[]'> " + tag + "</li>");
+          if(tags.indexOf(tag) != -1){
+            this.$("#tag-list").append("<li><label><input type='checkbox' value='" + tag + "' name='survey-tags[]' checked> " + tag + "</label></li>");
+          }
+          else{
+            this.$("#tag-list").append("<li><label><input type='checkbox' value='" + tag + "' name='survey-tags[]'> " + tag + "</label></li>");
+          }
+          
         }, this);
       }
+    },
+
+    update_category : function(e){
+      var category = this.$("#survey-category").val();
+      this.$("#survey-subcategory .extra").remove();
+      this.$("#tag-list").html("");
+      if(!category) return;
+
+      category = this.categories.findWhere({name : category});
+      // RENDER SUBCATEGORY
+      category.attributes.sub.forEach(function(sub){
+        this.$("#survey-subcategory").append("<option class='extra'>" + sub + "</option>");
+      }, this);
+
+      // RENDER  TAGS
+      category.attributes.tags.forEach(function(tag){
+        this.$("#tag-list").append("<li><label><input type='checkbox' value='" + tag + "' name='survey-tags[]'> " + tag + "</label></li>");
+      }, this);
     },
 
     // [ RENDER QUESTIONS FROM A SECTION ]
