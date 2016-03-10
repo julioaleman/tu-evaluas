@@ -84,7 +84,7 @@ class Blueprints extends Controller
 
     //
     $user = Auth::user();
-    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : $user->blueprints->with(with(["questions.options", "rules.question"]))->find($id);
+    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : Blueprint::with(["questions.options", "rules.question"])->where("user_id",$user->id )->find($id);
 
     //
     if(!$blueprint) return redirect("dashboard/encuestas");
@@ -111,7 +111,7 @@ class Blueprints extends Controller
   //
   public function blueprint($id){
     $user = Auth::user();
-    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : $user->blueprints->with(with(["questions.options", "rules.question"]))->find($id);
+    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : Blueprint::with(["questions.options", "rules.question"])->where("user_id",$user->id )->find($id);
 
     if(!$blueprint) return redirect("dashboard/encuestas");
 
@@ -136,7 +136,7 @@ class Blueprints extends Controller
   //
   public function show($id){
     $user = Auth::user();
-    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : $user->blueprints->with(with(["questions.options", "rules.question"]))->find($id);
+    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : Blueprint::with(["questions.options", "rules.question"])->where("user_id",$user->id )->find($id);
 
     if(!$blueprint) die("Este formulario no existe!");
 

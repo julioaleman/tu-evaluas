@@ -11,9 +11,11 @@
     </div>
   </header>
   <section class="programs row">
+    @if($surveys->count() > 0)
     <div class="col-sm-10 col-sm-offset-1">
     <h2>Programas Evaluados</h2>
     </div>
+    @endif
     <div class="col-sm-8 col-sm-offset-2">
     <ul>
     @foreach($surveys as $survey)

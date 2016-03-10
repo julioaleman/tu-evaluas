@@ -19,7 +19,7 @@ class BlueprintApi extends Controller
   public function saveQuestion(Request $request){
     // [1] CHECK IF THE BLUEPRINT EXIST AND THE USER CAN CHANGE IT
     $user = Auth::user();
-    $blueprint = $user->level == 3 ? Blueprint::find($request->input('blueprint_id')) : $user->blueprint->find($request->input('blueprint_id'));
+    $blueprint = $user->level == 3 ? Blueprint::find($request->input('blueprint_id')) : Blueprint::where("user_id",$user->id )->find($request->input('blueprint_id'));
     if(!$blueprint){
       if($user->level == 3){
         abort(404, 'El formulario no existe!');
