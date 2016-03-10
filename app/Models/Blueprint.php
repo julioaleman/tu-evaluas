@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blueprint extends Model
 {
-  protected $fillable = ['title', 'is_closed', 'is_visible', 'csv_file', 'banner', 'tags', 'category'];
+  protected $fillable = ['title', 'is_closed', 'is_visible', 'csv_file', 'banner', 'tags', 'category', 'subcategory'];
   
   public function user(){
     return $this->belongsTo('App\User');

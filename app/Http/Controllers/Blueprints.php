@@ -67,16 +67,11 @@ class Blueprints extends Controller
   //
   //
   public function update(Request $request, $id){
-    // 
-    $messages = [
-      'required' => 'El título del formulario es un campo necesario',
-      'image'    => 'El banner debe ser una imagen'
-    ];
     // validate the title && file type
     $this->validate($request, [
       'survey-title'  => 'required|max:255',
       'survey-banner' => 'image'
-    ], $messages);
+    ]);
 
     //
     if ($request->hasFile('survey-banner')) {
@@ -95,12 +90,14 @@ class Blueprints extends Controller
     if(!$blueprint) return redirect("dashboard/encuestas");
 
     //
-    $blueprint->title     = $request->input("survey-title");
-    $blueprint->category  = $request->input("survey-category");
-    $blueprint->tags      = $request->input("survey-tags");
-    $blueprint->is_public = $request->input("is_public") ? 1 : 0; 
-    $blueprint->is_closed = $request->input("is_closed") ? 1 : 0; 
-    $blueprint->banner    = isset($name) ? $name : $blueprint->banner;
+
+    $blueprint->title       = $request->input("survey-title");
+    $blueprint->category    = $request->input("survey-category");
+    $blueprint->subcategory = $request->input("survey-subcategory");
+    $blueprint->tags        = $request->input("survey-tags", null) ? implode(",", $request->input("survey-tags")) : "";
+    $blueprint->is_public   = $request->input("is_public") ? 1 : 0; 
+    $blueprint->is_closed   = $request->input("is_closed") ? 1 : 0; 
+    $blueprint->banner      = isset($name) ? $name : $blueprint->banner;
     $blueprint->save();
 
     //
@@ -164,7 +161,12 @@ class Blueprints extends Controller
     $blueprint = Blueprint::find($id);
     if($blueprint && ($user->level == 3 || $user->id == $blueprint->user_id)){
       $title = $blueprint->title;
+
+      $blueprint->questions->delete();
+      $blueprint->options->delete();
+      $blueprint->rules->delete();
       $blueprint->delete();
+
       $request->session()->flash('status', ['type' => 'delete', 'name' => $title]);
       return redirect('dashboard/encuestas');
     }

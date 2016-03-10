@@ -17,7 +17,8 @@ define(function(require){
       Question    = require('views/question_view.admin'),
       Description = require('views/description_view.admin'),
       Option      = require('text!templates/option_item.admin.html'),
-      Section_nav = require('text!templates/section_selector.admin.html');
+      Section_nav = require('text!templates/section_selector.admin.html'),
+      Categories  = require('categories');
 
 
   //
@@ -98,6 +99,9 @@ define(function(require){
 
       // [ DISPLAY THE FULL QUESTION LIST ]
       this.render_section(this.current_section);
+
+      // [ ENABLE THE CATEGORY SELECTOR ]
+      this.render_category();
       /*
       // [ THE MODEL ]
       this.model         = new Backbone.Model(SurveySettings.blueprint);
@@ -148,12 +152,35 @@ define(function(require){
     // [ THE RENDER ]
     //
     //
-    render : function(){
-      // [1] agrega todas las preguntas a la lista. Esta función ejecuta lo siguiente:
-      //     - this.model.set({current_section : section});
-      //     - this.sub_collection.set(questions);
-      //     - this.render_section_menu();
-      this.render_section(0);
+    render_category : function(){
+      this.categories = new Backbone.Collection(Categories.list);
+      var category = this.categories.findWhere({name : this.blueprint.category}),
+          subcat   = category ? category.get("subcat") : null,
+          tags     = category && this.blueprint.tags ? this.blueprint.tags.split(",") : [];
+      this.categories.each(function(cat){
+        var name = cat.get("name");
+        // RENDER CATEGORY
+        if(name == this.blueprint.category){
+          this.$("#survey-category").append("<option selected>" + name + "</option>");
+        }
+        else{
+          this.$("#survey-category").append("<option>" + name + "</option>");
+        }
+      }, this);
+
+      // RENDER SUBCATEGORY
+      if(category){
+        category.attributes.sub.forEach(function(sub){
+          this.$("#survey-subcategory").append("<option>" + sub + "</option>");
+        }, this);
+      }
+
+      // RENDER  TAGS
+      if(category){
+        category.attributes.tags.forEach(function(tag){
+          this.$("#tag-list").append("<li><input type='checkbox' value='" + tag + "' name='survey-tags[]'> " + tag + "</li>");
+        }, this);
+      }
     },
 
     // [ RENDER QUESTIONS FROM A SECTION ]

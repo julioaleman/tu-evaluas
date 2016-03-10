@@ -56,7 +56,28 @@
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
               <p>Categoría</p>
-              <p><input type="text" name="survey-category" value="{{$blueprint->category}}"></p>
+              <p>
+                <select name="survey-category" id="survey-category">
+                  <option value="">Selecciona una categoría</option>
+                </select>
+              </p>
+            </div>
+
+             <!-- SUBCATEGORY -->
+            <div class="col-sm-10 col-sm-offset-1">
+              <p>Subcategoría</p>
+              <p>
+                <select name="survey-subcategory" id="survey-subcategory">
+                  <option value="">Selecciona una subcategoría</option>
+                </select>
+              </p>
+            </div>
+
+             <!-- TAGS -->
+            <div class="col-sm-10 col-sm-offset-1">
+              <p>Etiquetas</p>
+              <ul id="tag-list"></ul>
+              <!-- survey-tags-->
             </div>
           </div>
 
@@ -66,14 +87,6 @@
               <p>Selecciona la portada</p>
               <img id="target" src="{{empty($blueprint->banner) ? "": url("img/programas/" . $blueprint->banner) }}" />
               <p><input type="file" name="survey-banner" id="survey-banner"></p>
-            </div>
-          </div>
-
-          <!-- TAGS -->
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-              <p>Tags</p>
-              <p><textarea name="survey-tags">{{$blueprint->tags}}</textarea></p>
             </div>
           </div>
 

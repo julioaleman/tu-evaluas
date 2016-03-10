@@ -1,4 +1,4 @@
-[{
+define({list : [{
   "name" : "Educación",
   "sub"  : ["Títulos","Cédulas","Certificados","Becas","Libros","Indígenas","Deporte","Tecnología"],
   "tags" : ["Prescolar", "primaria", "secundaria", "preparatoria", "técnica", "adultos", "hombres", "mujeres"]
@@ -60,4 +60,5 @@
   "name" : "Turismo",
   "sub"  : ["Turistas","Guías","Pueblos Mágicos","Mercados","Viajes","Créditos"],
   "tags" : ["Niños", "niñas", "jóvenes", "adultos", "adultos mayores", "hombres", "mujeres", "empresas", "negocios"]
-}];
+}]
+});
