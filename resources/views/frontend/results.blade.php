@@ -33,7 +33,7 @@
 							</p>
 						@endforeach
 					@else 
-						<h2>Estamos trabajando para mejorar la descarga de los resultados de las encuestas ¡Pronto estaremos de vuelta!</h2>
+						<h2>Estamos trabajando para mejorar la descarga de los resultados de las encuestas. ¡Pronto estaremos de vuelta!</h2>
 					@endif
 				</section>
 			</div>			
