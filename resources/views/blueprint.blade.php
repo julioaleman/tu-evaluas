@@ -66,16 +66,15 @@
              <!-- SUBCATEGORY -->
             <div class="col-sm-10 col-sm-offset-1">
               <p>Subcategoría</p>
-              <p>
-                <select name="survey-subcategory" id="survey-subcategory">
-                  <option value="">Selecciona una subcategoría</option>
-                </select>
-              </p>
+              <p class="rule">puedes seleccionar un máximo de 3 subcategorías</p>
+              <ul id="sub-list"></ul>
+              <!-- survey-tags-->
             </div>
 
              <!-- TAGS -->
             <div class="col-sm-10 col-sm-offset-1">
               <p>Etiquetas</p>
+              <p class="rule">puedes seleccionar un máximo de 5 etiquetas</p>
               <ul id="tag-list"></ul>
               <!-- survey-tags-->
             </div>

@@ -67,7 +67,11 @@ define(function(require){
       //'change #results-file' : '_upload_results',
 
       // [ UPDATE CATEGORY ]
-      "change #survey-category" : 'update_category'
+      "change #survey-category" : 'update_category',
+
+      // [ LIMIT TAGS AND SUBCATEGORIES ]
+      "change input[name='survey-subs[]']" : "limit_subs",
+      "change input[name='survey-tags[]']" : "limit_tags",
       
     },
 
@@ -157,9 +161,11 @@ define(function(require){
     //
     render_category : function(){
       this.categories = new Backbone.Collection(Categories.list);
-      var category = this.categories.findWhere({name : this.blueprint.category}),
-          subcat   = category ? category.get("subcat") : null,
-          tags     = category && this.blueprint.tags ? this.blueprint.tags.split(",") : [];
+
+      var category    = this.categories.findWhere({name : this.blueprint.category}),
+          subcat      = category && this.blueprint.subcategory ? this.blueprint.subcategory.split(",") : [];
+          tags        = category && this.blueprint.tags ? this.blueprint.tags.split(",") : [];
+
       this.categories.each(function(cat){
         var name = cat.get("name");
         // RENDER CATEGORY
@@ -171,6 +177,7 @@ define(function(require){
         }
       }, this);
 
+      /*
       // RENDER SUBCATEGORY
       if(category){
         category.attributes.sub.forEach(function(sub){
@@ -180,6 +187,20 @@ define(function(require){
           else{
             this.$("#survey-subcategory").append("<option class='extra'>" + sub + "</option>");
           }
+        }, this);
+      }
+      */
+
+      // RENDER SUBCATEGORY
+      if(category){
+        category.attributes.sub.forEach(function(sub){
+          if(subcat.indexOf(sub) != -1){
+            this.$("#sub-list").append("<li><label><input type='checkbox' value='" + sub + "' name='survey-subs[]' checked> " + sub + "</label></li>");
+          }
+          else{
+            this.$("#sub-list").append("<li><label><input type='checkbox' value='" + sub + "' name='survey-subs[]'> " + sub + "</label></li>");
+          }
+          
         }, this);
       }
 
@@ -812,6 +833,20 @@ define(function(require){
       // sending-label
       // send-file-button
       // get-csv-btn
+    },
+
+    limit_tags : function(e){
+      var num = this.$("input[name='" + e.currentTarget.getAttribute("name") + "']:checked").length;
+      if(num > 5){
+        e.currentTarget.checked = false;
+      }
+    },
+
+    limit_subs : function(e){
+      var num = this.$("input[name='" + e.currentTarget.getAttribute("name") + "']:checked").length;
+      if(num > 3){
+        e.currentTarget.checked = false;
+      }
     },
 
     //

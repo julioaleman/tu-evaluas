@@ -93,7 +93,7 @@ class Blueprints extends Controller
 
     $blueprint->title       = $request->input("survey-title");
     $blueprint->category    = $request->input("survey-category");
-    $blueprint->subcategory = $request->input("survey-subcategory");
+    $blueprint->subcategory = $request->input("survey-subs", null) ? implode(",", $request->input("survey-subs")) : "";
     $blueprint->tags        = $request->input("survey-tags", null) ? implode(",", $request->input("survey-tags")) : "";
     $blueprint->is_public   = $request->input("is_public") ? 1 : 0; 
     $blueprint->is_closed   = $request->input("is_closed") ? 1 : 0; 
