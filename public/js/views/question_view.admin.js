@@ -207,7 +207,8 @@ define(function(require){
     //
     _save : function(e){
       e.preventDefault();
-      var type        = this.$el.find('input[name^="type"]:checked').val(),
+      var that        = this,
+          type        = this.$el.find('input[name^="type"]:checked').val(),
           title_input = this.$el.find('input[name="question"]'),
           title       = this.$('.question_editor_question input').val(),
           section     = this.el.querySelector('.section-container select').value,
@@ -223,12 +224,13 @@ define(function(require){
         section_id  : section,
         is_location : type === 'location',
         type        : type === 'text' || type === 'location' ? 'text' : 'number',
-        options     : type !== 'multiple' ? [] : this._get_options()
+        options     : type !== 'multiple' ? [] : this._get_options(),
+        _token      : document.querySelector("input[name='_token']").value
       });
       
       this.model.save(null, {
         success : function(model, response, options){
-          that.render_editor();
+          that.render();
         }
       });
       
@@ -236,7 +238,8 @@ define(function(require){
 
     _suicide : function(e){
       e.preventDefault();
-      this.model.destroy({wait: true});
+      var token = document.querySelector("input[name='_token']").value;
+      this.model.destroy({wait: true, data : ("_token=" + token)});
     },
 
     _get_options : function(){

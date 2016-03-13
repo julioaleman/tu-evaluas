@@ -73,7 +73,44 @@ class BlueprintApi extends Controller
   }
 
   public function updateQuestion(Request $request, $id){
-    
+    // [1] CHECK IF THE BLUEPRINT EXIST AND THE USER CAN CHANGE IT
+    $user     = Auth::user();
+    $question = Question::find($id); // here we need more validation
+
+    // [2] CREATE THE QUESTION OBJECT
+    $question->section_id  = (int)$request->input("section_id");
+    $question->question    = $request->input("question");
+    $question->is_location = $request->input("is_location");
+    $question->type        = $request->input("type");
+
+    $question->update();
+    $options = [];
+
+    // [3] IF THE QUESTION HAS OPTIONS, CREATE THEM
+    if(!empty($request->input('options'))){
+      Option::where("question_id", $question->id)->delete();
+      $val = 1;
+
+      foreach($request->input('options') as $opt){
+        $option = new Option;
+        $option->question_id  = $question->id;
+        $option->blueprint_id = $question->blueprint_id;
+        $option->description  = $opt;
+        $option->value        = $val;
+        $option->name         = uniqid();
+        $option->order_num    = $val;
+        $option->save();
+        $options[] = $option;
+        $val++;
+      }
+    }
+    $question->options   = $options;
+
+    // [4] GENERATE A NEW TOKEN TO PREVENT TOKEN MISSMATCH
+    $question->new_token = csrf_token();
+
+    // [5] RETURN THE JSON
+    return response()->json($question)->header('Access-Control-Allow-Origin', '*');
   }
 
   public function deleteQuestion($id){
