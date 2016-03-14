@@ -218,7 +218,7 @@ define(function(require){
         return;
       }
       this.model.set({
-        //section_id     : section,
+        section_id     : section,
         // blueprint_id   : this.model.id,
         question    : title, 
         section_id  : section,

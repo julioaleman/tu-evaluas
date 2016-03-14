@@ -80,8 +80,8 @@ class BlueprintApi extends Controller
     // [2] CREATE THE QUESTION OBJECT
     $question->section_id  = (int)$request->input("section_id");
     $question->question    = $request->input("question");
-    $question->is_location = $request->input("is_location");
-    $question->type        = $request->input("type");
+    $question->is_location = $request->input("is_location", 0);
+    $question->type        = $request->input("type", 'text');
 
     $question->update();
     $options = [];
@@ -114,6 +114,11 @@ class BlueprintApi extends Controller
   }
 
   public function deleteQuestion($id){
-    
+    $user     = Auth::user();
+    $question = Question::find($id);
+    Option::where("question_id", $question->id)->delete();
+    $response = $question->delete();
+
+    return response()->json($response)->header('Access-Control-Allow-Origin', '*');
   }
 }

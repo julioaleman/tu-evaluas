@@ -145,18 +145,20 @@ define(function(require){
 
       this.model.set({
         question   : content.value,
-        section_id : section 
+        section_id : section,
+        _token     : document.querySelector("input[name='_token']").value 
       });
       this.model.save(null, {
         success : function(model, response, options){
-          that.render_editor();
+          that.render();
         }
       });
     },
 
     _suicide : function(e){
       e.preventDefault();
-      this.model.destroy({wait: true});
+      var token = document.querySelector("input[name='_token']").value;
+      this.model.destroy({wait: true, data : ("_token=" + token)});
     }
    
 
