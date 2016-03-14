@@ -90,11 +90,13 @@
           </div>
 
           <!-- IS VISIBLE -->
+          @if($user->level ==3)
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
               <p><label><input type="checkbox" name="is_public" {{$blueprint->is_public ? 'checked' : ''}}>Es pública</label></p>
             </div>
           </div>
+          @endif
 
           <!-- IS CLOSED -->
           <div class="row">

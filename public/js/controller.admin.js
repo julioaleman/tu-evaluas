@@ -220,15 +220,16 @@ define(function(require){
 
     update_category : function(e){
       var category = this.$("#survey-category").val();
-      this.$("#survey-subcategory .extra").remove();
+      this.$("#sub-list").html("");
       this.$("#tag-list").html("");
       if(!category) return;
 
       category = this.categories.findWhere({name : category});
+
       // RENDER SUBCATEGORY
-      category.attributes.sub.forEach(function(sub){
-        this.$("#survey-subcategory").append("<option class='extra'>" + sub + "</option>");
-      }, this);
+        category.attributes.sub.forEach(function(sub){
+          this.$("#sub-list").append("<li><label><input type='checkbox' value='" + sub + "' name='survey-subs[]'> " + sub + "</label></li>");  
+        }, this);
 
       // RENDER  TAGS
       category.attributes.tags.forEach(function(tag){
