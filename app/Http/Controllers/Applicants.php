@@ -23,7 +23,7 @@ class Applicants extends Controller
   //
   public function index(){
     $user = Auth::user();
-    $blueprints = $user->level == 3 ? Blueprint::with("applicants")->get() : $user->blueprints->with("applicants")->get();
+    $blueprints = $user->level == 3 ? Blueprint::with("applicants")->get() : Blueprint::with("applicants")->where("user_id",$user->id )->get();
    
     $data['title']       = 'Encuestas por aplicar Tú Evalúas';
     $data['description'] = '';
