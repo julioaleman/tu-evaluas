@@ -1123,6 +1123,11 @@ strong {
   .home nav ul li {
     padding-top: 0; }
 
+.divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 10px; }
+
 div.alert li {
   background: red;
   color: white;
@@ -1523,6 +1528,14 @@ article {
     .list li.los_titles {
       background: white;
       border-bottom: 2px solid #ccc; }
+
+.rule {
+  color: #999;
+  font-size: 12px;
+  margin-top: -15px; }
+
+#sub-list, #tag-list {
+  list-style: none; }
 
 /* Footer
 -------------------------------------------------------------- */
