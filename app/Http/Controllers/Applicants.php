@@ -27,7 +27,7 @@ class Applicants extends Controller
    
     $data['title']       = 'Encuestas por aplicar Tú Evalúas';
     $data['description'] = '';
-    $data['body_class']  = 'cuestionarios';
+    $data['body_class']  = 'applicants';
     $data['user']        = $user;
     $data['blueprints']  = $blueprints;
 
