@@ -1,22 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
+@extends('layouts.master_admin')
 
+@section('content')
+<div class="container">
+  <div class="row">
 <!-- [A] envía una a algún correo -->
   <form id="mail-to-someone" action="{{url('dashboard/encuestados/enviar/uno')}}" method="post" class="col-sm-12">
     {!! csrf_field() !!}
-    <h3>Envía formulario a un correo</h3>
-    <input name="email" type="text"> 
-    <select name="id">
+    <div class="col-md-12">
+    	<h1 class="title">Envía encuesta a un correo</h1>
+    </div>
+    <div class="col-sm-8 col-sm-offset-2">
+		<p>
+			Correo
+		<input name="email" type="text"> 
+		</p>
+		<p> Selecciona encuesta:<br>	
+		<select name="id">
       @foreach($blueprints as $bp)
       <option value="{{$bp->id}}">{{$bp->title}}</option>
       @endforeach
     </select>
-    <input type="submit" value="enviar">
+		</p>
+		<p>
+			<input type="submit" value="Enviar Encuesta">
+		</p>
+    </div>
   </form>
-
-</body>
-</html>
+  </div>
+</div>
+@endsection
