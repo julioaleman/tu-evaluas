@@ -16,6 +16,10 @@ class Blueprint extends Model
     return $this->hasMany('App\Models\Question');
   }
 
+  public function applicants(){
+    return $this->hasMany('App\Models\Applicant');
+  }
+
   public function rules(){
     return $this->hasMany('App\Models\Rule');
   }
