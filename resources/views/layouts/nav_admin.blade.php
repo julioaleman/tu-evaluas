@@ -28,11 +28,11 @@
             @else
             <a href="{{url('dashboard/usuarios')}}">Cuenta</a>
             @endif
-          </li>
-		  <!-- 
+          </li>		   
           <li class="{{$body_class == 'applicants' ? 'current' : ''}}">
-          <a href="{{url('dashboard/cuestionarios')}}">Enviar encuestas</a>
+          <a href="{{url('dashboard/encuestados')}}">Enviar encuestas</a>
         </li>
+         <!--
          <li><a href="{{url('dashboard/datos')}}">Datos abiertos</a></li>
           <li><a href="{{url('dashboard/correos')}}">Correos</a></li>-->
         </ul>
