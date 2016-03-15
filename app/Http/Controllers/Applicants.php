@@ -60,25 +60,28 @@ class Applicants extends Controller
   //
   public function sendForm($applicant){
     Mail::send('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant) {
-            $m->from('howdy@tuevaluas.com.mx', 'Howdy friend');
-
-            $m->to($applicant->user_email, "amigo")->subject('Invitación a opinar!');
+      $m->from('howdy@tuevaluas.com.mx', 'Howdy friend');
+      $m->to($applicant->user_email, "amigo")->subject('Invitación a opinar!');
     });
-    /*
-    $from    = "howdy@tuevaluas.com.mx";
-    $subject = "Invitación a opinar";
-    $to      = $applicant->user_email;
-    $mailgun = new Mailgun (env('MAILGUN_KEY'));
+  }
 
-    $message = [
-      'from'    => $from,
-      'to'      => $to,
-      'subject' => $subject,
-      'html'    => view('email.invitation')->with(["applicant" => $applicant])
-    ];
-    
-    $mailgun->sendMessage(env('MAILGUN_DOMAIN'), $message);
-    */
+  //
+  // [ DISPLAY FORM ]
+  //
+  //
+  public function displayForm($form_key){
+    $applicant = Applicant::where("form_key", $form_key)->first();
+    $blueprint = $applicant->blueprint; 
+
+    $data = [];
+    $data['applicant'] = $applicant;
+    $data['blueprint'] = $blueprint;
+    $data['questions'] = $blueprint->questions;
+    $data['rules']     = $blueprint->rules;
+    $data['options']   = $blueprint->options;
+    $data['answers']   = [];
+    $data['is_test']   = false;
+    return view("real-form")->with($data);
   }
 
   //

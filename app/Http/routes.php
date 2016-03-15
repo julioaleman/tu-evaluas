@@ -56,6 +56,9 @@ Route::group(['middleware' => 'web'], function () {
   Route::get('home', 'HomeController@index');
   Route::get('dashboard', 'HomeController@index');
 
+  // FORM APPLY
+  Route::get('encuesta/{key}', 'Applicants@displayForm');
+
   Route::group(['middleware' => 'auth'], function () {
     // USERS CRUD
     Route::get('dashboard/usuarios', 'Users@index');

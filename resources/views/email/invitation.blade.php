@@ -18,7 +18,7 @@ tomará alrededor de 5 minutos.</p>
 únicamente para conocer tu opinión de los apoyos o servicios que recibes.</p>
 
 <p style="padding: 0 20px;line-height: 1.4; color: #666;">Si estás de acuerdo con participar en la encuesta, por favor da 
-clic en el siguiente vínculo: <a href="{{ $url }}" style="background: #FF6F69;color: white;padding: 3px 5px;text-decoration: none;">tuevaluas.com.mx</a></p>
+clic en el siguiente vínculo: <a href="{{url('encuesta/' . $applicant->form_key)}}" style="background: #FF6F69;color: white;padding: 3px 5px;text-decoration: none;">tuevaluas.com.mx</a></p>
 <p style="padding: 30px 20px;line-height: 1.4; color: #999; font-size: 14px">Esta dirección de correo electrónico no está habilitada para recibir mensajes.</p>
 </body>
 </html>
