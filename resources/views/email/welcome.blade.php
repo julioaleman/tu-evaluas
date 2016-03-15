@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>Bienvenido a Tú Evaluas</title>
+	<title>Bienvenido a Tú Evalúas</title>
 </head>
 
 <body>
