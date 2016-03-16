@@ -55,7 +55,7 @@
       </select>
     </p>
     <p>
-      <input type="submit" value="Generar excel">
+      <input type="submit" value="Generar lista">
     </p>
     </div>
   </form>
