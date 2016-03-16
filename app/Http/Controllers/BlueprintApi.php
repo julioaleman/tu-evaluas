@@ -123,5 +123,39 @@ class BlueprintApi extends Controller
   }
 
   public function saveRule(Request $request){
+    // [1] CHECK IF THE BLUEPRINT EXIST AND THE USER CAN CHANGE IT
+    $user      = Auth::user();
+    $blueprint = Blueprint::find($request->input('blueprint_id'));
+
+    if(!$blueprint){
+      if($user->level == 3){
+        abort(404, 'El formulario no existe!');
+      }
+      else{
+        abort(403, 'El formulario no pertenece al usuario');
+      }
+    }
+
+    // [2] CREATE THE RULE OBJECT
+    $rule = new Rule;
+    $rule->blueprint_id = $blueprint->id;
+    $rule->section_id   = (int)$request->input("section_id");
+    $rule->question_id  = (int)$request->input("question_id");
+    $rule->value        = $request->input("value");
+    
+    $rule->save();
+   
+    // [4] GENERATE A NEW TOKEN TO PREVENT TOKEN MISSMATCH
+    $rule->new_token = csrf_token();
+
+    // [5] RETURN THE JSON
+    return response()->json($rule)->header('Access-Control-Allow-Origin', '*');
+  }
+
+  public function deleteRule($id){
+    $user = Auth::user();
+    $rule = Rule::find($id);
+    $response = $rule->delete();
+    return response()->json($response)->header('Access-Control-Allow-Origin', '*');
   }
 }

@@ -60,7 +60,7 @@ define(function(require){
       // [ ADD RULE ]
       'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
       'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule',
-      //'click #survey-navigation-rules-container .remove-rule-btn'  : '_remove_rule',
+      'click #survey-navigation-rules-container .remove-rule-btn'  : '_remove_rule',
       // [ CREATE CSV ]
       //'click .create-survey-btn' : '_generate_csv', 
       // [ UPLOAD RESULTS ]
@@ -740,9 +740,11 @@ define(function(require){
       if(!Number(question_id)) return;
       
       rule.set({
-        section_id  : section_id,
-        question_id : question_id,
-        value       : value
+        blueprint_id : this.blueprint.id,
+        section_id   : section_id,
+        question_id  : question_id,
+        value        : value,
+        _token       : document.querySelector("input[name='_token']").value
       });
 
       rule.save(null, {
@@ -759,12 +761,19 @@ define(function(require){
     _remove_rule : function(e){
       e.preventDefault();
       var rule_id = e.target.getAttribute('data-rule'),
-          li      = e.target.parentNode;
+          li      = e.target.parentNode,
+          token   = document.querySelector("input[name='_token']").value;
+
       this.rules.get(rule_id).destroy({
         success : function(m, response){
           li.parentNode.removeChild(li);
-        }
+        },
+        wait : true, 
+        data : ("_token=" + token)
       });
+      /*
+      var token = document.querySelector("input[name='_token']").value;
+      this.model.destroy({wait: true, data : ("_token=" + token)});*/
     },
 
     // [ GET QUESTION OPTIONS AS AN ARRAY ] 

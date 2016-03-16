@@ -94,5 +94,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::delete('dashboard/preguntas/{id}', 'BlueprintApi@deleteQuestion');
 
     Route::post('dashboard/reglas', 'BlueprintApi@saveRule');
+    Route::delete('dashboard/reglas/{id}', 'BlueprintApi@deleteRule');
   });
 });
