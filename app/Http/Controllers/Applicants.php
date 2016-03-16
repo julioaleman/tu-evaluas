@@ -112,6 +112,37 @@ class Applicants extends Controller
     })->export($type);
   }
 
+  function sendEmails(Request $request){
+    if (! $request->hasFile('list')) return redirect("dashboard/encuestados");
+
+    $user      = Auth::user();
+    $creator   = $user->id;
+    $blueprint = Blueprint::find($request->input('id'));
+    $file     = $request->file("list");
+    $fileUrl = $file->getPathName(); //. '/' . $file->getClientOriginalName();
+
+    $reader = Reader::createFromPath($fileUrl);
+    $results = $reader->fetch();
+
+    // fake limit 
+    $limit   = 5;
+    $counter = 0;
+
+    foreach ($results as $row) {
+      $form_key  = md5('blueprint' . $blueprint->id . $row[0]);
+      $applicant = Applicant::firstOrCreate([
+        "blueprint_id" => $blueprint->id, 
+        "form_key"     => $form_key, 
+        "user_email"   => $row[0]
+      ]);
+      if($counter > $limit) break;
+      $this->sendForm($applicant);
+      $counter++;
+    }
+
+    return redirect('dashboard/encuestados');
+  }
+
   /*
   * F R O N T   E N D
   * --------------------------------------------------------------------------------
