@@ -92,5 +92,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard/preguntas/{id}', 'BlueprintApi@getQuestion');
     Route::put('dashboard/preguntas/{id}', 'BlueprintApi@updateQuestion');
     Route::delete('dashboard/preguntas/{id}', 'BlueprintApi@deleteQuestion');
+
+    Route::post('dashboard/reglas', 'BlueprintApi@saveRule');
   });
 });

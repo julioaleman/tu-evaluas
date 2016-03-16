@@ -121,4 +121,7 @@ class BlueprintApi extends Controller
 
     return response()->json($response)->header('Access-Control-Allow-Origin', '*');
   }
+
+  public function saveRule(Request $request){
+  }
 }

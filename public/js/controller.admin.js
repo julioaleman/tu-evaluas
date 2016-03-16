@@ -58,8 +58,8 @@ define(function(require){
       'click #survey-add-buttons a.add-text' : 'render_content_form',
       'click #survey-add-content-btn'        : '_save_content',
       // [ ADD RULE ]
-      //'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
-      //'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule',
+      'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
+      'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule',
       //'click #survey-navigation-rules-container .remove-rule-btn'  : '_remove_rule',
       // [ CREATE CSV ]
       //'click .create-survey-btn' : '_generate_csv', 
@@ -97,9 +97,12 @@ define(function(require){
       this.collection      = new Backbone.Collection(this.blueprint.questions);
       this.collection.url  = BASE_PATH + "/dashboard/preguntas";//'/index.php/surveys/question';
       this.rules           = new Backbone.Collection(this.blueprint.rules);
+      this.rules.url      = BASE_PATH + "/dashboard/reglas";//'/index.php/surveys/rule';
       this.current_section = 0; // show all questions
       this.collection.comparator = function(m){ return m.get("section_id")};
       this.collection.sort();
+
+      // THE RULES
 
       // [ FIX THE SCOPES ]
       this._render_new_option = $.proxy(this._render_new_option, this);
@@ -730,7 +733,7 @@ define(function(require){
       var container   = document.querySelector('#survey-add-navigation-rule'),
           question_id = container.querySelector('.select-question').value,
           value       = container.querySelector('.select-answer').value,
-          section_id  = this.model.get('current_section'),
+          section_id  = this.current_section,//this.model.get('current_section'),
           rule        = new Backbone.Model(null, {collection : this.rules}),
           that        = this;
 
