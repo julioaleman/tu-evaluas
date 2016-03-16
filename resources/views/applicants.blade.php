@@ -51,11 +51,11 @@
       tipo de archivo <br>
       <select name="type">
         <option value="csv">CSV</option>
-        <option value="xls">XLSX</option>
+        <option value="xlsx">XLSX</option>
       </select>
     </p>
     <p>
-      <input type="submit" value="Enviar Encuesta">
+      <input type="submit" value="Generar excel">
     </p>
     </div>
   </form>

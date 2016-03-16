@@ -92,20 +92,24 @@ class Applicants extends Controller
       $excel->setDescription("Lista de links a encuestas");
         // add a sheet for each day, and set the date as the name of the sheet
       $excel->sheet("encuestas", function($sheet) use($options){
-        foreach($this->makeRange($total) as $i){
-          $form_key = md5('blueprint' . $blueprint->id . uniqid($i));
+        foreach($this->makeRange($options['total']) as $i){
+          $form_key = md5('blueprint' . $options['blueprint']->id . uniqid($i));
           
           $applicant = Applicant::firstOrCreate([
-            "blueprint_id" => $blueprint->id, 
+            "blueprint_id" => $options['blueprint']->id, 
             "form_key"     => $form_key, 
             "user_email"   => ""
           ]);
 
-          $sheet->appendRow([$applicant->id, $applicant->form_key, url('encuesta/' . $applicant->form_key)]);
+          $sheet->appendRow([
+            "id"    => $applicant->id, 
+            "clave" => $applicant->form_key, 
+            "url"   => url('encuesta/' . $applicant->form_key)
+          ]);
         }
       }); // add a sheet for each day ends
 
-    })->export('xlsx');
+    })->export($type);
   }
 
   /*
