@@ -47,15 +47,16 @@
           <!-- THE TITLE -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-              <p>Título</p>
+              <p><strong>Título</strong></p>
               <p><input type="text" name="survey-title" value="{{$blueprint->title}}"></p>
             </div>
           </div>
-
+		  
+		  <div class="divider"></div>
           <!-- CATEGORY / DEPENDENCY? -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-              <p>Categoría</p>
+              <p><strong>Categoría</strong></p>
               <p>
                 <select name="survey-category" id="survey-category">
                   <option value="">Selecciona una categoría</option>
@@ -66,7 +67,7 @@
              <!-- SUBCATEGORY -->
             <div class="col-sm-10 col-sm-offset-1">
               <p>Subcategoría</p>
-              <p class="rule">puedes seleccionar un máximo de 3 subcategorías</p>
+              <p class="rule">Puedes seleccionar un máximo de 3 subcategorías</p>
               <ul id="sub-list"></ul>
               <!-- survey-tags-->
             </div>
@@ -74,16 +75,17 @@
              <!-- TAGS -->
             <div class="col-sm-10 col-sm-offset-1">
               <p>Etiquetas</p>
-              <p class="rule">puedes seleccionar un máximo de 5 etiquetas</p>
+              <p class="rule">Puedes seleccionar un máximo de 5 etiquetas</p>
               <ul id="tag-list"></ul>
               <!-- survey-tags-->
             </div>
           </div>
 
+		  <div class="divider"></div>
           <!-- BANNER -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-              <p>Selecciona la portada</p>
+              <p><strong>Selecciona la portada</strong></p>
               <img id="target" src="{{empty($blueprint->banner) ? "": url("img/programas/" . $blueprint->banner) }}" />
               <p><input type="file" name="survey-banner" id="survey-banner"></p>
             </div>
@@ -91,21 +93,24 @@
 
           <!-- IS VISIBLE -->
           @if($user->level ==3)
+		  <div class="divider"></div>
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-              <p><label><input type="checkbox" name="is_public" {{$blueprint->is_public ? 'checked' : ''}}>Es pública</label></p>
+              <p><label><input type="checkbox" name="is_public" {{$blueprint->is_public ? 'checked' : ''}}> Es pública</label></p>
             </div>
           </div>
           @endif
 
+		  <div class="divider"></div>
           <!-- IS CLOSED -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-              <p><label><input type="checkbox" name="is_closed" {{$blueprint->is_closed ? 'checked' : ''}}>Ya terminó</label></p>
+              <p><label><input type="checkbox" name="is_closed" {{$blueprint->is_closed ? 'checked' : ''}}> Ya terminó</label></p>
             </div>
           </div>
 
           <!-- THE CSV -->
+		  <div class="divider"></div>
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
               <p>Sube tus propios resultados</p>
@@ -113,15 +118,17 @@
               <p id="send-file-button"><input type="file" name="results" id="results-file"></p>
             </div>
           </div>
-
+          
+		  <div class="divider"></div>
           <!-- SUBMIT -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-              <p><input type="submit" value="actualizar"></p>
+              <p><input type="submit" value="Actualizar encuesta"></p>
             </div>
           </div>
         </form>
-
+        
+		<div class="divider"></div>
         <!-- CREATE/GET CSV -->
         <div class="row">
           <div class="col-sm-10 col-sm-offset-1">
@@ -131,12 +138,12 @@
               <p><a id="get-csv-btn" href="#">Generando CSV</a></p>
               
             @elseif($blueprint->csv_file != '')
-              <p><a href="#" class="create-survey-btn">crear nuevo CSV</a></p>
+              <p><a href="#" class="create-survey-btn">Crear nuevo CSV</a></p>
               <p>
                 <a id="get-csv-btn" href="{{url('csv/' . $blueprint->csv_file)}}">descargar Archivo</a>
               </p>
             @else
-              <p><a href="#" class="create-survey-btn">crear CSV</a></p>
+              <p><a href="#" class="create-survey-btn">Crear CSV</a></p>
               <p><a style="display:none" id="get-csv-btn" href="#">[ CSV PLACEHOLDER ]</a></p>
             @endif
           </div>

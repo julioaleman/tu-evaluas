@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>Encuesta en Tú Evaluas</title>
+	<title>Encuesta en Tú Evalúas</title>
 </head>
 
 <body style="padding: 0 20px 20px; color: #011C26;font-family: sans-serif;">
