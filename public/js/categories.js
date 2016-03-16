@@ -1,7 +1,7 @@
 define({list : [{
   "name" : "Educación",
   "sub"  : ["Títulos","Cédulas","Certificados","Becas","Libros","Indígenas","Deporte","Tecnología"],
-  "tags" : ["Prescolar", "primaria", "secundaria", "preparatoria", "técnica", "adultos", "hombres", "mujeres"]
+  "tags" : ["Preescolar", "primaria", "secundaria", "preparatoria", "técnica", "adultos", "hombres", "mujeres"]
 },
 {
   "name" : "Salud",
