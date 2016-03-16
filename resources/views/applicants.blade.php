@@ -33,19 +33,26 @@
   <form id="make-file" action="{{url('dashboard/encuestados/crear/archivo')}}" method="post" class="col-sm-12">
     {!! csrf_field() !!}
     <div class="col-md-12">
-      <h1 class="title">Envía encuesta a un correo</h1>
+      <h1 class="title">Genera una lista de links para enviar</h1>
     </div>
     <div class="col-sm-8 col-sm-offset-2">
-    <p>
-      Correo
-    <input name="email" type="text"> 
-    </p>
     <p> Selecciona encuesta:<br>  
     <select name="id">
       @foreach($blueprints as $bp)
       <option value="{{$bp->id}}">{{$bp->title}}</option>
       @endforeach
     </select>
+    </p>
+    <p>
+      número de cuestionarios por generar <br>
+      <input name="total">
+    </p>
+    <p>
+      tipo de archivo <br>
+      <select name="type">
+        <option value="csv">CSV</option>
+        <option value="xls">XLSX</option>
+      </select>
     </p>
     <p>
       <input type="submit" value="Enviar Encuesta">

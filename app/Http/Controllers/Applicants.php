@@ -65,7 +65,47 @@ class Applicants extends Controller
     return redirect('dashboard/encuestados');
   }
 
+  //
+  // [ CREATE A FILE WITH A LIST OF APPLICANT KEYS ]
+  //
+  //
   public function makeFile(Request $request){
+    $user      = Auth::user();
+    $blueprint = Blueprint::find($request->input('id'));
+    $total     = $request->input('total', null) ? $request->input('total') : 1;
+    $type      = $request->input('type', null) ? $request->input('type') : "csv";
+
+    $options = [
+      'user'      => $user,
+      "blueprint" => $blueprint,
+      "total"     => $total,
+      "type"      => $type
+    ];
+
+    Excel::create('encuestas', function($excel) use($options) {
+      // Set the title
+      $excel->setTitle("encuestas");
+      // Chain the setters
+      $excel->setCreator('Tú Evalúas');
+      //->setCompany('Transpar');
+      // Call them separately
+      $excel->setDescription("Lista de links a encuestas");
+        // add a sheet for each day, and set the date as the name of the sheet
+      $excel->sheet("encuestas", function($sheet) use($options){
+        foreach($this->makeRange($total) as $i){
+          $form_key = md5('blueprint' . $blueprint->id . uniqid($i));
+          
+          $applicant = Applicant::firstOrCreate([
+            "blueprint_id" => $blueprint->id, 
+            "form_key"     => $form_key, 
+            "user_email"   => ""
+          ]);
+
+          $sheet->appendRow([$applicant->id, $applicant->form_key, url('encuesta/' . $applicant->form_key)]);
+        }
+      }); // add a sheet for each day ends
+
+    })->export('xlsx');
   }
 
   /*
