@@ -81,6 +81,7 @@ Route::group(['middleware' => 'web'], function () {
     // APPLICANTS
     Route::get('dashboard/encuestados', 'Applicants@index');
     Route::post('dashboard/encuestados/enviar/uno', 'Applicants@mailto');
+    Route::post('dashboard/encuestados/crear/archivo', 'Applicants@mailto');
 
     // FILE GENERATOR
     Route::post('dashboard/encuestas/crear/csv', 'FromFileMake@questions');

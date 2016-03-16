@@ -9,6 +9,7 @@ use Mailgun\Mailgun;
 use Mail;
 use League\Csv\Writer;
 use League\Csv\Reader;
+use Excel;
 use Auth;
 
 use App\User;
@@ -17,6 +18,11 @@ use App\Models\Applicant;
 
 class Applicants extends Controller
 {
+  /*
+  * A D M I N   V I E W
+  * --------------------------------------------------------------------------------
+  */
+
   // 
   // [ OPTIONS FOR SUBMIT FORMS ]
   //
@@ -33,6 +39,11 @@ class Applicants extends Controller
 
     return view("applicants")->with($data);
   }
+
+  /*
+  * M U L T I P L E   F U N C T I O N S
+  * --------------------------------------------------------------------------------
+  */
 
   //
   // [ SEND ONE INVITATION ]
@@ -54,16 +65,13 @@ class Applicants extends Controller
     return redirect('dashboard/encuestados');
   }
 
-  //
-  // [ SEND MAIL WITH MAILGUN ]
-  //
-  //
-  public function sendForm($applicant){
-    Mail::send('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant) {
-      $m->from('howdy@tuevaluas.com.mx', 'Howdy friend');
-      $m->to($applicant->user_email, "amigo")->subject('Invitación a opinar!');
-    });
+  public function makeFile(Request $request){
   }
+
+  /*
+  * F R O N T   E N D
+  * --------------------------------------------------------------------------------
+  */
 
   //
   // [ DISPLAY FORM ]
@@ -82,6 +90,22 @@ class Applicants extends Controller
     $data['answers']   = [];
     $data['is_test']   = false;
     return view("real-form")->with($data);
+  }
+
+  /*
+  * G E N E R A L   F U N C T I O N S
+  * --------------------------------------------------------------------------------
+  */
+
+  //
+  // [ SEND MAIL WITH MAILGUN ]
+  //
+  //
+  public function sendForm($applicant){
+    Mail::send('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant) {
+      $m->from('howdy@tuevaluas.com.mx', 'Howdy friend');
+      $m->to($applicant->user_email, "amigo")->subject('Invitación a opinar!');
+    });
   }
 
   //
