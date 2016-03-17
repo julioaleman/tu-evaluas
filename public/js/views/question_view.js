@@ -235,7 +235,8 @@ define(function(require){
         var server_res = {
           question_value : res,
           form_key       : this.controller.model.get('key'),
-          question_id    : this.model.id
+          question_id    : this.model.id,
+          _token         : document.querySelector("input[name='_token']").value
         };
       // [2.1] actualiza el valor antes de enviarlo al servidor; esto
       //       para evitar que el usuario tenga una navegación equivocada
@@ -245,12 +246,12 @@ define(function(require){
 
       // [3] envia la respuesta al servidor
         var that = this;
-        $.post('/index.php/respuestas', server_res, function(data){
+        $.post('respuestas', server_res, function(data){
       // [4] Si la operación tuvo "éxito-hacker cívico", se guarda la respuesta
       //     dentro del view actual. (Por si las flys)
           if(data){
             that.server_value = data;
-            that.model.set({'default_value' : data});
+            that.model.set({'default_value' : (data.num_value || data.text_value)});
           }
         }, 'json');
       }

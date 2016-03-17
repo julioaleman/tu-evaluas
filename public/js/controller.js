@@ -310,7 +310,7 @@ define(function(require){
       _.each(questions, function(question){
         var value = question.model.attributes.default_value,
             is_description = question.model.attributes.is_description;
-            console.log(is_description);
+
 
         if(!value && !is_description) errors.push(question);
       }, this);

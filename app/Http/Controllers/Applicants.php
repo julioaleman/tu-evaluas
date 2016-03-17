@@ -17,6 +17,8 @@ use App\Models\Blueprint;
 use App\Models\Applicant;
 use App\Models\City;
 use App\Models\Location;
+use App\Models\Answer;
+use App\Models\Question;
 
 class Applicants extends Controller
 {
@@ -167,6 +169,29 @@ class Applicants extends Controller
     $data['answers']   = [];
     $data['is_test']   = false;
     return view("real-form")->with($data);
+  }
+
+  //
+  // [ SAVE ANSWER ]
+  //
+  //
+  public function saveAnswer(Request $request){
+    $applicant = Applicant::where('form_key', $request->input('form_key'))->first();
+    $blueprint = Blueprint::find($applicant->blueprint_id);
+    $question  = Question::find($request->input('question_id'));
+
+    $answer = Answer::firstOrCreate([
+      "blueprint_id" => $blueprint->id,
+      "question_id"  => $question->id,
+      "form_key"     => $applicant->form_key
+    ]);
+
+    $answer->text_value = $question->type == "text" ? $request->input('question_value') : null;
+    $answer->num_value  = $question->type == "integer" ? $request->input('question_value') : null;
+
+    $answer->update();
+
+    return response()->json($answer)->header('Access-Control-Allow-Origin', '*');
   }
 
   //

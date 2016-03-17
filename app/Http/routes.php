@@ -60,6 +60,7 @@ Route::group(['middleware' => 'web'], function () {
   Route::get('encuesta/{key}', 'Applicants@displayForm');
   Route::get('encuesta/municipios/{id}', 'Applicants@cities');
   Route::get('encuesta/localidades/{estado}/{municipio}', 'Applicants@locations');
+  Route::post('encuesta/respuestas', 'Applicants@saveAnswer');
 
   Route::group(['middleware' => 'auth'], function () {
     // USERS CRUD
