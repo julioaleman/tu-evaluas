@@ -29,7 +29,8 @@ define(function(require){
     // 
     //
     events :{
-      'submit #survey' : '_do_nothing'
+      'submit #survey' : '_do_nothing',
+      'click #annoying-message a' : '_hide_error'
     },
 
     // 
@@ -120,6 +121,7 @@ define(function(require){
         _.each(errors, function(view){
           view.el.style.border = "1px solid #FF6F69";
         });
+        this.$("#annoying-message").fadeIn();
         return false;
       }
       // [ THE n SECTION ]
@@ -308,11 +310,20 @@ define(function(require){
       _.each(questions, function(question){
         var value = question.model.attributes.default_value,
             is_description = question.model.attributes.is_description;
+            console.log(is_description);
 
-        if(!value && is_description !=="1") errors.push(question);
+        if(!value && !is_description) errors.push(question);
       }, this);
 
       return errors;
+    },
+
+    _hide_error : function(e){
+      e.preventDefault();
+      e.currentTarget.parentNode.style.display = "none";
+      this.$("form div").css({
+        border : "none"
+      });
     },
 
     // [ DO NOTHING ]
