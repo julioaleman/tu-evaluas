@@ -166,7 +166,7 @@ class Applicants extends Controller
     $data['questions'] = $blueprint->questions;
     $data['rules']     = $blueprint->rules;
     $data['options']   = $blueprint->options;
-    $data['answers']   = [];
+    $data['answers']   = Answer::where("form_key", $form_key)->get();
     $data['is_test']   = false;
     return view("real-form")->with($data);
   }

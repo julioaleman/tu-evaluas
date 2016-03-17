@@ -42,13 +42,14 @@
       <section id="survey-app-title" class="box">
 		<a href="{{url('dashboard/encuestas/test/' . $blueprint->id)}}" class="btn_test preview">Previsualizar encuesta</a>
         <h2>Datos</h2>
-        <form name="update-blueprint" action="{{url('dashboard/encuestas/' . $blueprint->id)}}" enctype="multipart/form-data" method="post">
-        {!! csrf_field() !!}
+        <form id="ubp" name="update-blueprint" action="{{url('dashboard/encuestas/' . $blueprint->id)}}" enctype="multipart/form-data" method="post">
+          {!! csrf_field() !!}
           <!-- THE TITLE -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
               <p><strong>Título</strong></p>
-              <p><input type="text" name="survey-title" value="{{$blueprint->title}}"></p>
+              <p id="js-error-title" class="error"></p>
+              <p><input type="text" name="survey-title" value="{{$blueprint->title}}" required></p>
             </div>
           </div>
 		  
@@ -57,8 +58,9 @@
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
               <p><strong>Categoría</strong></p>
+              <p id="js-error-category" class="error"></p>
               <p>
-                <select name="survey-category" id="survey-category">
+                <select name="survey-category" id="survey-category" required>
                   <option value="">Selecciona una categoría</option>
                 </select>
               </p>
@@ -67,6 +69,7 @@
              <!-- SUBCATEGORY -->
             <div class="col-sm-10 col-sm-offset-1">
               <p>Subcategoría</p>
+              <p id="js-error-subcategory" class="error"></p>
               <p class="rule">Puedes seleccionar un máximo de 3 subcategorías</p>
               <ul id="sub-list"></ul>
               <!-- survey-tags-->
@@ -75,6 +78,7 @@
              <!-- TAGS -->
             <div class="col-sm-10 col-sm-offset-1">
               <p>Etiquetas</p>
+              <p id="js-error-tags" class="error"></p>
               <p class="rule">Puedes seleccionar un máximo de 5 etiquetas</p>
               <ul id="tag-list"></ul>
               <!-- survey-tags-->

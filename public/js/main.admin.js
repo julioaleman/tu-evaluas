@@ -15,11 +15,15 @@ require.config({
     text       : "bower_components/requirejs-text/text",
     velocity   : 'bower_components/velocity/velocity.min',
     d3         : 'bower_components/d3/d3.min',
+    "jquery-validation" : "bower_components/jquery-validation/dist/jquery.validate.min"
   },
   shim : {
     backbone : {
       deps    : ["jquery", "underscore"],
       exports : "Backbone"
+    },
+    "jquery-validation" : {
+      deps : ["jquery"]
     }
   }
 });

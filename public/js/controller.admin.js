@@ -14,6 +14,8 @@ define(function(require){
   var Backbone    = require('backbone'),
       Velocity    = require('velocity'),
       d3          = require('d3'),
+      validation  = require("jquery-validation"),
+      //aditional   = require("additional-methods"),
       Question    = require('views/question_view.admin'),
       Description = require('views/description_view.admin'),
       Option      = require('text!templates/option_item.admin.html'),
@@ -93,6 +95,39 @@ define(function(require){
     //
     //
     initialize : function(){
+      $("#ubp").validate({
+        rules : {
+          "survey-title"    : "required",
+          "survey-category" : "required",
+          "survey-subs[]"   : "required",
+          "survey-tags[]"   : "required"
+        },
+        messages : {
+          "survey-title"    : "debes escribir un título",
+          "survey-category" : "debes seleccionar una categoría",
+          "survey-subs[]"   : "debes seleccionar por lo menos una subcategoría",
+          "survey-tags[]"   : "debes seleccionar por lo menos una etiqueta",
+          
+        },
+        errorPlacement: function (error, element) {
+          var name = element.attr("name");
+          console.log(name);
+          if(name == "survey-title"){
+            $("#js-error-title").append(error);
+          }
+          else if(name == "survey-category"){
+            $("#js-error-category").append(error);
+          }
+          else if(name == "survey-subs[]"){
+            $("#js-error-subcategory").append(error);
+          }
+          else{
+            $("#js-error-tags").append(error);
+          }
+
+        }
+      });
+      /**/
       this.blueprint       = SurveySettings.blueprint;
       this.collection      = new Backbone.Collection(this.blueprint.questions);
       this.collection.url  = BASE_PATH + "/dashboard/preguntas";//'/index.php/surveys/question';
