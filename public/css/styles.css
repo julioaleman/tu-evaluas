@@ -1415,6 +1415,10 @@ article {
     padding: 0; }
     .nav_back li.current {
       background: #f9f9f9; }
+  .nav_back.test {
+    background: #FF6F69; }
+    .nav_back.test a {
+      color: white; }
 
 .title {
   border-bottom: 1px solid #ccc;
@@ -1536,6 +1540,11 @@ article {
 
 #sub-list, #tag-list {
   list-style: none; }
+
+.instructions {
+  font-size: 14px;
+  color: #999;
+  text-align: center; }
 
 /* Footer
 -------------------------------------------------------------- */

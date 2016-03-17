@@ -18,10 +18,34 @@
     <nav class="col-sm-3 col-sm-offset-1">
       <a href="{{url('')}}" class="tuevaluas">Tú evalúas</a>
     </nav>
-    
-  </div>  
+    <nav class="col-sm-1 col-sm-offset-7">
+      <ul>
+        <li><a href="{{url('logout')}}">Salir</a></li>
+      </ul>
+    </nav>
+  </div> 
+  <nav class="nav_back test">
+	  <div class="container">
+	    <div class="row">
+	        <ul>
+	        
+	
+	          <li class="">
+	            <a href="{{ url('dashboard/encuestas/' . $blueprint->id) }}">&lt; Regresar a editar encuesta</a>
+	          </li>
+	
+	          
+	        </ul>
+	    </div>
+	  </div>
+	</nav> 
 </header>
-  
+
+<div class="container">
+	<div class="col-sm-12">
+		<p class="instructions">Esta es la pre visualización de tu encuesta, lo que los usuarios verán cuando reciban el correo para contestarla.</p>
+	</div>
+</div>
 
   <div class="container cuestiona">
     <h1>{{$blueprint->title}}</h1>
