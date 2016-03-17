@@ -9,8 +9,8 @@
 				<section>
 					@if ($surveys->count() > 0)
 					<!-- FILTRAR RESULTADOS -->
-					<h2>Filtrar resultados</h2>
-				  <form id="fbp" name="filter-blueprints" method="get" action="{{url('resultados')}}">
+					<h2 class="toggle">Filtrar resultados</h2>
+				  <form style="display: none" id="fbp" name="filter-blueprints" method="get" action="{{url('resultados')}}">
 				    <?php $category = $request->input('category') ? $categories->where("name", $request->input('category'))->first() : null; ?>
 				    {!! csrf_field() !!}
 				    <p>Título: <input type="text" name="title" value="{{$request->input('title')}}"></p>
@@ -30,7 +30,7 @@
               <ul id="sub-list">
               @if($category)
                 @foreach($category->sub as $sub)
-                <label><input type="checkbox" value="{{$sub}}" name="survey-subs[]"> {{$sub}}</label>
+                <li><label><input type="checkbox" value="{{$sub}}" name="survey-subs[]" {{in_array($sub, $request->input('survey-subs')) ? 'checked' : ''}}> {{$sub}}</label></li>
                 @endforeach
               @endif
               </ul>
@@ -43,7 +43,7 @@
               <ul id="tag-list">
               @if($category)
                 @foreach($category->tags as $tag)
-                <label><input type="checkbox" value="{{$tag}}" name="survey-tags[]"> {{$tag}}</label>
+                <li><label><input type="checkbox" value="{{$tag}}" name="survey-tags[]" {{in_array($tag, $request->input('survey-tags')) ? 'checked' : ''}}> {{$tag}}</label></li>
                 @endforeach
               @endif
               </ul>
@@ -72,5 +72,42 @@
 		</article>
 	</div>
 </div>
+
+<script src="{{url('js/bower_components/jquery/dist/jquery.min.js')}}"></script>
+<script>
+  $(document).ready(function(){
+  	var categories = <?php echo json_encode($categories); ?>;
+  	
+  	$('.toggle').on('click', function(e){
+  		$("#fbp").slideToggle();
+  	});
+
+  	$('#survey-category').on('change', function(e){
+  		var value = e.currentTarget.value, 
+  		   category = categories.filter(function(cat){
+  			   return cat.name == value;
+  		   })[0];
+
+  		// CLEAR LISTS
+  		$("#sub-list").html("");
+  		$("#tag-list").html("");
+
+  		if(value){
+  			category.sub.forEach(function(sub){
+  				$("#sub-list").append('<li><label><input type="checkbox" value="' + sub + '" name="survey-tags[]"> ' + sub + '</label></li>');
+  			});
+  			category.tags.forEach(function(tag){
+  				$("#tag-list").append('<li><label><input type="checkbox" value="' + tag + '" name="survey-tags[]"> ' + tag + '</label></li>');
+  			});
+  		}
+  		else{
+  			$("#sub-list").append("<li>Selecciona una categoría</li>");
+  			$("#tag-list").append("<li>Selecciona una categoría</li>");
+  		}
+
+  	});
+
+  });
+</script>
 
 @endsection
