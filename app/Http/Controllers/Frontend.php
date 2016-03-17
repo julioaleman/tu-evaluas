@@ -36,12 +36,15 @@ class Frontend extends Controller
     return view("frontend.faqs")->with($data);
   }
   
-  function results(){
+  function results(Request $request){
+    $categories = file_get_contents(public_path() . "/". "js/categories.json");
     $data = [];
     $data['surveys']     = Blueprint::where("is_public", 1)->where("is_visible", 1)->get();
     $data['title']       = 'Resultados | Tú Evalúas';
     $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
     $data['body_class']  = 'results';
+    $data['categories']  = collect(json_decode($categories));
+    $data['request']     = $request;
     return view("frontend.results")->with($data);
   }
   
