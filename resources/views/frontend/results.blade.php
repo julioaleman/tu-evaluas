@@ -9,17 +9,17 @@
 				<section>
 					@if ($surveys->count() > 0)
 					<!-- FILTRAR RESULTADOS -->
+					<h2>Filtrar resultados</h2>
 				  <form id="fbp" name="filter-blueprints" method="get" action="{{url('resultados')}}">
 				    <?php $category = $request->input('category') ? $categories->where("name", $request->input('category'))->first() : null; ?>
-				    <pre>{{var_dump($categories->where("name", "Salud"))}}</pre>
 				    {!! csrf_field() !!}
 				    <p>Título: <input type="text" name="title" value="{{$request->input('title')}}"></p>
 
 				    <p>
               <select name="category" id="survey-category">
                 <option value="">Selecciona una categoría</option>
-                @foreach($categories as $category)
-                <option value="{{$category->name}}" {{$request->input('category') == $category->name ? 'selected' : ''}}>{{$category->name}}</option>
+                @foreach($categories as $cat)
+                <option value="{{$cat->name}}" {{$category && $category->name == $cat->name ? 'selected' : ''}}>{{$cat->name}}</option>
                 @endforeach
               </select>
             </p>
@@ -28,20 +28,30 @@
             <div>
               <p>Subcategoría</p>
               <ul id="sub-list">
-              	
+              @if($category)
+                @foreach($category->sub as $sub)
+                <label><input type="checkbox" value="{{$sub}}" name="survey-subs[]"> {{$sub}}</label>
+                @endforeach
+              @endif
               </ul>
               <!-- survey-tags-->
             </div>
 
              <!-- TAGS -->
-            <div class="col-sm-10 col-sm-offset-1">
+            <div>
               <p>Etiquetas</p>
-              <p id="js-error-tags" class="error"></p>
-              <p class="rule">Puedes seleccionar un máximo de 5 etiquetas</p>
-              <ul id="tag-list"></ul>
+              <ul id="tag-list">
+              @if($category)
+                @foreach($category->tags as $tag)
+                <label><input type="checkbox" value="{{$tag}}" name="survey-tags[]"> {{$tag}}</label>
+                @endforeach
+              @endif
+              </ul>
               <!-- survey-tags-->
             </div>
+            <p><input type="submit" value="Filtrar resultados"></p>
           </form>
+
 						@foreach($surveys as $survey)
 							<h2><a href="{{ url('resultados/'. $survey->id)}}">{{ $survey->title}}</h2>
 							<a href="{{url('resultados/'. $survey->id) }}">
