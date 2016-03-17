@@ -58,6 +58,8 @@ Route::group(['middleware' => 'web'], function () {
 
   // FORM APPLY
   Route::get('encuesta/{key}', 'Applicants@displayForm');
+  Route::get('encuesta/municipios/{id}', 'Applicants@cities');
+  Route::get('encuesta/localidades/{estado}/{municipio}', 'Applicants@locations');
 
   Route::group(['middleware' => 'auth'], function () {
     // USERS CRUD

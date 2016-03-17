@@ -15,6 +15,8 @@ use Auth;
 use App\User;
 use App\Models\Blueprint;
 use App\Models\Applicant;
+use App\Models\City;
+use App\Models\Location;
 
 class Applicants extends Controller
 {
@@ -165,6 +167,25 @@ class Applicants extends Controller
     $data['answers']   = [];
     $data['is_test']   = false;
     return view("real-form")->with($data);
+  }
+
+  //
+  // [ SEND CITIES ]
+  //
+  //
+  public function cities($state_id){
+    $cities = City::where("estado_id", $state_id)->get();
+    return response()->json($cities)->header('Access-Control-Allow-Origin', '*');
+  }
+
+  //
+  // [ SEND LOCATIONS ]
+  //
+  //
+  public function locations($state_id, $city_key){
+    $city = City::where("estado_id", $state_id)->where("clave", $city_key)->first();
+    $locations = Location::where("municipio_id", $city->id)->get();
+    return response()->json($locations)->header('Access-Control-Allow-Origin', '*');
   }
 
   /*
