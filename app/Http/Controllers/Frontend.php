@@ -11,6 +11,7 @@ use App\Models\Blueprint;
 
 class Frontend extends Controller
 {
+  const PAGE_SIZE = 3;
   function index(){
     $data                = [];
     $data['title']       = 'Tú Evalúas';
@@ -36,15 +37,26 @@ class Frontend extends Controller
     return view("frontend.faqs")->with($data);
   }
   
-  function results(Request $request){
+  function results(Request $request, $page = 1){
+    if(empty($request->all())){
+      $blueprints = Blueprint::where("is_public", 1)->skip(($page-1) * self::PAGE_SIZE)->take(self::PAGE_SIZE)->get();
+      $total = Blueprint::where("is_public", 1)->count();
+    }
+    else{
+      $blueprints = Blueprint::where("is_public", 1)->skip(($page-1) * self::PAGE_SIZE)->take(self::PAGE_SIZE)->get();
+      $total = Blueprint::where("is_public", 1)->count();
+    }
     $categories = file_get_contents(public_path() . "/". "js/categories.json");
     $data = [];
-    $data['surveys']     = Blueprint::where("is_public", 1)->where("is_visible", 1)->get();
+    $data['surveys']     = $blueprints;
     $data['title']       = 'Resultados | Tú Evalúas';
     $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
     $data['body_class']  = 'results';
     $data['categories']  = collect(json_decode($categories));
     $data['request']     = $request;
+    $data['page']        = $page;
+    $data['total']       = $total;
+    $data['pages']       = ceil($total/self::PAGE_SIZE);
     return view("frontend.results")->with($data);
   }
   

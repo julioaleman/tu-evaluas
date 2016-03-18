@@ -30,7 +30,7 @@
               <ul id="sub-list">
               @if($category)
                 @foreach($category->sub as $sub)
-                <li><label><input type="checkbox" value="{{$sub}}" name="survey-subs[]" {{in_array($sub, $request->input('survey-subs')) ? 'checked' : ''}}> {{$sub}}</label></li>
+                <li><label><input type="checkbox" value="{{$sub}}" name="survey-subs[]" {{in_array($sub, $request->input('survey-subs', [])) ? 'checked' : ''}}> {{$sub}}</label></li>
                 @endforeach
               @endif
               </ul>
@@ -43,7 +43,7 @@
               <ul id="tag-list">
               @if($category)
                 @foreach($category->tags as $tag)
-                <li><label><input type="checkbox" value="{{$tag}}" name="survey-tags[]" {{in_array($tag, $request->input('survey-tags')) ? 'checked' : ''}}> {{$tag}}</label></li>
+                <li><label><input type="checkbox" value="{{$tag}}" name="survey-tags[]" {{in_array($tag, $request->input('survey-tags', [])) ? 'checked' : ''}}> {{$tag}}</label></li>
                 @endforeach
               @endif
               </ul>
@@ -64,6 +64,12 @@
 								<a href="{{ url('resultados/'.$survey->id)}}" class="btn"> Consulta los resultados</a>
 							</p>
 						@endforeach
+
+						<ul id="pagination">
+							@for($i = 1; $i <= $pages; $i++)
+							<li><a href="{{url('resultados/' . $i) . '?' . http_build_query($request->all())}}" {{$page == $i ? 'class="current"' : ''}}>{{$i}}</a></li>
+							@endfor
+						</ul>
 					@else 
 						<h2>Estamos trabajando para mejorar la descarga de los resultados de las encuestas. ¡Pronto estaremos de vuelta!</h2>
 					@endif
