@@ -11,7 +11,6 @@
 					@if ($surveys->count() > 0)
 					<!-- FILTRAR RESULTADOS -->
 					<h2 class="toggle">Filtrar resultados</h2>
-<<<<<<< HEAD
 					<form style="display: none" id="fbp" name="filter-blueprints" method="get" action="{{url('resultados')}}" class="form_search">
 				    	<?php $category = $request->input('category') ? $categories->where("name", $request->input('category'))->first() : null; ?>
 						{!! csrf_field() !!}
