@@ -28,8 +28,8 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 // FRONT END
 Route::get('que-es', "Frontend@about");
 Route::get('preguntas-frecuentes', "Frontend@faqs");
-Route::get('resultados', "Frontend@results");
-Route::get('resultados/{id}', "Frontend@result")->where('id', '[0-9]+');
+Route::get('resultados/{page?}', "Frontend@results");
+Route::get('resultado/{id}', "Frontend@result")->where('id', '[0-9]+');
 
 Route::get('terminos-condiciones', "Frontend@terms");
 Route::get('aviso-privacidad', "Frontend@privacy");
