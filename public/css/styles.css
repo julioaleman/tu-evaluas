@@ -275,6 +275,20 @@ input[type="search"]::-webkit-search-decoration {
     background: rgba(0, 0, 0, 0.9);
     color: white; }
 
+input.advanced_search {
+  border: 1px solid #ccc;
+  height: 35px;
+  width: 100%; }
+
+.form_search input[type="submit"] {
+  background: #011C26;
+  border: 0;
+  float: left;
+  color: white;
+  padding: 10px 30px; }
+  .form_search input[type="submit"]:hover {
+    background: #FF6F69; }
+
 .backend form {
   margin: 0; }
   .backend form input[type="text"], .backend form input[type="password"] {
@@ -1545,6 +1559,19 @@ article {
   font-size: 14px;
   color: #999;
   text-align: center; }
+
+article .form_search {
+  background: #f2f2f2;
+  border: 0;
+  padding-bottom: 0; }
+  article .form_search div {
+    border: 0;
+    margin: 0 0 0;
+    padding-bottom: 10px; }
+    article .form_search div.divider {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      margin: 0 0 5px;
+      padding: 0 0 15px; }
 
 /* Footer
 -------------------------------------------------------------- */
