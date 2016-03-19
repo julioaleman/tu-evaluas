@@ -116,13 +116,15 @@ define(function(require){
       // antes de pasar a la siguiente sección. Si le falta alguna,
       // se le indica mediante un recuadro rosa que le falta contestar
       // esa pregunta. Porque #YOLO
-      var errors = this._validate_section();
-      if(errors.length){
-        _.each(errors, function(view){
-          view.el.style.border = "1px solid #FF6F69";
-        });
-        this.$("#annoying-message").fadeIn();
-        return false;
+      if(!agentesFormSettings.is_test){
+        var errors = this._validate_section();
+        if(errors.length){
+          _.each(errors, function(view){
+            view.el.style.border = "1px solid #FF6F69";
+          });
+          this.$("#annoying-message").fadeIn();
+          return false;
+        }
       }
       // [ THE n SECTION ]
       // dibuja la siguiente sección, siempre y cuando exista!
@@ -176,7 +178,9 @@ define(function(require){
         }
       // [5] hace hueco para el siguiente contenido.
       //     aquí es donde podría haber "magia" en la interacción
-        this.$('#survey').html('');
+        // this.$('#survey').html('');
+        this.$('#survey fieldset').remove();
+        this.$('#annoying-message').hide();
       // [6] renderea la siguiente sección
         this.$('#survey').append(this.sections[position].el);
 

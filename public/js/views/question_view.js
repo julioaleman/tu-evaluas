@@ -132,6 +132,7 @@ define(function(require){
       this.$el.html(this.loc_temp(this.model.attributes));
       if(this.model.get('default_value')){
         var location = this.model.get('default_value');
+        console.log(location, this.model.attributes);
         var state    = location.slice(0,2);
         var city     = location.slice(2,5);
         var locality = location.slice(5);
