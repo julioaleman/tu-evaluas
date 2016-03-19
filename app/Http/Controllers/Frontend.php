@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\Blueprint;
+use App\Models\Answer;
 
 class Frontend extends Controller
 {
@@ -144,20 +145,14 @@ class Frontend extends Controller
   //
   //
   function result($id){
-    $blueprint =Blueprint::with(["questions.options", "rules.question"])->find($id);
+    $blueprint = Blueprint::with(["questions" => function($q){
+      $q->has('options');
+    }])->find($id);
 
     if(!$blueprint) die("Este formulario no existe!");
 
     $data = [];
-   
-  //  $data['applicant'] = $user;
-    $data['blueprint'] = $blueprint;
-    $data['questions'] = $blueprint->questions;
-    $data['rules']     = $blueprint->rules;
-    $data['options']   = $blueprint->options;
-    $data['answers']   = [];
-    $data['is_test']   = true;
-
+    $data['blueprint']  = $blueprint;
     $data['title']       = 'Resultados | Tú Evalúas';
     $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
     $data['body_class']  = 'results';

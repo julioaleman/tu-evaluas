@@ -187,9 +187,10 @@ class Applicants extends Controller
     ]);
 
     $answer->text_value = $question->type == "text" ? $request->input('question_value') : null;
-    $answer->num_value  = $question->type == "integer" ? $request->input('question_value') : null;
+    $answer->num_value  = $question->type == "integer" || "number" ? $request->input('question_value') : null;
 
     $answer->update();
+    $answer->question_value = $request->input('question_value');
 
     return response()->json($answer)->header('Access-Control-Allow-Origin', '*');
   }

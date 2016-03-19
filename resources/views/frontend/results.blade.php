@@ -61,7 +61,7 @@
 							</a>
 							<p class="lead">
 								<!-- aquí se agregará la descripción de cada encuesta-->
-								<a href="{{ url('resultados/'.$survey->id)}}" class="btn"> Consulta los resultados</a>
+								<a href="{{ url('resultado/'.$survey->id)}}" class="btn"> Consulta los resultados</a>
 							</p>
 						@endforeach
 

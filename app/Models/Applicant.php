@@ -10,4 +10,8 @@ class Applicant extends Model
   public function blueprint(){
     return $this->belongsTo('App\Models\Blueprint');
   }
+
+  public function answers(){
+    return $this->hasMany('App\Models\Answer', 'form_key', 'form_key');
+  }
 }
