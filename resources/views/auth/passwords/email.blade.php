@@ -1,7 +1,15 @@
-@extends('layouts.app')
-
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Pase usted</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{url('img/favicon.ico')}}">
+  <link rel="stylesheet" href="{{url('css/normalize.css')}}">
+    <link rel="stylesheet" href="{{url('css/styles.css')}}">
+  </head>
+  <body class="login">
 <!-- Main Content -->
-@section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -44,4 +52,5 @@
         </div>
     </div>
 </div>
-@endsection
+</body>
+</html>

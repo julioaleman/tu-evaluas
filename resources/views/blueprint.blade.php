@@ -118,7 +118,9 @@
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
               <p>Sube tus propios resultados</p>
-              <p id="sending-label" style="display:none;">"enviado documento"</p>
+              <p class="rule">Si es una encuesta que ya has aplicado en otra plataforma, publica los resultados
+              subiendo el archivo con los mismos. (El archivo estará disponible para descargar la sección de
+              resultados)</p>
               <p id="send-file-button"><input type="file" name="results" id="results-file"></p>
             </div>
           </div>

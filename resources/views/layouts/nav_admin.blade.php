@@ -28,7 +28,13 @@
             @else
             <a href="{{url('dashboard/usuarios')}}">Cuenta</a>
             @endif
-          </li>		   
+          </li>
+          @if($user->level == 3)
+          <li class="{{$body_class == 'authorizations' ? 'current' : ''}}">
+            <a href="{{url('dashboard/autorizaciones')}}">Autorizaciones</a>
+          </li> 
+          @endif
+
           <li class="{{$body_class == 'applicants' ? 'current' : ''}}">
           <a href="{{url('dashboard/encuestados')}}">Enviar encuestas</a>
         </li>
