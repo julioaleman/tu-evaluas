@@ -25,9 +25,45 @@
               </label></li>
             </ul>
             @endif
-            <p><input type="submit" value="editar"></p>
+            <p>
+              <input type="submit" value="editar">
+              @if($user->id != $_user->id)
+              <a data-title="{{$_user->email}}" id="kill-him" href="{{url('dashboard/usuario/eliminar/' . $_user->id)}}">Eliminar!</a>
+              @endif
+            </p>
             </div>
   </form>
 </div>
 
+<script src="/js/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/js/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+$(document).ready(function(){
+
+    // DELETE SURVEY WARNING
+    //
+    //
+    //
+    $("#kill-him").on("click", function(e){
+      e.preventDefault();
+      var url   = $(this).attr("href"),
+          title = $(this).attr("data-title");
+      deleteSurvey(url, title);
+    });
+
+    function deleteSurvey(url, title){
+      swal({
+        title: "Eliminar usuario", 
+        text: "Vas a eliminar \"" + title + "\" del sistema. Esto no se puede deshacer!", 
+        type: "warning",
+        confirmButtonText : "Eliminar",
+        //confirmButtonColor: "#ec6c62"
+        showCancelButton: true,
+        cancelButtonText : "Mejor no",
+      }, function(){
+        window.location.href = url;
+      });
+    }
+});
+</script>
 @endsection

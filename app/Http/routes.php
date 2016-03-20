@@ -13,23 +13,6 @@
 
 Route::get('/', "Frontend@index");
 
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
-
-// FRONT END
-Route::get('que-es', "Frontend@about");
-Route::get('preguntas-frecuentes', "Frontend@faqs");
-Route::get('resultados/{page?}', "Frontend@results");
-Route::get('resultado/{id}', "Frontend@result")->where('id', '[0-9]+');
-
-Route::get('terminos-condiciones', "Frontend@terms");
-Route::get('aviso-privacidad', "Frontend@privacy");
-Route::get('contacto', "Frontend@contact");
-
-Route::get("el-csv-para-preguntas", "Frontend@blueprintDocsCSV");
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +26,18 @@ Route::get("el-csv-para-preguntas", "Frontend@blueprintDocsCSV");
 */
 
 Route::group(['middleware' => 'web'], function () {
+  // FRONT END
+  Route::get('que-es', "Frontend@about");
+  Route::get('preguntas-frecuentes', "Frontend@faqs");
+  Route::get('resultados/{page?}', "Frontend@results");
+  Route::get('resultado/{id}', "Frontend@result")->where('id', '[0-9]+');
+
+  Route::get('terminos-condiciones', "Frontend@terms");
+  Route::get('aviso-privacidad', "Frontend@privacy");
+  Route::get('contacto', "Frontend@contact");
+
+  Route::get("el-csv-para-preguntas", "Frontend@blueprintDocsCSV");
+
   // Password reset link request routes...
   Route::get('password/email', 'Auth\PasswordController@getEmail');
   Route::post('password/email', 'Auth\PasswordController@postEmail');
@@ -68,6 +63,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('dashboard/usuarios/crear', 'Users@store');
     Route::get('dashboard/usuario/{id}', 'Users@update');
     Route::post('dashboard/usuario/{id}', 'Users@change');
+    Route::get('dashboard/usuario/eliminar/{id}', 'Users@delete');
 
     // BLUEPRINT CRUD
     Route::get('dashboard/encuestas', 'Blueprints@index');

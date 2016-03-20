@@ -48,12 +48,22 @@ class Users extends Controller
     $email = trim($request->input('email'));
     $request->merge(['email' => $email]);
 
+    $messages = [
+      'name.required'     => 'Debes escribir el nombre del usuario',
+      'name.max'          => 'El nombre es muuuuuuy largo :/',
+      'email.required'    => 'Debes escribir el correo del usuario',
+      'email'             => 'El correo debe tener un formato válido',
+      'email.unique'      => 'Ese correo ya está en uso',
+      'email.max'         => 'Ese correo seguro no existe...',
+      'password.required' => 'Debes escribir el password del usuario',
+      'password.min'      => 'El password debe tener por lo menos 8 caracteres',
+    ];
     // validate the user
     $this->validate($request, [
       'name'     => 'required|max:255',
       'email'    => 'required|email|unique:users|max:255',
       'password' => 'required|min:8',
-    ]);
+    ], $messages);
 
     $user = new User();
     $user->name     = $request->name;
@@ -103,6 +113,24 @@ class Users extends Controller
     $user->update();
     $request->session()->flash('status', ['type' => 'update', 'name' => $user->name]);
     return redirect("dashboard/usuarios");
+  }
+
+  //
+  // [ DELETE USER ]
+  //
+  //
+  public function delete(Request $request, $id){
+    $user = Auth::user();
+    if(! $user->level == 3 || $user->id == $id){
+      return redirect("dashboard/usuarios"); 
+    }
+
+    $kenny = User::find($id);
+    $title = $kenny->email;
+    $kenny->delete();
+
+    $request->session()->flash('status', ['type' => 'delete', 'name' => $title]);
+    return redirect('dashboard/usuarios');
   }
 
   //

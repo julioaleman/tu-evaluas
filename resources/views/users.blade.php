@@ -5,6 +5,16 @@
 <div class="container">
   <div class="row">
 <!-- ERROR / SUCCESS MESSAGE -->
+@if(count($errors) > 0)
+  <div class="alert">
+    <ul>
+    @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+    </ul>
+  </div>
+@endif
+
 @if($status)  
   <div class="{{$status['type']}}"> 
   @if($status['type'] == "delete")
@@ -52,7 +62,7 @@
           		  <p><label>Contraseña</label><input id="the-new-pass" type="password" name="password"></p>
           		  <p>Tipo de usuario</p>
           		  <ul class="options">
-          		    <li><label><input type="radio" name="level" value="2">Funcionario</label></li>
+          		    <li><label><input type="radio" name="level" value="2" checked>Funcionario</label></li>
           		    <li><label><input type="radio" name="level" value="3">Administrador</label></li>
           		  </ul>
           		  <p><input type="submit" value="crear usuario"></p>
