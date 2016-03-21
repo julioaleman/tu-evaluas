@@ -237,7 +237,8 @@ define(function(require){
           question_value : res,
           form_key       : this.controller.model.get('key'),
           question_id    : this.model.id,
-          _token         : document.querySelector("input[name='_token']").value
+          _token         : document.querySelector("input[name='_token']").value,
+          is_test        : agentesFormSettings.is_test
         };
       // [2.1] actualiza el valor antes de enviarlo al servidor; esto
       //       para evitar que el usuario tenga una navegación equivocada

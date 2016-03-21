@@ -52,7 +52,8 @@
     <div id="main" class="row">
       <div class="col-sm-12">
         <form id="survey">
-      
+        {!! csrf_field() !!}
+        <p id="annoying-message" style="display: none">Debes contestar las preguntas para avanzar a la siguiente sección ;D <a href="#" class="close-me">x</a></p>
           </form>
       </div>
     </div>

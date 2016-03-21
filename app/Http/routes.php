@@ -97,5 +97,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('dashboard/reglas', 'BlueprintApi@saveRule');
     Route::delete('dashboard/reglas/{id}', 'BlueprintApi@deleteRule');
+
+    // FAKE FORM APPLY
+    Route::post('dashboard/encuestas/test/respuestas', 'Applicants@saveAnswer');
   });
 });

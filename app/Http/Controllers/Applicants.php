@@ -176,22 +176,39 @@ class Applicants extends Controller
   //
   //
   public function saveAnswer(Request $request){
-    $applicant = Applicant::where('form_key', $request->input('form_key'))->first();
-    $blueprint = Blueprint::find($applicant->blueprint_id);
-    $question  = Question::find($request->input('question_id'));
+    if($request->input('is_test') != 1){
+      $applicant = Applicant::where('form_key', $request->input('form_key'))->first();
+      $blueprint = Blueprint::find($applicant->blueprint_id);
+      $question  = Question::find($request->input('question_id'));
 
-    $answer = Answer::firstOrCreate([
-      "blueprint_id" => $blueprint->id,
-      "question_id"  => $question->id,
-      "form_key"     => $applicant->form_key
-    ]);
+      $answer = Answer::firstOrCreate([
+        "blueprint_id" => $blueprint->id,
+        "question_id"  => $question->id,
+        "form_key"     => $applicant->form_key
+      ]);
 
-    $answer->text_value = $question->type == "text" ? $request->input('question_value') : null;
-    $answer->num_value  = $question->type == "integer" || $question->type == "number" ? $request->input('question_value') : null;
+      $answer->text_value = $question->type == "text" ? $request->input('question_value') : null;
+      $answer->num_value  = $question->type == "integer" || $question->type == "number" ? $request->input('question_value') : null;
 
-    $answer->update();
-    $answer->question_value = $request->input('question_value');
-    $answer->new_token      = csrf_token();
+      $answer->update();
+      $answer->question_value = $request->input('question_value');
+      $answer->new_token      = csrf_token();
+    }
+    else{
+      $question = Question::find($request->input('question_id'));
+      $answer   = new Answer([
+        "blueprint_id" => $question->blueprint->id,
+        "question_id"  => $question->id,
+        "form_key"     => "xxx"//$applicant->form_key
+      ]);
+
+      $answer->text_value = $question->type == "text" ? $request->input('question_value') : null;
+      $answer->num_value  = $question->type == "integer" || $question->type == "number" ? $request->input('question_value') : null;
+
+      //$answer->update();
+      $answer->question_value = $request->input('question_value');
+      $answer->new_token      = csrf_token();
+    }
 
     return response()->json($answer)->header('Access-Control-Allow-Origin', '*');
   }

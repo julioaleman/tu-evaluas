@@ -136,7 +136,7 @@ class Blueprints extends Controller
   //
   public function show($id){
     $user = Auth::user();
-    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : Blueprint::with(["questions.options", "rules.question"])->where("user_id",$user->id )->find($id);
+    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules"])->find($id) : Blueprint::with(["questions.options", "rules"])->where("user_id",$user->id )->find($id);
 
     if(!$blueprint) die("Este formulario no existe!");
 
