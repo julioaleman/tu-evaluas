@@ -252,7 +252,7 @@ define(function(require){
       //     dentro del view actual. (Por si las flys)
           if(data){
             that.server_value = data;
-            that.model.set({'default_value' : (data.num_value || data.text_value)});
+            that.model.set({'default_value' : (+data.num_value || data.text_value)});
           }
         }, 'json');
       }
