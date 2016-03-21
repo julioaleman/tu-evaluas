@@ -72,7 +72,7 @@
 
 						@foreach($surveys as $survey)
 							<h2><a href="{{ url('resultados/'. $survey->id)}}">{{ $survey->title}}</h2>
-							<a href="{{url('resultados/'. $survey->id) }}">
+							<a href="{{url('resultado/'. $survey->id) }}">
 								<figure>
 									<img src="{{url('img/programas/'.(empty($survey->banner) ? "default.jpg":$survey->banner))}}">
 								</figure>
