@@ -156,15 +156,15 @@ class Blueprints extends Controller
   // [ D E L E T E ]
   //
   //
-  public function delete(Request $request, $id){
+  public function remove(Request $request, $id){
     $user = Auth::user();
     $blueprint = Blueprint::find($id);
     if($blueprint && ($user->level == 3 || $user->id == $blueprint->user_id)){
       $title = $blueprint->title;
 
-      $blueprint->questions->delete();
-      $blueprint->options->delete();
-      $blueprint->rules->delete();
+      $blueprint->questions()->delete();
+      $blueprint->options()->delete();
+      $blueprint->rules()->delete();
       $blueprint->delete();
 
       $request->session()->flash('status', ['type' => 'delete', 'name' => $title]);
