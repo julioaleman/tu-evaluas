@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Pase usted</title>
+    <title>Recuperar contraseña</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{url('img/favicon.ico')}}">
   <link rel="stylesheet" href="{{url('css/normalize.css')}}">
@@ -13,42 +13,39 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+	        <h1 class="tu_evaluas">Tú Evalúas</h1>
             <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+	            <h2 class="subtitle">Recuperar Contraseña</div>
                 <div class="panel-body">
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-sm-offset-3">    
+                    <form method="POST" action="{{ url('/password/email') }}">
                         {!! csrf_field() !!}
-
+						<!-- [ THE EMAIL ] -->
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
+							<p><label>Email</label>
+							<input type="email" name="email" id="email" value="{{ old('email') }}">
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
-                            </div>
+                            </p>
                         </div>
-
+						
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-envelope"></i>Send Password Reset Link
-                                </button>
-                            </div>
+	                        <p><input type="submit" value="Enviar enlace para cambiar contraseña"></p>
+                            
                         </div>
                     </form>
-                </div>
-            </div>
         </div>
     </div>
 </div>

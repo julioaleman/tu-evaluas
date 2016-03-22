@@ -21,7 +21,7 @@
     @foreach($surveys as $survey)
       <li class="row">
         <div class="col-sm-8">
-          <a href="{{url('resultados/' . $survey->id)}}">{{$survey->title}} <strong>&gt;</strong></a>
+          <a href="{{url('resultado/' . $survey->id)}}">{{$survey->title}} <strong>&gt;</strong></a>
         </div>
         <div class="col-sm-4">
           <?php

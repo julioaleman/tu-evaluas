@@ -14,31 +14,42 @@
 				</section> */ ?>
 				<div class="answers">
 					<h2>Respuestas</h2>
+						
 					<!-- comienza lista de preguntas-->
 					<ol>
 						@foreach($blueprint->questions as $question)
-						<li>
+						<li {!! $question->options->count() == 0 ? "class='hide'" :'' !!}>
 							<h3>{{ $question->question }}</h3>
+							@if($question->options->count() > 0)
 							<ul class="row">
-							<?php $total = $question->answers->count(); ?>
-							@foreach($question->options as $option)
-							  <?php
-							    $subtotal = $question->answers->where("num_value", (float)$option->value)->count();
-							    $share = number_format(($subtotal/$total)*100, 2);
-							  ?>
-							  <span class="clearfix">
-								  <li class="col-sm-6">
-								    {{$option->description}}: 
-								    <strong>{{(int)$share ? $share : 0}}%</strong> <span class="total">({{$subtotal}})</span>
-								  </li>
+								<?php /// total de respuestas para pregunta 
+									$le_total = $question->answers->count();?>
+								@foreach($question->options as $option)
+								<span class="clearfix">
+									<li class="col-sm-6">
+									{{ $option->description }}
+									<?php  // intento para calcurar respuestas por opcion 
+										$option_answers = 0;?>
+									@if ($option->value == 	$question->answers[0]->num_value)
+										<?php // suma si coincide opción y respuesta 
+											$option_answers++;?>
+									@endif
+									<?php  /// calcula porcenta
+										   $amount =  ($option_answers / $le_total) * 100;
+										   $amount = round($amount, 2);?>
+									 <strong>{{$amount}}%</strong> <span class="total">({{$option_answers}})</span>
+									</li>
 									<li class="col-sm-6">
 										<span class="the_bar"> 
-										  <span class="bar" style="width:{{$share}}%"></span>
+										  <span class="bar" style="width:{{$amount}}%"></span>
 										</span>
 									</li>
-							  </span>
-							@endforeach
+								</span>
+								@endforeach
 							</ul>
+							@else
+							<!--pronto-->
+							@endif			
 						</li>
 						@endforeach
 					</ol>
