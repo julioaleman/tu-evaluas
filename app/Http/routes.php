@@ -85,6 +85,9 @@ Route::group(['middleware' => 'web'], function () {
 
     // AUTHORIZATIONS
     Route::get('dashboard/autorizaciones', "Authorizations@index");
+    Route::get('dashboard/encuestas/ocultar/{id}', "Blueprints@hideBlueprint");
+    Route::get('dashboard/encuestas/autorizar/{id}', "Blueprints@authBlueprint");
+    Route::get('dashboard/encuestas/cancelar/{id}', "Blueprints@cancelAuth");
 
     // FILE GENERATOR
     Route::post('dashboard/encuestas/crear/csv', 'FromFileMake@questions');

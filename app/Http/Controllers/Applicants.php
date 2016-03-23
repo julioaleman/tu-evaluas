@@ -65,6 +65,7 @@ class Applicants extends Controller
       "form_key"     => $form_key, 
       "user_email"   => $email
       ]);
+
     $this->sendForm($applicant);
     return redirect('dashboard/encuestados');
   }
@@ -242,7 +243,14 @@ class Applicants extends Controller
   //
   //
   public function sendForm($applicant){
+    /*
     Mail::send('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant) {
+      $m->from('howdy@tuevaluas.com.mx', 'Howdy friend');
+      $m->to($applicant->user_email, "amigo")->subject('Invitación a opinar!');
+    });
+    */
+
+    Mail::queue('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant){
       $m->from('howdy@tuevaluas.com.mx', 'Howdy friend');
       $m->to($applicant->user_email, "amigo")->subject('Invitación a opinar!');
     });

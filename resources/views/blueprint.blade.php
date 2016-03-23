@@ -21,7 +21,11 @@
   @if($status['type'] == "delete")
     <p>Se ha eliminado "{{$status['name']}}"</p>  
   @elseif($status['type'] == "create")
-    <p>Se ha creado "{{$status['name']}}"</p>  
+    <p>Se ha creado "{{$status['name']}}"</p>
+  @elseif($status['type'] == "authorize")
+    <p>Se ha solicitado la autorización para publicar: "{{$status['name']}}"</p>
+  @elseif($status['type'] == "cancel")
+    <p>Se canceló la petición de autorización.</p> 
   @else
     <p>Se actualizó "{{$status['name']}}"</p> 
   @endif
@@ -34,6 +38,29 @@
     	<h1 class="title">Editar Encuesta</h1>
     </div>
   </div>
+
+  @if($user->level == 2)
+  <!-- THE AUTH BUTTON -->
+  <div class="row">
+    <div class="col-sm-4">
+      <section id="survey-app-title" class="box">
+      @if($blueprint->pending)
+      <a href="{{url('dashboard/encuestas/cancelar/' . $blueprint->id)}}" class="btn_test preview">cancelar autorización!</a>
+        <p>La encuesta está en proceso de ser autorizada</p>
+      @elseif($blueprint->is_public)
+        <a href="{{url('dashboard/encuestas/ocultar/' . $blueprint->id)}}" class="btn_test preview">Oculta la encuesta</a>
+        <p>Si ocultas la encuesta, ni los resultados ni las preguntas estarán disponibles en línea.</p>
+      @else
+        <a href="{{url('dashboard/encuestas/autorizar/' . $blueprint->id)}}" class="btn_test preview">Publica la encuesta</a>
+        <p>Un administrador debe autorizar la publicación de la encuesta</p>
+      @endif
+      </section>
+    </div>
+  </div>
+  <!-- THE AUTH BUTTON ENDS -->
+  @endif
+
+
   <!-- [[   T H E   A P P   ]] -->
   
   <div class="row">

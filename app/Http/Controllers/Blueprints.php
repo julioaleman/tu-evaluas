@@ -59,7 +59,7 @@ class Blueprints extends Controller
     $blueprint->save();
     $request->session()->flash('status', ['type' => 'create', 'name' => $blueprint->title]);
 
-    return redirect('dashboard/encuestas');
+    return redirect('dashboard/encuestas/' . $blueprint->id);
   }
 
   //
@@ -173,6 +173,55 @@ class Blueprints extends Controller
     else{
       return redirect('dashboard/encuestas');
     }
+  }
+
+  //
+  // [ H I D E ]
+  //
+  //
+  public function hideBlueprint(Request $request, $id){
+    $user = Auth::user();
+    $blueprint = $user->blueprints()->find($id);
+    if(! $blueprint) return redirect("dashboard/encuestas");
+
+    $blueprint->is_public = 0;
+    $blueprint->update();
+
+    $request->session()->flash('status', ['type' => 'update', 'name' => $blueprint->title]);
+
+    return redirect("dashboard/encuestas/" . $blueprint->id);
+  }
+
+  //
+  // [ AUTHORIZE ]
+  //
+  //
+  public function authBlueprint(Request $request, $id){
+    $user = Auth::user();
+    $blueprint = $user->blueprints()->find($id);
+    if(! $blueprint) return redirect("dashboard/encuestas");
+
+    $blueprint->pending = 1;
+    $blueprint->update();
+
+    $request->session()->flash('status', ['type' => 'authorize', 'name' => $blueprint->title]);
+    return redirect("dashboard/encuestas/" . $blueprint->id);
+  }
+
+  //
+  // [ CANCEL AUTHORIZATION ]
+  //
+  //
+  public function cancelAuth(Request $request, $id){
+    $user = Auth::user();
+    $blueprint = $user->blueprints()->find($id);
+    if(! $blueprint) return redirect("dashboard/encuestas");
+
+    $blueprint->pending = 0;
+    $blueprint->update();
+
+    $request->session()->flash('status', ['type' => 'cancel', 'name' => $blueprint->title]);
+    return redirect("dashboard/encuestas/" . $blueprint->id);
   }
 
   //

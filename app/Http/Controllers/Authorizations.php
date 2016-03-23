@@ -15,9 +15,11 @@ class Authorizations extends Controller
 {
   public function __construct(){
     $user = Auth::user();
-    if($user->level == 3) return redirect('dashboard');
+    if($user->level != 3) return redirect('dashboard');
   } 
 
+  //
+  //
   public function index(){
     $user = Auth::user();
     $data = [];
