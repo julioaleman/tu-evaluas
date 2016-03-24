@@ -1147,7 +1147,7 @@ div.alert li {
   color: white;
   padding: 5px; }
 
-div.delete p, div.update div.create p {
+div.delete p, div.update p, div.create p {
   background: #2FBC75;
   color: white;
   padding: 5px; }

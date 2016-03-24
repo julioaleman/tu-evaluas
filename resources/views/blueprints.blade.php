@@ -53,6 +53,8 @@
           </section>
 
 
+
+
           <section class="box">
             <h2>Buscar</h2>
             <!-- SEARCH SURVEY -->
@@ -108,6 +110,23 @@
             </div>
           </form>
           <!-- CREATE SURVEY FROM CSV -->
+          </section>
+
+          <section class="box">
+            <h2>Publicar un archivo con resultados</h2>
+          <!-- CREATE SURVEY -->
+          <form name="add-survey" method="post" class="row" action="{{url('dashboard/encuestas/crear')}}">
+            {!! csrf_field() !!}
+            <div class="col-sm-12">
+              <p><label>Título: </label> 
+                <input type="text" name="title">
+              </p>
+            </div>
+            <div class="col-sm-12">
+             <p><input type="submit" value="crear encuesta"></p>
+            </div>
+          </form>
+          <!-- CREATE SURVEY -->
           </section>
         </div>
         

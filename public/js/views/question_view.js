@@ -73,7 +73,7 @@ define(function(require){
       this.server_value = false;
 
       // [ THE HTML ]
-      // las respuestas generan su HTLM desde el momento que se crean
+      // las respuestas generan su HTML desde el momento que se crean
       this.render();
     },
 
@@ -144,6 +144,20 @@ define(function(require){
     },
 
     _render_input : function(){
+  
+      var type = this.model.get('type');
+      
+      if(type == "number" || type == "integer"){
+        this.model.set({
+          input_type : "number"
+        });
+      }
+      else{
+        this.model.set({
+          input_type : "text"
+        });
+      }
+ 
       this.$el.html(this.template(this.model.attributes));
       this.$el.append(this.inp_temp(this.model.attributes));
     },
