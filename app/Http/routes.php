@@ -103,5 +103,7 @@ Route::group(['middleware' => 'web'], function () {
 
     // FAKE FORM APPLY
     Route::post('dashboard/encuestas/test/respuestas', 'Applicants@saveAnswer');
+    Route::get('dashboard/encuestas/test/municipios/{id}', 'Applicants@cities');
+  Route::get('dashboard/encuestas/test/localidades/{estado}/{municipio}', 'Applicants@locations');
   });
 });
