@@ -272,8 +272,14 @@ class Blueprints extends Controller
   //
   //
   public function search(Request $request){
+    $user = Auth::user();
     $query = $request->input("query");
-    $response = Blueprint::where("title", "like", "%{$query}%")->get();
+    if($user->level == 3){
+      $response = Blueprint::where("title", "like", "%{$query}%")->get();
+    }
+    else{
+      $response = $user->blueprints()->where("title", "like", "%{$query}%")->get();
+    }
     return response()->json($response)->header('Access-Control-Allow-Origin', '*');
   }
 }
