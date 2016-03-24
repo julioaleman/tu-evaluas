@@ -44,7 +44,7 @@ class Blueprints extends Controller
 
     // validate the title
     $this->validate($request, [
-      'title' => 'required|max:255'
+      'title' => 'required'
     ], $messages);
 
     $user  = Auth::user();
@@ -63,13 +63,56 @@ class Blueprints extends Controller
   }
 
   //
+  // [ C R E A T E   F I N I S H E D ]
+  //
+  //
+  public function createResultsOnly(Request $request){
+    $messages = [
+      'title.required'            => 'El título del formulario es un campo necesario',
+      'the-results-file.required' => 'Es necesario subir el archivo con los resultados',
+    ];
+    // validate the title && file type
+    $this->validate($request, [
+      'title'            => 'required',
+      'the-results-file' => 'required'
+    ], $messages);
+
+    //
+    if($request->file('the-results-file')->isValid()){
+      $user = Auth::user();
+      $name = uniqid() . "." . $request->file("the-results-file")->guessExtension();
+      $path = "/results/";
+      $request->file('the-results-file')->move(public_path() . $path, $name);
+
+      $blueprint            = new Blueprint;
+      $blueprint->title     = $request->input('title');
+      $blueprint->is_public = 0;
+      $blueprint->is_closed = 1;
+      $blueprint->type      = "results";
+      $blueprint->csv_file  = $name;
+      $blueprint->save();
+
+      $request->session()->flash('status', ['type' => 'create', 'name' => $blueprint->title]);
+      return redirect('dashboard/encuestas/' . $blueprint->id);
+    }
+    else{
+      $request->session()->flash('status', ['type' => 'create-fail', 'name' => $request->input('title')]);
+      return redirect("dashboard/encuestas");
+    }
+  }
+
+  //
   // [ U P D A T E   B L U E P R I N T ]
   //
   //
   public function update(Request $request, $id){
+    $messages = [
+      'survey-title.required' => 'El título del formulario es un campo necesario',
+      'survey-banner.image'   => 'La portada debe ser un archivo de tipo imagen',
+    ];
     // validate the title && file type
     $this->validate($request, [
-      'survey-title'  => 'required|max:255',
+      'survey-title'  => 'required',
       'survey-banner' => 'image'
     ]);
 

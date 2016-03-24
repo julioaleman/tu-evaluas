@@ -22,6 +22,8 @@
     <p>Se ha eliminado "{{$status['name']}}"</p>  
   @elseif($status['type'] == "create")
     <p>Se ha creado "{{$status['name']}}"</p>  
+  @elseif($status['type'] == "create-fail")
+    <p>El formulario "{{$status['name']}}" no cuenta con un archivo válido</p>
   @else
     <p>Se actualizó "{{$status['name']}}"</p> 
   @endif
@@ -112,21 +114,31 @@
           <!-- CREATE SURVEY FROM CSV -->
           </section>
 
+          <!--
+           - SUBE UN ARCHIVO PARA SER CONSULTADO EN LÍNEA 
+           - 
+           -
+          -->
           <section class="box">
             <h2>Publicar un archivo con resultados</h2>
-          <!-- CREATE SURVEY -->
-          <form name="add-survey" method="post" class="row" action="{{url('dashboard/encuestas/crear')}}">
-            {!! csrf_field() !!}
-            <div class="col-sm-12">
-              <p><label>Título: </label> 
-                <input type="text" name="title">
-              </p>
-            </div>
-            <div class="col-sm-12">
-             <p><input type="submit" value="crear encuesta"></p>
-            </div>
-          </form>
-          <!-- CREATE SURVEY -->
+            <p class="rule">Si quieres compartir los resultados
+            de una encuesta, sube el archivo, y estará disponible en línea.</p>
+            <form name="add-finished-survey" method="post" class="row" enctype="multipart/form-data" action="{{url('dashboard/encuestas/resultados/crear')}}">
+              {!! csrf_field() !!}
+              <div class="col-sm-12">
+                <p>
+                  <label>Título:</label> 
+                  <input type="text" name="title">
+                </p>
+                <p>
+                  <label>Archivo de resultados</label>
+                  <input type="file" name="the-results-file">
+                </p>
+              </div>
+              <div class="col-sm-12">
+                <p><input type="submit" value="crear encuesta"></p>
+              </div>
+            </form>
           </section>
         </div>
         

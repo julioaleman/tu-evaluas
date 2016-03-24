@@ -51,7 +51,7 @@ class FromFileMake extends Controller
       $options  = $q['section'] ? $q['section'] : 1;
       $question->blueprint_id = $blueprint->id;
       $question->local_id     = $q['id'];
-      $question->question     = $q['question'];
+      $question->question     = mb_convert_encoding($q['question'], "UTF-8");
       $question->section_id   = $q['section'] ? $q['section'] : 1;
       $question->type         = empty($q['options']) ? "string" : "integer";
       $question->save();
