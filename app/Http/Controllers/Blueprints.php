@@ -85,6 +85,7 @@ class Blueprints extends Controller
       $request->file('the-results-file')->move(public_path() . $path, $name);
 
       $blueprint            = new Blueprint;
+      $blueprint->user_id   = $user->id;
       $blueprint->title     = $request->input('title');
       $blueprint->is_public = 0;
       $blueprint->is_closed = 1;
@@ -135,6 +136,7 @@ class Blueprints extends Controller
     //
 
     $blueprint->title       = $request->input("survey-title");
+    $blueprint->ptp         = $request->input("survey-ptp");
     $blueprint->category    = $request->input("survey-category");
     $blueprint->subcategory = $request->input("survey-subs", null) ? implode(",", $request->input("survey-subs")) : "";
     $blueprint->tags        = $request->input("survey-tags", null) ? implode(",", $request->input("survey-tags")) : "";

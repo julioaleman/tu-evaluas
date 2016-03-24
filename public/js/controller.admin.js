@@ -100,20 +100,27 @@ define(function(require){
           "survey-title"    : "required",
           "survey-category" : "required",
           "survey-subs[]"   : "required",
-          "survey-tags[]"   : "required"
+          "survey-tags[]"   : "required",
+          "survey-ptp" : {
+            "url" : true
+          }
         },
         messages : {
           "survey-title"    : "debes escribir un título",
           "survey-category" : "debes seleccionar una categoría",
           "survey-subs[]"   : "debes seleccionar por lo menos una subcategoría",
           "survey-tags[]"   : "debes seleccionar por lo menos una etiqueta",
-          
+          "survey-ptp"    : {
+            'url' : "el campo debe ser un url"
+          }
         },
         errorPlacement: function (error, element) {
           var name = element.attr("name");
-          console.log(name);
           if(name == "survey-title"){
             $("#js-error-title").append(error);
+          }
+          if(name == "survey-ptp"){
+            $("#js-error-ptp").append(error);
           }
           else if(name == "survey-category"){
             $("#js-error-category").append(error);
