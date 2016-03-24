@@ -108,7 +108,8 @@ class Users extends Controller
 
     $user->name = $request->name;
     if(!empty($pass)) $user->password = Hash::make($request->password);
-    $user->level = $request->level;
+
+    if($user->level == 3) $user->level = empty($user->level) || empty($request->level) ? 2 : $request->level;
 
     $user->update();
     $request->session()->flash('status', ['type' => 'update', 'name' => $user->name]);
