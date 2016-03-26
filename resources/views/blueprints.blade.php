@@ -162,10 +162,10 @@
             <?php foreach($surveys as $survey): ?>
               <li class="row">
                 <div class="col-sm-8">
-                <a href="{{url('dashboard/encuestas/' . $survey->id)}}">{{$survey->title}}</a>
+                <a href="{{url('dashboard/encuesta/' . $survey->id)}}">{{$survey->title}}</a>
                 </div>
                  <div class="col-sm-4">
-                  <a href="{{url('dashboard/encuestas/test/' . $survey->id)}}" class="btn_test">Previsualizar</a>
+                  <a href="{{url('dashboard/encuesta/test/' . $survey->id)}}" class="btn_test">Previsualizar</a>
                   <a data-title="{{$survey->title}}" href="{{url('dashboard/encuestas/eliminar/' . $survey->id)}}" class="danger">Eliminar</a>
                  </div>
               </li>

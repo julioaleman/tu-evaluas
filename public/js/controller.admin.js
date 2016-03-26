@@ -39,15 +39,7 @@ define(function(require){
       
       // [ SURVEY NAVIGATION ]
       'click #survey-navigation-menu a' : 'render_section',
-      // [ UPDATE BLUEPRINT ]
-
-      
-      //'focus #survey-app-title input[type="text"]'       : '_enable_save',
-      //'blur #survey-app-title input[type="text"]'        : '_disable_save',
-      //'change #survey-app-title input[name="is_closed"]' : '_update_bluprint',
-      //'change #survey-app-title input[name="is_public"]' : '_update_bluprint',
-      
-      //'click #survey-app-title .create-survey-btn'       : '_save_csv',
+  
       // [ ADD QUESTION ]
       'change #survey-add-question input[name="type"]' : '_set_is_type',
       'click #survey-add-buttons a.add-question'       : 'render_question_form',
@@ -63,10 +55,6 @@ define(function(require){
       'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
       'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule',
       'click #survey-navigation-rules-container .remove-rule-btn'  : '_remove_rule',
-      // [ CREATE CSV ]
-      //'click .create-survey-btn' : '_generate_csv', 
-      // [ UPLOAD RESULTS ]
-      //'change #results-file' : '_upload_results',
 
       // [ UPDATE CATEGORY ]
       "change #survey-category" : 'update_category',
@@ -145,6 +133,7 @@ define(function(require){
       this.collection.sort();
 
       // THE RULES
+      this.listenTo(this.collection, "sync", this.update_ui);
 
       // [ FIX THE SCOPES ]
       this._render_new_option = $.proxy(this._render_new_option, this);
@@ -154,52 +143,19 @@ define(function(require){
 
       // [ ENABLE THE CATEGORY SELECTOR ]
       this.render_category();
-      /*
-      // [ THE MODEL ]
-      this.model         = new Backbone.Model(SurveySettings.blueprint);
-      this.model.url     = BASE_PATH + "/dashboard/encuesta/actualizar";// "/index.php/surveys/blueprint/update";
-      this.model.set({current_section : 0}); // show all
-      // [ THE COLLECTION ]
-     this.collection            = new Backbone.Collection(SurveySettings.questions);
-     this.collection.url        = BASE_PATH + "/dashboard/preguntas";//'/index.php/surveys/question';
-     this.collection.comparator = function(m){ return Number(m.get('section_id'));};
-     this.collection.sort();
-      // [ THE OTHER COLLECTIONS ]
-      this.sub_collection = new Backbone.Collection([]);
-      this.q_options      = new Backbone.Collection(SurveySettings.options);
-      //this.sections       = new Backbone.Collection(SurveySettings.sections);
-      this.rules          = new Backbone.Collection(SurveySettings.rules);
-      this.rules.url      = BASE_PATH + "/dashboard/reglas";//'/index.php/surveys/rule';
-      // [ MAP THE OPTIONS FOR EACH QUESTION ]
-      this.collection.each(function(el, ind, col){
-        el.set({
-          options : this.q_options.where({question_id : el.id})
-        });
-      }, this);
-      // [ FIX THE SCOPES ]
-      this._update_title      = $.proxy(this._update_title, this);
-      this._render_new_option = $.proxy(this._render_new_option, this);
-      // [ THE LISTENERS ]
-      this.listenTo(this.model, 'sync', this._render_saved_title);
-      this.listenTo(this.sub_collection, 'add', this._render_question);
-      this.listenTo(this.collection, 'remove', this._remove_question);
-      // this.listenTo(this.rules, 'add', this._render_rule);
-      // [ FETCH SHORTCUTS ]
-      this.html = {
-        navigation_menu : this.$('#survey-navigation-menu'),
-        question_form   : this.$('#survey-add-question'),
-        content_form    : this.$('#survey-add-content'),
-        answers_form    : this.$('#survey-add-options')
-      };
-      // [ RENDER ]
-      this.render();
-      */
     },
 
     //
     // R E N D E R   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
+    update_ui : function(model, response){
+      if(response.remove_rule){
+        var r = this.rules.where({question_id : model.id});
+        console.log(r);
+        this.rules.remove(r);
+      }
+    },
 
     // [ THE RENDER ]
     //
@@ -221,20 +177,6 @@ define(function(require){
           this.$("#survey-category").append("<option>" + name + "</option>");
         }
       }, this);
-
-      /*
-      // RENDER SUBCATEGORY
-      if(category){
-        category.attributes.sub.forEach(function(sub){
-          if(sub == this.blueprint.subcategory){
-            this.$("#survey-subcategory").append("<option class='extra' selected>" + sub + "</option>");
-          }
-          else{
-            this.$("#survey-subcategory").append("<option class='extra'>" + sub + "</option>");
-          }
-        }, this);
-      }
-      */
 
       // RENDER SUBCATEGORY
       if(category){
@@ -379,16 +321,23 @@ define(function(require){
       // [5] busca preguntas de opción múltiple de secciones
       //     anteriores para el <select> de crear nueva regla.
       _.each(low_sections, function(section_id){
+        /*
         questions = this.collection.where({
           is_description : 0, 
           section_id     : section_id, 
           type           : "integer"
         });
+        */
+
+        questions = this.collection.filter(function(m){
+          var n = m.attributes;
+          return ! n.is_description && n.section_id == section_id && n.type == "integer" && n.options.length;
+        }, this);
+
         Array.prototype.push.apply(low_questions, questions);
       }, this);
       // [6] si hay preguntas de opción múltiple anteriores,
       //     llena el <select> de preguntas
-      console.log(questions);
       if(low_questions.length){
         this.$('.rule-answer').remove();
         _.each(low_questions, function(q){
@@ -417,7 +366,9 @@ define(function(require){
           q_id     = model.get('question_id'),
           question = this.collection.get(q_id),
           q_text   = question.get('question'),
-          option   = _.find(question.get('options'), function(m){
+          options  = question.get('options');
+
+          var option   = _.find(options, function(m){
             return (m.value || m.get('value')) == model.get('value');
           }, this),
           o_text   = option.description || option.get('description'),

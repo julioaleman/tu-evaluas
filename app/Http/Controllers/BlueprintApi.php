@@ -57,8 +57,13 @@ class BlueprintApi extends Controller
         $options[] = $option;
         $val++;
       }
+      $remove_rule = 0;
     }
-    $question->options   = $options;
+    else{
+      $remove_rule = Rule::where("blueprint_id", $blueprint->id)->where("question_id", $question->id)->delete();
+    }
+    $question->options     = $options;
+    $question->remove_rule = $remove_rule;
 
     // [4] GENERATE A NEW TOKEN TO PREVENT TOKEN MISSMATCH
     $question->new_token = csrf_token();
@@ -74,8 +79,10 @@ class BlueprintApi extends Controller
 
   public function updateQuestion(Request $request, $id){
     // [1] CHECK IF THE BLUEPRINT EXIST AND THE USER CAN CHANGE IT
-    $user     = Auth::user();
-    $question = Question::find($id); // here we need more validation
+    $user        = Auth::user();
+    $question    = Question::find($id); // here we need more validation
+    $blueprint   = $question->blueprint;
+    $old_section = $question->section_id;
 
     // [2] CREATE THE QUESTION OBJECT
     $question->section_id  = (int)$request->input("section_id");
@@ -103,8 +110,16 @@ class BlueprintApi extends Controller
         $options[] = $option;
         $val++;
       }
+      $remove_rule = 0;
     }
-    $question->options   = $options;
+    else{
+      $remove_rule = Rule::where("blueprint_id", $blueprint->id)->where("question_id", $question->id)->delete();
+    }
+    if($old_section != $question->section_id){
+      $remove_rule = 1;
+    }
+    $question->options     = $options;
+    $question->remove_rule = $remove_rule;
 
     // [4] GENERATE A NEW TOKEN TO PREVENT TOKEN MISSMATCH
     $question->new_token = csrf_token();
@@ -114,10 +129,13 @@ class BlueprintApi extends Controller
   }
 
   public function deleteQuestion($id){
-    $user     = Auth::user();
-    $question = Question::find($id);
+    $user      = Auth::user();
+    $question  = Question::find($id);
+    $blueprint = $question->blueprint;
     Option::where("question_id", $question->id)->delete();
-    $response = $question->delete();
+    $remove_rule = Rule::where("blueprint_id", $blueprint->id)->where("question_id", $question->id)->delete();
+    $delete      = $question->delete();
+    $response = ["remove_rule" => $remove_rule, "delete" => $delete];
 
     return response()->json($response)->header('Access-Control-Allow-Origin', '*');
   }

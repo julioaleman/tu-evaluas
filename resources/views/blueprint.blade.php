@@ -67,7 +67,7 @@
     <!-- [ THE BLUEPRINT ] -->
     <div class="col-sm-4">
       <section id="survey-app-title" class="box">
-		<a href="{{url('dashboard/encuestas/test/' . $blueprint->id)}}" class="btn_test preview">Previsualizar encuesta</a>
+		<a href="{{url('dashboard/encuesta/test/' . $blueprint->id)}}" class="btn_test preview">Previsualizar encuesta</a>
         <h2>Datos</h2>
         <form id="ubp" name="update-blueprint" action="{{url('dashboard/encuestas/' . $blueprint->id)}}" enctype="multipart/form-data" method="post">
           {!! csrf_field() !!}
