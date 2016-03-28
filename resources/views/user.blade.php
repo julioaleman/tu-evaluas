@@ -13,7 +13,9 @@
               
             <p>Correo: <em>{{$_user->email}}</em></p>
             <p><label>nombre</label><input id="the-new-name" type="text" name="name" value="{{$_user->name}}"></p>
-            <p><label>contraseña</label><input id="the-new-pass" type="password" name="password"></p>
+            <p><label>contraseña</label><input id="the-new-pass" type="password" name="password">
+              <br><span>El password debe tener por lo menos ocho caracteres</span>
+            </p>
 			@if($user->level == 3)
             <p>Tipo de usuario</p>
             <ul class="options">

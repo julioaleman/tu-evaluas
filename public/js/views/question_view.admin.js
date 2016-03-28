@@ -223,7 +223,7 @@ define(function(require){
         question    : title, 
         section_id  : section,
         is_location : type === 'location',
-        type        : type === 'text' || type === 'location' ? 'text' : 'number',
+        type        : type === 'text' || type === 'location' ? 'text' : 'integer',
         options     : type !== 'multiple' ? [] : this._get_options(),
         _token      : document.querySelector("input[name='_token']").value
       });

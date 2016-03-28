@@ -65,14 +65,19 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('dashboard/usuario/{id}', 'Users@change');
     Route::get('dashboard/usuario/eliminar/{id}', 'Users@delete');
 
+    // FAKE FORM APPLY
+    Route::post('dashboard/encuesta/test/respuestas', 'Applicants@saveAnswer');
+    Route::get('dashboard/encuesta/test/municipios/{id}', 'Applicants@cities');
+    Route::get('dashboard/encuesta/test/localidades/{estado}/{municipio}', 'Applicants@locations');
+
     // BLUEPRINT CRUD
-    Route::get('dashboard/encuestas', 'Blueprints@index');
-    Route::get('dashboard/encuestas/{id}', 'Blueprints@blueprint')->where('id', '[0-9]+');
-    Route::post('dashboard/encuestas/{id}', 'Blueprints@update')->where('id', '[0-9]+');
+    Route::get('dashboard/encuesta/{id}', 'Blueprints@blueprint')->where('id', '[0-9]+');
+    Route::post('dashboard/encuesta/{id}', 'Blueprints@update')->where('id', '[0-9]+');
     Route::post('dashboard/encuestas/crear', 'Blueprints@create');
     Route::post('dashboard/encuestas/resultados/crear', 'Blueprints@createResultsOnly');
     Route::get('dashboard/encuestas/eliminar/{id}', 'Blueprints@remove')->where('id', '[0-9]+');
-    Route::get('dashboard/encuestas/test/{id}', 'Blueprints@show')->where('id', '[0-9]+');
+    Route::get('dashboard/encuesta/test/{id}', 'Blueprints@show')->where('id', '[0-9]+');
+    Route::get('dashboard/encuestas/{tipo?}/{page?}', 'Blueprints@index');
 
     // SEARCH
     Route::get('dashboard/encuestas/buscar/json', 'Blueprints@search');
@@ -102,9 +107,5 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('dashboard/reglas', 'BlueprintApi@saveRule');
     Route::delete('dashboard/reglas/{id}', 'BlueprintApi@deleteRule');
 
-    // FAKE FORM APPLY
-    Route::post('dashboard/encuestas/test/respuestas', 'Applicants@saveAnswer');
-    Route::get('dashboard/encuestas/test/municipios/{id}', 'Applicants@cities');
-  Route::get('dashboard/encuestas/test/localidades/{estado}/{municipio}', 'Applicants@locations');
   });
 });

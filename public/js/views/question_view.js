@@ -33,6 +33,7 @@ define(function(require){
       // [ GENERAL QUESTIONS]
       'click input[type="radio"]'   : 'save_response',
       'blur input[type="text"]'     : 'save_response',
+      'blur input[type="number"]'     : 'save_response',
       'change input[type="hidden"]' : 'save_response',
 
       // [ LOCATION QUESTIONS]

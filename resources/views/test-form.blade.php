@@ -31,7 +31,7 @@
 	        
 	
 	          <li class="">
-	            <a href="{{ url('dashboard/encuestas/' . $blueprint->id) }}">&lt; Regresar a editar encuesta</a>
+	            <a href="{{ url('dashboard/encuesta/' . $blueprint->id) }}">&lt; Regresar a editar encuesta</a>
 	          </li>
 	
 	          

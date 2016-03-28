@@ -18,7 +18,7 @@ class Blueprints extends Controller
   // [ L I S T ]
   //
   //
-  public function index(Request $request){
+  public function index(Request $request, $type = "todas", $page = 1){
     $user = Auth::user();
     $data = [];
 
@@ -59,7 +59,7 @@ class Blueprints extends Controller
     $blueprint->save();
     $request->session()->flash('status', ['type' => 'create', 'name' => $blueprint->title]);
 
-    return redirect('dashboard/encuestas/' . $blueprint->id);
+    return redirect('dashboard/encuesta/' . $blueprint->id);
   }
 
   //
@@ -85,6 +85,7 @@ class Blueprints extends Controller
       $request->file('the-results-file')->move(public_path() . $path, $name);
 
       $blueprint            = new Blueprint;
+      $blueprint->user_id   = $user->id;
       $blueprint->title     = $request->input('title');
       $blueprint->is_public = 0;
       $blueprint->is_closed = 1;
@@ -93,7 +94,7 @@ class Blueprints extends Controller
       $blueprint->save();
 
       $request->session()->flash('status', ['type' => 'create', 'name' => $blueprint->title]);
-      return redirect('dashboard/encuestas/' . $blueprint->id);
+      return redirect('dashboard/encuesta/' . $blueprint->id);
     }
     else{
       $request->session()->flash('status', ['type' => 'create-fail', 'name' => $request->input('title')]);
@@ -135,6 +136,7 @@ class Blueprints extends Controller
     //
 
     $blueprint->title       = $request->input("survey-title");
+    $blueprint->ptp         = $request->input("survey-ptp");
     $blueprint->category    = $request->input("survey-category");
     $blueprint->subcategory = $request->input("survey-subs", null) ? implode(",", $request->input("survey-subs")) : "";
     $blueprint->tags        = $request->input("survey-tags", null) ? implode(",", $request->input("survey-tags")) : "";
@@ -232,7 +234,7 @@ class Blueprints extends Controller
 
     $request->session()->flash('status', ['type' => 'update', 'name' => $blueprint->title]);
 
-    return redirect("dashboard/encuestas/" . $blueprint->id);
+    return redirect("dashboard/encuesta/" . $blueprint->id);
   }
 
   //
@@ -248,7 +250,7 @@ class Blueprints extends Controller
     $blueprint->update();
 
     $request->session()->flash('status', ['type' => 'authorize', 'name' => $blueprint->title]);
-    return redirect("dashboard/encuestas/" . $blueprint->id);
+    return redirect("dashboard/encuesta/" . $blueprint->id);
   }
 
   //
@@ -264,7 +266,7 @@ class Blueprints extends Controller
     $blueprint->update();
 
     $request->session()->flash('status', ['type' => 'cancel', 'name' => $blueprint->title]);
-    return redirect("dashboard/encuestas/" . $blueprint->id);
+    return redirect("dashboard/encuesta/" . $blueprint->id);
   }
 
   //
