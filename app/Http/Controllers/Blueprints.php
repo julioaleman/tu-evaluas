@@ -238,7 +238,7 @@ class Blueprints extends Controller
   }
 
   //
-  // [ AUTHORIZE ]
+  // [ A U T H O R I Z E ]
   //
   //
   public function authBlueprint(Request $request, $id){
@@ -254,7 +254,23 @@ class Blueprints extends Controller
   }
 
   //
-  // [ CANCEL AUTHORIZATION ]
+  // [ C O N F I R M   A U T H O R I Z A T I O N ]
+  //
+  //
+  public function confirmAuthBlueprint(Request $request, $id){
+    $user = Auth::user();
+    if($user->level == 3){
+      $blueprint = Blueprint::find($id);
+      $blueprint->is_public = 1;
+      $blueprint->pending = 0;
+      $blueprint->update();
+      $request->session()->flash('status', ['type' => 'authorize', 'name' => $blueprint->title]);
+    }
+    return redirect("dashboard/encuestas/");
+  }
+
+  //
+  // [ C A N C E L   A U T H O R I Z A T I O N ]
   //
   //
   public function cancelAuth(Request $request, $id){

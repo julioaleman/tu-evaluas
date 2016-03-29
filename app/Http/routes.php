@@ -70,6 +70,14 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard/encuesta/test/municipios/{id}', 'Applicants@cities');
     Route::get('dashboard/encuesta/test/localidades/{estado}/{municipio}', 'Applicants@locations');
 
+    // AUTHORIZATIONS
+    Route::get('dashboard/autorizaciones', "Authorizations@index");
+    Route::get('dashboard/encuestas/ocultar/{id}', "Blueprints@hideBlueprint");
+    Route::get('dashboard/encuestas/autorizar/{id}', "Blueprints@authBlueprint");
+    Route::get('dashboard/encuestas/cancelar/{id}', "Blueprints@cancelAuth");
+
+    Route::get('dashboard/encuestas/autorizar/confirmar/{id}', "Blueprints@confirmAuthBlueprint");
+
     // BLUEPRINT CRUD
     Route::get('dashboard/encuesta/{id}', 'Blueprints@blueprint')->where('id', '[0-9]+');
     Route::post('dashboard/encuesta/{id}', 'Blueprints@update')->where('id', '[0-9]+');
@@ -89,11 +97,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('dashboard/encuestados/enviar/todos', 'Applicants@sendEmails');
     Route::post('dashboard/encuestados/crear/archivo', 'Applicants@makeFile');
 
-    // AUTHORIZATIONS
-    Route::get('dashboard/autorizaciones', "Authorizations@index");
-    Route::get('dashboard/encuestas/ocultar/{id}', "Blueprints@hideBlueprint");
-    Route::get('dashboard/encuestas/autorizar/{id}', "Blueprints@authBlueprint");
-    Route::get('dashboard/encuestas/cancelar/{id}', "Blueprints@cancelAuth");
 
     // FILE GENERATOR
     Route::post('dashboard/encuestas/crear/csv', 'FromFileMake@questions');

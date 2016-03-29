@@ -24,6 +24,8 @@
     <p>Se ha creado "{{$status['name']}}"</p>  
   @elseif($status['type'] == "create-fail")
     <p>El formulario "{{$status['name']}}" no cuenta con un archivo válido</p>
+  @elseif($status['type'] == "authorize")
+    <p>Has publicado la encuesta: "{{$status['name']}}". Puede remover la autorización al editar la encuesta.</p>
   @else
     <p>Se actualizó "{{$status['name']}}"</p> 
   @endif
@@ -152,19 +154,37 @@
             
             <ul class="list">
               <li class="row los_titles">
-                 <div class="col-sm-8">
+                 <div class="col-sm-6">
                    <h4>Nombre</h4>
                  </div>
-                 <div class="col-sm-4">
+                 <div class="col-sm-3">
+                    <h4>Estado</h4>
+                 </div>
+                 <div class="col-sm-3">
                     <h4>Acciones</h4>
                  </div>
               </li>
             <?php foreach($surveys as $survey): ?>
               <li class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                 <a href="{{url('dashboard/encuesta/' . $survey->id)}}">{{$survey->title}}</a>
                 </div>
-                 <div class="col-sm-4">
+                <div class="col-sm-3">
+                @if($survey->pending)
+                  @if($user->level == 3)
+                  <a data-title="{{$survey->title}}" href="{{url('dashboard/encuestas/autorizar/confirmar/' . $survey->id)}}" class="btn_test">Autorizar</a>
+                  @else
+                  por autorizar
+                  @endif
+                @elseif($survey->is_closed)
+                terminada
+                @elseif($survey->is_public)
+                en curso
+                @else
+                oculta
+                @endif
+                </div>
+                 <div class="col-sm-3">
                   <a href="{{url('dashboard/encuesta/test/' . $survey->id)}}" class="btn_test">Previsualizar</a>
                   <a data-title="{{$survey->title}}" href="{{url('dashboard/encuestas/eliminar/' . $survey->id)}}" class="danger">Eliminar</a>
                  </div>
