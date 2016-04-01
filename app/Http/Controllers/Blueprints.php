@@ -290,11 +290,11 @@ class Blueprints extends Controller
 
   public function makeCSV(Request $request, $id){
     $user      = Auth::user();
-    $blueprint = Blueprint::find($id);
-    $questions = $blueprint->questions;
-    $titles    = $questions->pluck("question");
+    $blueprint = Blueprint::with("questions.options")->find($id);
+    //$questions = $blueprint->questions;
+    //$titles    = $questions->pluck("question");
     
-    Excel::create('resultados', function($excel) use($titles, $blueprint) {
+    Excel::create('resultados', function($excel) use($blueprint) {
       // Set the title
       $excel->setTitle($blueprint->title);
       // Chain the setters
@@ -303,15 +303,51 @@ class Blueprints extends Controller
       // Call them separately
       $excel->setDescription("Resuktadis dsagregados");
         // add a sheet for each day, and set the date as the name of the sheet
-      $excel->sheet("encuestas", function($sheet) use($titles, $blueprint){
+      $excel->sheet("encuestas", function($sheet) use($blueprint){
         //var_dump($titles->toArray());
+        $questions = $blueprint->questions;
+        $titles    = $questions->pluck("question");
+
         $sheet->appendRow($titles->toArray());
 
         $applicants = $blueprint->applicants()->has("answers")->with("answers")->get();
-        echo "<pre>";
-        var_dump($applicants->toArray());
-        echo "</pre>";
-        die();
+
+        foreach($applicants as $applicant){
+          $row  = [];
+          foreach($questions as $question){
+            if($question->is_description){
+              $row[] = "es descripción";
+            }
+            elseif($question->is_location){
+              $inegi_key = $applicant
+                       ->answers()
+                       ->where("question_id", $question->id)
+                       ->get()
+                       ->first();//->text_value;
+              $row[] = $inegi_key ? $inegi_key->text_value : "no dijo de dónde";
+            }
+            elseif($question->type == "text"){
+              $open_answer = $applicant
+                       ->answers()
+                       ->where("question_id", $question->id)
+                       ->get()
+                       ->first();//->text_value;
+              $row[] = $open_answer ? $open_answer->text_value : "no contestó";
+            }
+            elseif($question->options->count()){
+              $row[] = "es opción múltiple";
+            }
+            else{
+              $num_value = $applicant
+                       ->answers()
+                       ->where("question_id", $question->id)
+                       ->get()
+                       ->first();//->text_value;
+              $row[] = $num_value ? $num_value->num_value : "-";
+            }
+          }
+          $sheet->appendRow($row);
+        }
       });
     })->export("csv");
   }
