@@ -11,6 +11,9 @@ use Auth;
 use App\User;
 use App\Models\Blueprint;
 use Image;
+use League\Csv\Reader;
+use League\Csv\Writer;
+use Excel;
 
 class Blueprints extends Controller
 {
@@ -283,6 +286,34 @@ class Blueprints extends Controller
 
     $request->session()->flash('status', ['type' => 'cancel', 'name' => $blueprint->title]);
     return redirect("dashboard/encuesta/" . $blueprint->id);
+  }
+
+  public function makeCSV(Request $request, $id){
+    $user      = Auth::user();
+    $blueprint = Blueprint::find($id);
+    $questions = $blueprint->questions;
+    $titles    = $questions->pluck("question");
+    
+    Excel::create('resultados', function($excel) use($titles, $blueprint) {
+      // Set the title
+      $excel->setTitle($blueprint->title);
+      // Chain the setters
+      $excel->setCreator('Tú Evalúas');
+      //->setCompany('Transpar');
+      // Call them separately
+      $excel->setDescription("Resuktadis dsagregados");
+        // add a sheet for each day, and set the date as the name of the sheet
+      $excel->sheet("encuestas", function($sheet) use($titles, $blueprint){
+        //var_dump($titles->toArray());
+        $sheet->appendRow($titles->toArray());
+
+        $applicants = $blueprint->applicants()->has("answers")->with("answers")->get();
+        echo "<pre>";
+        var_dump($applicants->toArray());
+        echo "</pre>";
+        die();
+      });
+    })->export("csv");
   }
 
   //

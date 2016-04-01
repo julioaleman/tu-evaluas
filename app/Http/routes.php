@@ -79,6 +79,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard/encuestas/autorizar/confirmar/{id}', "Blueprints@confirmAuthBlueprint");
 
     // BLUEPRINT CRUD
+    Route::get('dashboard/encuestas/crear/csv/{id}', 'Blueprints@makeCSV');
     Route::get('dashboard/encuesta/{id}', 'Blueprints@blueprint')->where('id', '[0-9]+');
     Route::post('dashboard/encuesta/{id}', 'Blueprints@update')->where('id', '[0-9]+');
     Route::post('dashboard/encuestas/crear', 'Blueprints@create');
