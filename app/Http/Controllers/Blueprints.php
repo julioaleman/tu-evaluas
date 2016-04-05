@@ -136,6 +136,7 @@ class Blueprints extends Controller
       'survey-banner' => 'image'
     ]);
 
+
     //
     if ($request->hasFile('survey-banner')) {
       $name = uniqid() . "." . $request->file("survey-banner")->guessExtension();
@@ -147,7 +148,7 @@ class Blueprints extends Controller
 
     //
     $user = Auth::user();
-    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : Blueprint::with(["questions.options", "rules.question"])->where("user_id",$user->id )->find($id);
+    $blueprint = $user->level == 3 ? Blueprint::find($id) : Blueprint::where("user_id",$user->id)->find($id);
 
     //
     if(!$blueprint) return redirect("dashboard/encuestas");
