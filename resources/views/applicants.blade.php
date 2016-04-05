@@ -4,6 +4,27 @@
 <div class="container">
   <div class="row">
   	<h1 class="title">Enviar encuestas</h1>
+  	
+<!-- ERROR / SUCCESS MESSAGE -->
+@if(count($errors) > 0)
+  <div class="alert">
+    <ul>
+    @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+    </ul>
+  </div>
+@endif
+
+@if($status)
+  <div class="{{$status['type']}}"> 
+  @if($status['type'] == "create")
+    <p>{{$status['name']}}</p>  
+  @endif
+  </div>
+@endif
+ <!-- ERROR / SUCCESS MESSAGE ENDS -->
+
   	<p>Para enviar las encuestas, <strong>Tú Evalúas</strong> tiene tres métodos diferentes:</p>
   
   	<!-- [A] envía una a algún correo -->
@@ -15,7 +36,7 @@
 			  
 			  	<p>
 			  		Correo
-			  	<input name="email" type="text"> 
+			  	<input name="email" type="email"> 
 			  	</p>
 			  	<p> Selecciona encuesta:<br>	
 			  	<select name="id">

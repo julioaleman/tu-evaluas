@@ -40,6 +40,7 @@ class Applicants extends Controller
     $data['body_class']  = 'applicants';
     $data['user']        = $user;
     $data['blueprints']  = $blueprints;
+    $data['status']      = session('status');
 
     return view("applicants")->with($data);
   }
@@ -54,6 +55,17 @@ class Applicants extends Controller
   //
   //
   public function mailto(Request $request){
+
+    $messages = [
+      'email.required' => 'El correo debe ser válido',
+      'email.email' => 'El correo debe ser válido'
+    ];
+
+    // validate the title
+    $this->validate($request, [
+      'email' => 'required|email'
+    ], $messages);
+
     $user      = Auth::user();
     $creator   = $user->id;
     $blueprint = Blueprint::find($request->input('id'));
@@ -64,9 +76,14 @@ class Applicants extends Controller
       "blueprint_id" => $blueprint->id, 
       "form_key"     => $form_key, 
       "user_email"   => $email
-      ]);
+    ]);
 
     $this->sendForm($applicant);
+
+    $request->session()->flash('status', [
+      'type' => 'create', 
+      'name' => "el correo se ha enviado!"
+    ]);
     return redirect('dashboard/encuestados');
   }
 
@@ -144,6 +161,11 @@ class Applicants extends Controller
       $this->sendForm($applicant);
       $counter++;
     }
+
+    $request->session()->flash('status', [
+      'type' => 'create', 
+      'name' => "los correos se han enviado!"
+    ]);
 
     return redirect('dashboard/encuestados');
   }
