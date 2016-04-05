@@ -10,7 +10,7 @@
       <h3><a href="{{url('dashboard/encuestas')}}"><strong>{{$surveys->count()}}</strong> 
         {{$surveys->count() == 1 ? 'Encuesta' :'Encuestas'}} &gt;</a></a>
       </h3>
-      <p> <a href="{{url('dashboard/encuestas')}}">Crear Encuesta</a></p>
+      <p> <a href="{{url('dashboard/encuestas/agregar')}}">Crear Encuesta</a></p>
     </div>
     
     <div class="col-sm-4 col-sm-offset-1 box">

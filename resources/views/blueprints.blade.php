@@ -39,22 +39,8 @@
       <div class="row">
         <!-- add survey-->
         <div class="col-sm-4">
-          <section class="box">
-            <h2>Crear encuesta</h2>
-          <!-- CREATE SURVEY -->
-          <form name="add-survey" method="post" class="row" action="{{url('dashboard/encuestas/crear')}}">
-            {!! csrf_field() !!}
-            <div class="col-sm-12">
-              <p><label>Título: </label> 
-                <input type="text" name="title">
-              </p>
-            </div>
-            <div class="col-sm-12">
-             <p><input type="submit" value="crear encuesta"></p>
-            </div>
-          </form>
-          <!-- CREATE SURVEY -->
-          </section>
+            <p><a href="{{ url('dashboard/encuestas/agregar') }}" class="btn_deafult">Crear encuesta &gt;</a></p>
+            <!-- CREATE SURVEY -->
 
 
 

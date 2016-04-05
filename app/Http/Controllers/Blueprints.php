@@ -36,6 +36,22 @@ class Blueprints extends Controller
   }
 
   //
+  // [ L A N D I N G   C R E A T E ]
+  //
+  //
+  public function addBlue(Request $request){
+	$user = Auth::user();
+	$data = [];
+
+    $data['title']       = 'Encuestas Tú Evalúas';
+    $data['description'] = '';
+    $data['body_class']  = 'surveys';
+    $data['user']        = $user;
+    $data['status']      = session('status');
+
+    return view("add_blueprints")->with($data);
+  }
+  //
   // [ C R E A T E ]
   //
   //
