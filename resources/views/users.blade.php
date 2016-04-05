@@ -108,7 +108,7 @@
       <div class="col-sm-8">  
         <section class="box">
 	        @if($user->level == 3)
-			<h2>Funcionarios</h2>
+			<h2>Funcionarios Públicos</h2>
 			<h3>Total
 			    <strong>{{$users->count()}}</strong>
 			  </h3>
