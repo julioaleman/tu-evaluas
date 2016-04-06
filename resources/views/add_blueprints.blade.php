@@ -33,14 +33,12 @@
 @endif
 <!-- ERROR / SUCCESS MESSAGE -->
 
-
-
-      <h1 class="title">{{ $user->level == 3 ? "Todas las Encuestas > Crear Encuesta" : "Mis Encuestas > Crear Encuesta"}}</h1>
-      <div class="row">
+	<h1 class="title">{{ $user->level == 3 ? "Crear Encuesta" : "Crear Encuesta"}}</h1>
+    <div class="row">
         <!-- add survey-->
-        <div class="col-sm-10 col-sm-offset-1">
+        <div class="col-sm-4">
           <section class="box">
-            <h2>Crear encuesta</h2>
+            <h2>Crear encuesta en la plataforma</h2>
           <!-- CREATE SURVEY -->
           <form name="add-survey" method="post" class="row" action="{{url('dashboard/encuestas/crear')}}">
             {!! csrf_field() !!}
@@ -55,11 +53,67 @@
           </form>
           <!-- CREATE SURVEY -->
           </section>
+        </div>
 
+        <div class="col-sm-4">
+        	<section class="box">
+            <h2>Crear encuesta desde un archivo</h2>
+          <!-- CREATE SURVEY FROM CSV -->
+          <form name="add-survey-from-csv" method="post" enctype="multipart/form-data" class="row" action="{{url('dashboard/encuestas/crear/csv')}}">
+            {!! csrf_field() !!}
+            
+            @if(count($errors))
+            <!-- La validación -->
+            <p>Debes escribir el título del cuestionario y agregar un archivo CSV válido</p>
+            @endif
 
+            <div class="col-sm-12">
+              <p>
+                <label>Título: </label> 
+                <input type="text" name="title">
+              </p>
+              <p>
+                <label>Archivo CSV</label>
+                <input type="file" name="the-csv">
+              </p>
+              <p><a href="{{url('el-csv-para-preguntas')}}" target="_blank">Cómo debe ser el CSV</a></p>
+            </div>
+            <div class="col-sm-12">
+             <p><input type="submit" value="crear encuesta"></p>
+            </div>
+          </form>
+          <!-- CREATE SURVEY FROM CSV -->
+          </section>
         </div>
         
-        
+        <!--
+           - SUBE UN ARCHIVO PARA SER CONSULTADO EN LÍNEA 
+           - 
+           -
+          -->
+        <div class="col-sm-4">
+          <section class="box">
+            <h2>Publicar un archivo con resultados</h2>
+            <p class="rule">Si quieres compartir los resultados
+            de una encuesta, sube el archivo, y estará disponible en línea.</p>
+            <form name="add-finished-survey" method="post" class="row" enctype="multipart/form-data" action="{{url('dashboard/encuestas/resultados/crear')}}">
+              {!! csrf_field() !!}
+              <div class="col-sm-12">
+                <p>
+                  <label>Título:</label> 
+                  <input type="text" name="title">
+                </p>
+                <p>
+                  <label>Archivo de resultados</label>
+                  <input type="file" name="the-results-file">
+                </p>
+              </div>
+              <div class="col-sm-12">
+                <p><input type="submit" value="crear encuesta"></p>
+              </div>
+            </form>
+          </section>
+        </div>
         
       </div><!--- ends row-->
     </div>
