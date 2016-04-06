@@ -288,6 +288,10 @@ class Blueprints extends Controller
     return redirect("dashboard/encuesta/" . $blueprint->id);
   }
 
+  //
+  // [ E X P O R T   C S V ]
+  //
+  //
   public function makeCSV(Request $request, $id){
     $user      = Auth::user();
     $blueprint = Blueprint::with("questions.options")->find($id);
@@ -349,7 +353,7 @@ class Blueprints extends Controller
           $sheet->appendRow($row);
         }
       });
-    })->export("csv");
+    })->store("csv", public_path('csv'));
   }
 
   //
