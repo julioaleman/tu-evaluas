@@ -160,14 +160,14 @@ class Blueprints extends Controller
     $blueprint->category    = $request->input("survey-category");
     $blueprint->subcategory = $request->input("survey-subs", null) ? implode(",", $request->input("survey-subs")) : "";
     $blueprint->tags        = $request->input("survey-tags", null) ? implode(",", $request->input("survey-tags")) : "";
-    $blueprint->is_public   = $request->input("is_public") ? 1 : 0; 
-    $blueprint->is_closed   = $request->input("is_closed") ? 1 : 0; 
+    //  $blueprint->is_public   = $request->input("is_public") ? 1 : 0; 
+    //  $blueprint->is_closed   = $request->input("is_closed") ? 1 : 0; 
     $blueprint->banner      = isset($name) ? $name : $blueprint->banner;
     $blueprint->save();
 
     //
     $request->session()->flash('status', ['type' => 'update', 'name' => $blueprint->title]);
-    return redirect("dashboard/encuestas/" . $blueprint->id);
+    return redirect("dashboard/encuesta/" . $blueprint->id);
   }
 
   //
@@ -277,15 +277,70 @@ class Blueprints extends Controller
   // [ C O N F I R M   A U T H O R I Z A T I O N ]
   //
   //
-  public function confirmAuthBlueprint(Request $request, $id){
+  public function confirmAuthBlueprint(Request $request, $id, $single = false){
     $user = Auth::user();
     if($user->level == 3){
       $blueprint = Blueprint::find($id);
       $blueprint->is_public = 1;
-      $blueprint->pending = 0;
+      $blueprint->pending   = 0;
+      $blueprint->is_closed = 0;
       $blueprint->update();
       $request->session()->flash('status', ['type' => 'authorize', 'name' => $blueprint->title]);
     }
+    if($single){
+      return redirect("dashboard/encuesta/" . $id);
+    }
+    else{
+      return redirect("dashboard/encuestas/");
+    }
+  }
+
+  //
+  // [ C L O S E   B L U E P R I N T ]
+  //
+  //
+  public function closeAuthBlueprint(Request $request, $id, $single = false){
+    $user = Auth::user();
+    if($user->level == 3){
+      $blueprint = Blueprint::find($id);
+      $blueprint->is_public = 0;
+      $blueprint->pending   = 0;
+      $blueprint->update();
+      $request->session()->flash('status', ['type' => 'authorize', 'name' => $blueprint->title]);
+    }
+
+    if($single){
+      return redirect("dashboard/encuesta/" . $id);
+    }
+    else{
+      return redirect("dashboard/encuestas/");
+    }
+
+    return redirect("dashboard/encuestas/");
+  }
+
+  //
+  // [ F I N I S H   B L U E P R I N T ]
+  //
+  //
+  public function closeAuthBlueprint(Request $request, $id, $single = false){
+    $user = Auth::user();
+    if($user->level == 3){
+      $blueprint = Blueprint::find($id);
+      $blueprint->is_public = 0;
+      $blueprint->pending   = 0;
+      $blueprint->is_closed = 1;
+      $blueprint->update();
+      $request->session()->flash('status', ['type' => 'authorize', 'name' => $blueprint->title]);
+    }
+
+    if($single){
+      return redirect("dashboard/encuesta/" . $id);
+    }
+    else{
+      return redirect("dashboard/encuestas/");
+    }
+    
     return redirect("dashboard/encuestas/");
   }
 

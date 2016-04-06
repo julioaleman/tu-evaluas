@@ -76,7 +76,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard/encuestas/autorizar/{id}', "Blueprints@authBlueprint");
     Route::get('dashboard/encuestas/cancelar/{id}', "Blueprints@cancelAuth");
 
-    Route::get('dashboard/encuestas/autorizar/confirmar/{id}', "Blueprints@confirmAuthBlueprint");
+    Route::get('dashboard/encuestas/autorizar/confirmar/{id}/{single?}', "Blueprints@confirmAuthBlueprint");
+    Route::get('dashboard/encuestas/cerrar/confirmar/{id}/{single?}', "Blueprints@closeAuthBlueprint");
+    Route::get('dashboard/encuestas/terminar/confirmar/{id}/{single?}', "Blueprints@finishAuthBlueprint");
 
     // BLUEPRINT CRUD
     Route::get('dashboard/encuestas/crear/csv/{id}', 'Blueprints@makeCSV');

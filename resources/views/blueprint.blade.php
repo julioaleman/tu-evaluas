@@ -148,7 +148,12 @@
 		  <div class="divider"></div>
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-              <p><label><input type="checkbox" name="is_public" {{$blueprint->is_public ? 'checked' : ''}}> Es pública</label></p>
+            @if($blueprint->is_public)
+              <p><a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Publicar encuesta</a></p>
+            @else
+              <p><a href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Cerrar encuesta</a></p>
+            @endif
+              <!-- <p><label><input type="checkbox" name="is_public" {{$blueprint->is_public ? 'checked' : ''}}> Es pública</label></p>-->
             </div>
           </div>
           @endif
@@ -157,11 +162,17 @@
           <!-- IS CLOSED -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-              <p><label><input type="checkbox" name="is_closed" {{$blueprint->is_closed ? 'checked' : ''}}> Ya terminó</label></p>
+            @if($blueprint->is_closed)
+              <p>La encuesta ha terminado</p>
+            @else
+              <p><a href="{{url('dashboard/encuestas/terminar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Terminar encuesta</a></p>
+            @endif
+              <!-- <p><label><input type="checkbox" name="is_closed" {{$blueprint->is_closed ? 'checked' : ''}}> Ya terminó</label></p>-->
             </div>
           </div>
 
           <!-- THE CSV -->
+          <!--
 		  <div class="divider"></div>
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
@@ -172,6 +183,7 @@
               <p id="send-file-button"><input type="file" name="results" id="results-file"></p>
             </div>
           </div>
+          -->
           
 		  <div class="divider"></div>
           <!-- SUBMIT -->
