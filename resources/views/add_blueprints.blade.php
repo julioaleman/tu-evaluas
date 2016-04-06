@@ -32,97 +32,86 @@
   </div>
 @endif
 <!-- ERROR / SUCCESS MESSAGE -->
-	<h1 class="title">{{ $user->level == 3 ? "Todas las Encuestas" : "Mis Encuestas"}}</h1>
-    
+
+	<h1 class="title">{{ $user->level == 3 ? "Crear Encuesta" : "Crear Encuesta"}}</h1>
     <div class="row">
         <!-- add survey-->
-        <div class="col-sm-3">
-            <p><a href="{{ url('dashboard/encuestas/agregar') }}" class="btn_deafult">Crear encuesta &gt;</a></p>
-            <!-- CREATE SURVEY -->
-
-
-
-
+        <div class="col-sm-4">
           <section class="box">
-            <h2>Buscar</h2>
-            <!-- SEARCH SURVEY -->
-            <form id="search-survey" name="search-survey" method="post" class="row" action="{{url('dashboard/encuestas/buscar/json')}}">
+            <h2>Crear encuesta en la plataforma</h2>
+          <!-- CREATE SURVEY -->
+          <form name="add-survey" method="post" class="row" action="{{url('dashboard/encuestas/crear')}}">
             {!! csrf_field() !!}
             <div class="col-sm-12">
-              <p><label>Buscar encuesta: </label> 
-                <input type="text" name="query" class="typeahead">
+              <p><label>Título: </label> 
+                <input type="text" name="title">
               </p>
             </div>
-          </form>
-          <!-- SEARCH SURVEY ENDS -->
-
-          <!-- SEARCH USERS -->
-          @if($user->level == 3)
-          <form id="search-user" name="search-user" method="post" class="row" action="{{url('dashboard/usuarios/buscar/json')}}">
-            {!! csrf_field() !!}
             <div class="col-sm-12">
-              <p><label>Buscar usuario (email): </label> 
-                <input type="text" name="query" class="typeahead">
-              </p>
+             <p><input type="submit" value="Crear encuesta"></p>
             </div>
           </form>
-          @endif
-          <!-- SEARCH USERS ENDS -->
+          <!-- CREATE SURVEY -->
           </section>
+        </div>
 
+        <div class="col-sm-4">
+        	<section class="box">
+            <h2>Crear encuesta desde un archivo</h2>
+          <!-- CREATE SURVEY FROM CSV -->
+          <form name="add-survey-from-csv" method="post" enctype="multipart/form-data" class="row" action="{{url('dashboard/encuestas/crear/csv')}}">
+            {!! csrf_field() !!}
+            
+            @if(count($errors))
+            <!-- La validación -->
+            <p>Debes escribir el título del cuestionario y agregar un archivo CSV válido</p>
+            @endif
 
-          
-
-          
+            <div class="col-sm-12">
+              <p>
+                <label>Título: </label> 
+                <input type="text" name="title">
+              </p>
+              <p>
+                <label>Archivo CSV</label>
+                <input type="file" name="the-csv">
+              </p>
+              <p><a href="{{url('el-csv-para-preguntas')}}" target="_blank">Cómo debe ser el CSV</a></p>
+            </div>
+            <div class="col-sm-12">
+             <p><input type="submit" value="crear encuesta"></p>
+            </div>
+          </form>
+          <!-- CREATE SURVEY FROM CSV -->
+          </section>
         </div>
         
-        <!-- survey list-->
-        <div class="col-sm-9">
+        <!--
+           - SUBE UN ARCHIVO PARA SER CONSULTADO EN LÍNEA 
+           - 
+           -
+          -->
+        <div class="col-sm-4">
           <section class="box">
-            <h2>Encuestas</h2>
-            <h3>Total de Encuestas
-              <strong>{{$surveys->count()}}</strong>
-            </h3>
-            
-            <ul class="list">
-              <li class="row los_titles">
-                 <div class="col-sm-6">
-                   <h4>Nombre</h4>
-                 </div>
-                 <div class="col-sm-3">
-                    <h4>Estado</h4>
-                 </div>
-                 <div class="col-sm-3">
-                    <h4>Acciones</h4>
-                 </div>
-              </li>
-            <?php foreach($surveys as $survey): ?>
-              <li class="row">
-                <div class="col-sm-6">
-                <a href="{{url('dashboard/encuesta/' . $survey->id)}}">{{$survey->title}}</a>
-                </div>
-                <div class="col-sm-3">
-                @if($survey->pending)
-                  @if($user->level == 3)
-                  <a data-title="{{$survey->title}}" href="{{url('dashboard/encuestas/autorizar/confirmar/' . $survey->id)}}" class="btn_test">Autorizar</a>
-                  @else
-                  por autorizar
-                  @endif
-                @elseif($survey->is_closed)
-                terminada
-                @elseif($survey->is_public)
-                en curso
-                @else
-                oculta
-                @endif
-                </div>
-                 <div class="col-sm-3">
-                  <a href="{{url('dashboard/encuesta/test/' . $survey->id)}}" class="btn_test">Previsualizar</a>
-                  <a data-title="{{$survey->title}}" href="{{url('dashboard/encuestas/eliminar/' . $survey->id)}}" class="danger">Eliminar</a>
-                 </div>
-              </li>
-            <?php endforeach; ?>
-            </ul>
+            <h2>Publicar un archivo con resultados</h2>
+            <p class="rule">Si quieres compartir los resultados
+            de una encuesta, sube el archivo, y estará disponible en línea.</p>
+            <form name="add-finished-survey" method="post" class="row" enctype="multipart/form-data" action="{{url('dashboard/encuestas/resultados/crear')}}">
+              {!! csrf_field() !!}
+              <div class="col-sm-12">
+                <p>
+                  <label>Título:</label> 
+                  <input type="text" name="title">
+                </p>
+                <p>
+                  <label>Archivo de resultados</label>
+                  <input type="file" name="the-results-file">
+                </p>
+              </div>
+              <div class="col-sm-12">
+                <p><input type="submit" value="crear encuesta"></p>
+              </div>
+            </form>
           </section>
         </div>
         

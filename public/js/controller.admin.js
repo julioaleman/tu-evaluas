@@ -94,12 +94,12 @@ define(function(require){
           }
         },
         messages : {
-          "survey-title"    : "debes escribir un título",
-          "survey-category" : "debes seleccionar una categoría",
-          "survey-subs[]"   : "debes seleccionar por lo menos una subcategoría",
-          "survey-tags[]"   : "debes seleccionar por lo menos una etiqueta",
+          "survey-title"    : "Debes escribir un título",
+          "survey-category" : "Debes seleccionar una categoría",
+          "survey-subs[]"   : "Debes seleccionar por lo menos una subcategoría",
+          "survey-tags[]"   : "Debes seleccionar por lo menos una etiqueta",
           "survey-ptp"    : {
-            'url' : "el campo debe ser un url"
+            'url' : "El campo debe ser un url"
           }
         },
         errorPlacement: function (error, element) {

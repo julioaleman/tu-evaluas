@@ -39,26 +39,7 @@
     </div>
   </div>
 
-  @if($user->level == 2)
-  <!-- THE AUTH BUTTON -->
-  <div class="row">
-    <div class="col-sm-4">
-      <section id="survey-app-title" class="box">
-      @if($blueprint->pending)
-      <a href="{{url('dashboard/encuestas/cancelar/' . $blueprint->id)}}" class="btn_test preview">cancelar autorización!</a>
-        <p>La encuesta está en proceso de ser autorizada</p>
-      @elseif($blueprint->is_public)
-        <a href="{{url('dashboard/encuestas/ocultar/' . $blueprint->id)}}" class="btn_test preview">Oculta la encuesta</a>
-        <p>Si ocultas la encuesta, ni los resultados ni las preguntas estarán disponibles en línea.</p>
-      @else
-        <a href="{{url('dashboard/encuestas/autorizar/' . $blueprint->id)}}" class="btn_test preview">Publica la encuesta</a>
-        <p>Un administrador debe autorizar la publicación de la encuesta</p>
-      @endif
-      </section>
-    </div>
-  </div>
-  <!-- THE AUTH BUTTON ENDS -->
-  @endif
+  
 
 
   <!-- [[   T H E   A P P   ]] -->
@@ -66,10 +47,41 @@
   <div class="row">
     <!-- [ THE BLUEPRINT ] -->
     <div class="col-sm-4">
+	    
+	    @if($user->level == 2)
+		<!-- THE AUTH BUTTON -->
+		<section id="survey-app-title" class="box">
+			@if($blueprint->pending)
+			<a href="{{url('dashboard/encuestas/cancelar/' . $blueprint->id)}}" class="btn_test preview">cancelar autorización!</a>
+			<div class="row">
+			    <div class="col-sm-10 col-sm-offset-1">  
+			      <p>La encuesta está en proceso de ser autorizada</p>
+			    </div>
+			</div>     
+			@elseif($blueprint->is_public)
+			<a href="{{url('dashboard/encuestas/ocultar/' . $blueprint->id)}}" class="btn_test preview">Oculta la encuesta</a>
+			<div class="row">
+			  <div class="col-sm-10 col-sm-offset-1">
+			      <p>Si ocultas la encuesta, ni los resultados ni las preguntas estarán disponibles en línea.</p>
+			  </div>
+			</div>
+			@else
+			<a href="{{url('dashboard/encuestas/autorizar/' . $blueprint->id)}}" class="btn_test preview">Publica la encuesta</a>
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-1">  
+					<p>Un administrador debe autorizar la publicación de la encuesta</p>
+				</div>
+			</div>
+			@endif
+  		</section>
+  		<!-- THE AUTH BUTTON ENDS -->
+  		@endif
+	    
+	    
       <section id="survey-app-title" class="box">
 		<a href="{{url('dashboard/encuesta/test/' . $blueprint->id)}}" class="btn_test preview">Previsualizar encuesta</a>
         <h2>Datos</h2>
-        <form id="ubp" name="update-blueprint" action="{{url('dashboard/encuestas/' . $blueprint->id)}}" enctype="multipart/form-data" method="post">
+        <form id="ubp" name="update-blueprint" action="{{url('dashboard/encuesta/' . $blueprint->id)}}" enctype="multipart/form-data" method="post">
           {!! csrf_field() !!}
           <!-- THE TITLE -->
           <div class="row">
@@ -165,7 +177,7 @@
           <!-- SUBMIT -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-              <p><input type="submit" value="Actualizar encuesta"></p>
+              <p><input type="submit" value="Guardar Cambios"></p>
             </div>
           </div>
         </form>

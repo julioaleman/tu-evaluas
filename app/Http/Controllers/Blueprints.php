@@ -36,6 +36,22 @@ class Blueprints extends Controller
   }
 
   //
+  // [ L A N D I N G   C R E A T E ]
+  //
+  //
+  public function addBlue(Request $request){
+	$user = Auth::user();
+	$data = [];
+
+    $data['title']       = 'Encuestas Tú Evalúas';
+    $data['description'] = '';
+    $data['body_class']  = 'surveys';
+    $data['user']        = $user;
+    $data['status']      = session('status');
+
+    return view("add_blueprints")->with($data);
+  }
+  //
   // [ C R E A T E ]
   //
   //
@@ -120,6 +136,7 @@ class Blueprints extends Controller
       'survey-banner' => 'image'
     ]);
 
+
     //
     if ($request->hasFile('survey-banner')) {
       $name = uniqid() . "." . $request->file("survey-banner")->guessExtension();
@@ -131,7 +148,7 @@ class Blueprints extends Controller
 
     //
     $user = Auth::user();
-    $blueprint = $user->level == 3 ? Blueprint::with(["questions.options", "rules.question"])->find($id) : Blueprint::with(["questions.options", "rules.question"])->where("user_id",$user->id )->find($id);
+    $blueprint = $user->level == 3 ? Blueprint::find($id) : Blueprint::where("user_id",$user->id)->find($id);
 
     //
     if(!$blueprint) return redirect("dashboard/encuestas");

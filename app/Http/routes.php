@@ -82,6 +82,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard/encuestas/crear/csv/{id}', 'Blueprints@makeCSV');
     Route::get('dashboard/encuesta/{id}', 'Blueprints@blueprint')->where('id', '[0-9]+');
     Route::post('dashboard/encuesta/{id}', 'Blueprints@update')->where('id', '[0-9]+');
+    Route::get('dashboard/encuestas/agregar', 'Blueprints@addBlue');
     Route::post('dashboard/encuestas/crear', 'Blueprints@create');
     Route::post('dashboard/encuestas/resultados/crear', 'Blueprints@createResultsOnly');
     Route::get('dashboard/encuestas/eliminar/{id}', 'Blueprints@remove')->where('id', '[0-9]+');

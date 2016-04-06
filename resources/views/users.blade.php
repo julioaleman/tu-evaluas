@@ -108,7 +108,7 @@
       <div class="col-sm-8">  
         <section class="box">
 	        @if($user->level == 3)
-			<h2>Funcionarios</h2>
+			<h2>Funcionarios Públicos</h2>
 			<h3>Total
 			    <strong>{{$users->count()}}</strong>
 			  </h3>
@@ -117,6 +117,8 @@
 			
             @endif
            <ul class="list">
+		  @if($user->level == 3)
+          	
             <li class="row los_titles">
                <div class="col-sm-8">
                    <h4>Nombre</h4>
@@ -125,21 +127,34 @@
                     <h4>Correo</h4>
                </div>
             </li>
-		  @if($user->level == 3)
-          @foreach($users as $user_fun)
-            <li class="row">
-              <div class="col-sm-8">
-               <a href="{{url('dashboard/usuario/' . $user_fun->id)}}">{{$user_fun->name}}</a>
-              </div>
-              <div class="col-sm-4">{{$user_fun->email}}</div>
-            </li>
-          @endforeach
+          	@foreach($users as $user_fun)
+          	  <li class="row">
+          	    <div class="col-sm-8">
+          	     <a href="{{url('dashboard/usuario/' . $user_fun->id)}}">{{$user_fun->name}}</a>
+          	    </div>
+          	    <div class="col-sm-4">{{$user_fun->email}}</div>
+          	  </li>
+          	@endforeach
           @else
+          	<li class="row los_titles">
+               <div class="col-sm-4">
+                   <h4>Nombre</h4>
+               </div>
+               <div class="col-sm-4">
+                    <h4>Correo</h4>
+               </div>
+                <div class="col-sm-4">
+                    <h4>Tipo de Usuario</h4>
+               </div>
+            </li>
           	<li class="row">
-              <div class="col-sm-8">
+              <div class="col-sm-4">
                <a href="{{url('dashboard/usuario/' . $user->id)}}">{{$user->name}}</a>
               </div>
               <div class="col-sm-4">{{$user->email}}</div>
+              <div class="col-sm-4">
+                    <p>Funcionario público</p>
+               </div>
             </li>
           @endif
           </ul>
