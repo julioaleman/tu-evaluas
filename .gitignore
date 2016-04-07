@@ -21,3 +21,5 @@ agentes_key.pem
 public/img/programas
 public/results/*
 !public/results/index.html
+public/csv/*
+!public/csv/index.html

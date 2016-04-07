@@ -285,7 +285,7 @@ class Blueprints extends Controller
       $blueprint->pending   = 0;
       $blueprint->is_closed = 0;
       $blueprint->update();
-      $request->session()->flash('status', ['type' => 'authorize', 'name' => $blueprint->title]);
+      $request->session()->flash('status', ['type' => 'authorize create', 'name' => $blueprint->title]);
     }
     if($single){
       return redirect("dashboard/encuesta/" . $id);
@@ -306,24 +306,21 @@ class Blueprints extends Controller
       $blueprint->is_public = 0;
       $blueprint->pending   = 0;
       $blueprint->update();
-      $request->session()->flash('status', ['type' => 'authorize', 'name' => $blueprint->title]);
+      $request->session()->flash('status', ['type' => 'close create', 'name' => $blueprint->title]);
     }
-
     if($single){
       return redirect("dashboard/encuesta/" . $id);
     }
     else{
       return redirect("dashboard/encuestas/");
     }
-
-    return redirect("dashboard/encuestas/");
   }
 
   //
   // [ F I N I S H   B L U E P R I N T ]
   //
   //
-  public function closeAuthBlueprint(Request $request, $id, $single = false){
+  public function finishAuthBlueprint(Request $request, $id, $single = false){
     $user = Auth::user();
     if($user->level == 3){
       $blueprint = Blueprint::find($id);
@@ -331,7 +328,7 @@ class Blueprints extends Controller
       $blueprint->pending   = 0;
       $blueprint->is_closed = 1;
       $blueprint->update();
-      $request->session()->flash('status', ['type' => 'authorize', 'name' => $blueprint->title]);
+      $request->session()->flash('status', ['type' => 'finish create', 'name' => $blueprint->title]);
     }
 
     if($single){
@@ -340,8 +337,6 @@ class Blueprints extends Controller
     else{
       return redirect("dashboard/encuestas/");
     }
-    
-    return redirect("dashboard/encuestas/");
   }
 
   //
@@ -361,30 +356,46 @@ class Blueprints extends Controller
   }
 
   //
+  // [ M A K E   S L U G ]
+  //
+  //
+  // http://stackoverflow.com/questions/5305879/automatic-clean-and-seo-friendly-url-slugs
+  private function sluggable($string, $separator = '-') {
+    $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
+    $special_cases = array( '&' => 'and', "'" => '');
+    $string = mb_strtolower( trim( $string ), 'UTF-8' );
+    $string = str_replace( array_keys($special_cases), array_values( $special_cases), $string );
+    $string = preg_replace( $accents_regex, '$1', htmlentities( $string, ENT_QUOTES, 'UTF-8' ) );
+    $string = preg_replace("/[^a-z0-9]/u", "$separator", $string);
+    $string = preg_replace("/[$separator]+/u", "$separator", $string);
+    return $string;
+  }
+
+  //
   // [ E X P O R T   C S V ]
   //
   //
   public function makeCSV(Request $request, $id){
     $user      = Auth::user();
     $blueprint = Blueprint::with("questions.options")->find($id);
-    //$questions = $blueprint->questions;
-    //$titles    = $questions->pluck("question");
+    $title     = $this->sluggable($blueprint->title);
     
-    Excel::create('resultados', function($excel) use($blueprint) {
+    Excel::create($title, function($excel) use($blueprint) {
       // Set the title
       $excel->setTitle($blueprint->title);
       // Chain the setters
       $excel->setCreator('Tú Evalúas');
       //->setCompany('Transpar');
       // Call them separately
-      $excel->setDescription("Resuktadis dsagregados");
+      $excel->setDescription("Resultado desagregados");
         // add a sheet for each day, and set the date as the name of the sheet
       $excel->sheet("encuestas", function($sheet) use($blueprint){
         //var_dump($titles->toArray());
         $questions = $blueprint->questions;
         $titles    = $questions->pluck("question");
+        $titles    = $titles->toArray();
 
-        $sheet->appendRow($titles->toArray());
+        $sheet->appendRow($titles);
 
         $applicants = $blueprint->applicants()->has("answers")->with("answers")->get();
 
@@ -425,7 +436,12 @@ class Blueprints extends Controller
           $sheet->appendRow($row);
         }
       });
-    })->store("csv", public_path('csv'));
+    })->store("xlsx", public_path('csv'));
+
+    $request->session()->flash('status', ['type' => 'csv create', 'name' => $blueprint->title]);
+    $blueprint->csv_file = $title . ".xlsx";
+    $blueprint->update();
+    return redirect("dashboard/encuesta/" . $id);
   }
 
   //

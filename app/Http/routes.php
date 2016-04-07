@@ -80,6 +80,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard/encuestas/cerrar/confirmar/{id}/{single?}', "Blueprints@closeAuthBlueprint");
     Route::get('dashboard/encuestas/terminar/confirmar/{id}/{single?}', "Blueprints@finishAuthBlueprint");
 
+    // SEARCH
+    Route::get('dashboard/encuestas/buscar/json', 'Blueprints@search');
+    Route::get('dashboard/usuarios/buscar/json', 'Users@search');
+    
     // BLUEPRINT CRUD
     Route::get('dashboard/encuestas/crear/csv/{id}', 'Blueprints@makeCSV');
     Route::get('dashboard/encuesta/{id}', 'Blueprints@blueprint')->where('id', '[0-9]+');
@@ -91,9 +95,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard/encuesta/test/{id}', 'Blueprints@show')->where('id', '[0-9]+');
     Route::get('dashboard/encuestas/{tipo?}/{page?}', 'Blueprints@index');
 
-    // SEARCH
-    Route::get('dashboard/encuestas/buscar/json', 'Blueprints@search');
-    Route::get('dashboard/usuarios/buscar/json', 'Users@search');
 
     // APPLICANTS
     Route::get('dashboard/encuestados', 'Applicants@index');
