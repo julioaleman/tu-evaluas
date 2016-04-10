@@ -27,8 +27,9 @@ class FromFileMake extends Controller
     // [1] validate the title and the CSV
     $this->validate($request, [
         'title'   => 'bail|required|max:255',
-        'the-csv' => 'required|mimes:csv,txt'
+        'the-csv' => 'required'
     ]);
+    
 
     // [2] save the quiz blueprint
     $user = Auth::user();
@@ -40,22 +41,25 @@ class FromFileMake extends Controller
     $blueprint->is_visible = 1;
     $blueprint->save();
 
-    
     // [3] add the questions
     $file = $request->file("the-csv");
-    $reader = Reader::createFromPath($file->getPathName());
-    $keys = ["id","question","section","type","options"];
-    $results = $reader->fetchAssoc($keys);
-    foreach($results as $q){
-      $question = new Question;
-      $options  = $q['section'] ? $q['section'] : 1;
-      $question->blueprint_id = $blueprint->id;
-      $question->local_id     = $q['id'];
-      $question->question     = mb_convert_encoding($q['question'], "UTF-8");
-      $question->section_id   = $q['section'] ? $q['section'] : 1;
-      $question->type         = empty($q['options']) ? "string" : "integer";
-      $question->save();
+    $temp = $file->getPathName();
 
+    Excel::load($temp, function($reader) use($blueprint){
+      $reader->each(function($row) use($blueprint){
+        if(trim($row->pregunta) != "" ){
+          $question = new Question;
+          //$options  = !empty($row->seccion) ? (int)$row->seccion : 1;
+          $question->blueprint_id = $blueprint->id;
+          $question->question     = $row->pregunta;
+          $question->section_id   = !empty($row->seccion) ? (int)$row->seccion : 1;
+          
+          $question = $this->set_type($question, $row);
+
+          $question->save();
+        }
+
+        /*
       // [4] add the options if required
       if(!empty($q['options'])){
         $options = explode("|", $q['options']);
@@ -70,9 +74,26 @@ class FromFileMake extends Controller
           $option->save();
         } // for
       } // if
-    } // foreach
+      */
+      });
+    })->first();
+    
+    
     
     $request->session()->flash('status', ['type' => 'create', 'name' => $blueprint->title]);
     return redirect("dashboard/encuestas");
   } // function
+
+  private function set_type($question, $data){
+    if($data->tipo == "abierta"){
+      $question->type == "string";
+    }
+    else{
+      $question->type == "integer";
+    }
+
+    return $question;
+  }
+
+
 }
