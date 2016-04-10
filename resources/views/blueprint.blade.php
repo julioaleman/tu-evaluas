@@ -151,9 +151,17 @@
             </div>
           </div>
 
-          <!-- IS VISIBLE -->
+       <div class="divider"></div>
+          <!-- SUBMIT -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p><input type="submit" value="Guardar Cambios"></p>
+            </div>
+          </div>
+        </form>
+    <!-- IS VISIBLE -->
           @if($user->level ==3)
-		  <div class="divider"></div>
+      <div class="divider"></div>
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
             @if($blueprint->is_public)
@@ -167,7 +175,7 @@
           </div>
           @endif
 
-		  <div class="divider"></div>
+      <div class="divider"></div>
           <!-- IS CLOSED -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
@@ -177,17 +185,7 @@
               <p><a href="{{url('dashboard/encuestas/terminar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Terminar encuesta</a></p>
             @endif
             </div>
-          </div>
-          
-		  <div class="divider"></div>
-          <!-- SUBMIT -->
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-              <p><input type="submit" value="Guardar Cambios"></p>
-            </div>
-          </div>
-        </form>
-        
+          </div>   
 		<div class="divider"></div>
         <!-- CREATE/GET CSV -->
         <div class="row">
@@ -198,8 +196,12 @@
           </p>
           @else
           <p>
-          <a download href="{{url('csv/' . $blueprint->csv_file)}}">descargar CSV</a> <br>
-          <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Generar nuevo CSV</a>
+          <a download href="{{url('csv/' . $blueprint->csv_file)}}">
+            descargar {{$blueprint->type == "results" ? "resultados" : "CSV"}}
+          </a> <br>
+          @if(!$blueprint->type == "results")
+            <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Generar nuevo CSV</a>
+          @endif
           </p>
           @endif
 
@@ -212,8 +214,20 @@
 
     <form name="survey-app">
     <div class="col-sm-8">  
+    <!-- [ MESSAGE FOR GENERATED QUESTIONS ] -->
+    @if($blueprint->type == "results")
+    <section id="the-survey-only-results" class="box">
+    <h2>Encuesta de solo resultados</h2>
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        Esta encuesta no puede tener preguntas, es solo un archivo para descargar
+      </div>
+    </div>
+    </section>
+    @endif
+
     <!-- [ THE CONTENT CREATOR ] -->
-    <section id="survey-app-questions" class="box">
+    <section id="survey-app-questions" class="box" <?php echo $blueprint->type == 'results' ? "style='display: none'" : ''; ?>>
       <h2>Agregar preguntas</h2>
     <!-- [ ADD CONTENT BUTTONS ] -->
     <div class="row">
@@ -291,7 +305,7 @@
     <!-- { THE CONTENT CREATOR ENDS } -->
 
     <!-- [ THE SURVEY ] -->
-<section id="the-survey" class="box">
+<section id="the-survey" class="box" <?php echo $blueprint->type == 'results' ? "style='display: none'" : ''; ?>>
   <h2>Preguntas agregadas</h2>
   <div class="row">
     <div class="col-sm-10 col-sm-offset-1">
@@ -337,6 +351,7 @@
 </div>
 
     <!-- THE INITIAL DATA -->
+
     <script>
 
       var BASE_PATH  = "{{url('/')}}",
@@ -346,6 +361,9 @@
         options   : <?= json_encode($options); ?>,
         rules     : <?= json_encode($rules); ?>
       };
+
+      // survey-app-questions
+      // the-survey
 
     </script>
     <!-- DEVELOPMENT SOURCE -->

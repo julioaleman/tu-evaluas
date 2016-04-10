@@ -39,6 +39,7 @@ class FromFileMake extends Controller
     $blueprint->is_closed  = 0;
     $blueprint->is_public  = 0;
     $blueprint->is_visible = 1;
+    $blueprint->type       = "generated";
     $blueprint->save();
 
     // [3] add the questions

@@ -75,6 +75,7 @@ class Blueprints extends Controller
     $blueprint->is_closed  = 0;
     $blueprint->is_public  = 0;
     $blueprint->is_visible = 1;
+    $blueprint->type      = "regular";
     $blueprint->save();
     $request->session()->flash('status', ['type' => 'create', 'name' => $blueprint->title]);
 
@@ -100,7 +101,7 @@ class Blueprints extends Controller
     if($request->file('the-results-file')->isValid()){
       $user = Auth::user();
       $name = uniqid() . "." . $request->file("the-results-file")->guessExtension();
-      $path = "/results/";
+      $path = "/csv/";
       $request->file('the-results-file')->move(public_path() . $path, $name);
 
       $blueprint            = new Blueprint;
