@@ -140,7 +140,7 @@
               <!-- survey-tags-->
             </div>
           </div>
-		 
+		 @if($user->level == 3)
 		  <div class="divider"></div>
 		  <!-- checkbox -->
           <div class="row">
@@ -149,7 +149,7 @@
               <input type="checkbox" name="yes" value="yes">  <strong> Ocultar encuesta</strong></p>
             </div>
           </div>
-          
+          @endif
           
 		  <div class="divider"></div>
           <!-- BANNER -->
