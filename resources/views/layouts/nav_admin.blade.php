@@ -30,9 +30,10 @@
             @endif
           </li>
           @if($user->level == 3)
+          <!--
           <li class="{{$body_class == 'authorizations' ? 'current' : ''}}">
             <a href="{{url('dashboard/autorizaciones')}}">Autorizaciones</a>
-          </li> 
+          </li> -->
           @endif
 
           <li class="{{$body_class == 'applicants' ? 'current' : ''}}">
