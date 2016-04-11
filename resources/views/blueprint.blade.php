@@ -140,7 +140,17 @@
               <!-- survey-tags-->
             </div>
           </div>
-
+		 
+		  <div class="divider"></div>
+		  <!-- checkbox -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p>
+              <input type="checkbox" name="yes" value="yes">  <strong> Ocultar encuesta</strong></p>
+            </div>
+          </div>
+          
+          
 		  <div class="divider"></div>
           <!-- BANNER -->
           <div class="row">
