@@ -289,6 +289,10 @@ input.advanced_search {
   .form_search input[type="submit"]:hover {
     background: #FF6F69; }
 
+select {
+  display: block;
+  width: 100%; }
+
 .backend form {
   margin: 0; }
   .backend form input[type="text"], .backend form input[type="password"] {
