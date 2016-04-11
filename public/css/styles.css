@@ -289,7 +289,7 @@ input.advanced_search {
   .form_search input[type="submit"]:hover {
     background: #FF6F69; }
 
-select {
+select, input[type="archive"] {
   display: block;
   width: 100%; }
 
