@@ -204,7 +204,7 @@
           <div class="col-sm-10 col-sm-offset-1">
           @if($blueprint->csv_file == '')
           <p>
-          <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Crear CSV</a>
+          <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Crear archivos para descargar</a>
           </p>
           @else
           <p>
@@ -213,7 +213,7 @@
              @else
                <a download href="{{url('csv/' . $blueprint->csv_file . '.csv')}}">descargar CSV</a> <br>
                <a download href="{{url('csv/' . $blueprint->csv_file . '.xlsx')}}">descargar XLS</a> <br>
-               <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Generar nuevo CSV</a>
+               <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Generar archivos nuevamente</a>
              @endif
           </p>
           @endif
