@@ -149,7 +149,11 @@
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
             @if($blueprint->is_public)
-              <p><a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Publicar encuesta</a></p>
+              <p><a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">
+              @if($blueprint->is_closed)
+               Publicar encuesta
+              @endif
+              </a></p>
             @else
               <p><a href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Cerrar encuesta</a></p>
             @endif
