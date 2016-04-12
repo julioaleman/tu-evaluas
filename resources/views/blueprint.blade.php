@@ -208,12 +208,13 @@
           </p>
           @else
           <p>
-          <a download href="{{url('csv/' . $blueprint->csv_file)}}">
-            descargar {{$blueprint->type == "results" ? "resultados" : "CSV"}}
-          </a> <br>
-          @if(!$blueprint->type == "results")
-            <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Generar nuevo CSV</a>
-          @endif
+             @if($blueprint->type == "results")
+               <a download href="{{url('csv/' . $blueprint->csv_file)}}">descargar resultados</a> <br>
+             @else
+               <a download href="{{url('csv/' . $blueprint->csv_file . '.csv')}}">descargar CSV</a> <br>
+               <a download href="{{url('csv/' . $blueprint->csv_file . '.xlsx')}}">descargar XLS</a> <br>
+               <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Generar nuevo CSV</a>
+             @endif
           </p>
           @endif
 

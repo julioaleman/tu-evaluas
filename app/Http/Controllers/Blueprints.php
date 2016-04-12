@@ -361,13 +361,16 @@ class Blueprints extends Controller
   //
   //
   public function makeCSV(Request $request, $id){
-    $user = Auth::user();
+    $user      = Auth::user();
     $blueprint = Blueprint::find($id);
-    $path = base_path();
-    if($user->level != 3) die("n______n");
-    exec("php {$path}/artisan blueprint:file {$id} xlsx &");
-    $request->session()->flash('status', ['type' => 'file create', 'name' => $blueprint->title]);
+    $path      = base_path();
 
+    if($user->level != 3) die("n______n");
+
+    exec("php {$path}/artisan blueprint:file {$id} xlsx &");
+    exec("php {$path}/artisan blueprint:file {$id} csv &");
+    
+    $request->session()->flash('status', ['type' => 'file create', 'name' => $blueprint->title]);
     return redirect("dashboard/encuesta/" . $id);
   }
 
