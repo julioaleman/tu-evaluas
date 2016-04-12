@@ -357,22 +357,6 @@ class Blueprints extends Controller
   }
 
   //
-  // [ M A K E   S L U G ]
-  //
-  //
-  // http://stackoverflow.com/questions/5305879/automatic-clean-and-seo-friendly-url-slugs
-  private function sluggable($string, $separator = '-') {
-    $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
-    $special_cases = array( '&' => 'and', "'" => '');
-    $string = mb_strtolower( trim( $string ), 'UTF-8' );
-    $string = str_replace( array_keys($special_cases), array_values( $special_cases), $string );
-    $string = preg_replace( $accents_regex, '$1', htmlentities( $string, ENT_QUOTES, 'UTF-8' ) );
-    $string = preg_replace("/[^a-z0-9]/u", "$separator", $string);
-    $string = preg_replace("/[$separator]+/u", "$separator", $string);
-    return $string;
-  }
-
-  //
   // [ E X P O R T   C S V ]
   //
   //
@@ -446,7 +430,7 @@ class Blueprints extends Controller
   }
 
   //
-  // [ S E A R C H ]
+  // [ S E A R C H - J S O N ]
   //
   //
   public function search(Request $request){
@@ -459,5 +443,21 @@ class Blueprints extends Controller
       $response = $user->blueprints()->where("title", "like", "%{$query}%")->get();
     }
     return response()->json($response)->header('Access-Control-Allow-Origin', '*');
+  }
+
+  //
+  // [ M A K E   S L U G ]
+  //
+  //
+  // http://stackoverflow.com/questions/5305879/automatic-clean-and-seo-friendly-url-slugs
+  private function sluggable($string, $separator = '-') {
+    $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
+    $special_cases = array( '&' => 'and', "'" => '');
+    $string = mb_strtolower( trim( $string ), 'UTF-8' );
+    $string = str_replace( array_keys($special_cases), array_values( $special_cases), $string );
+    $string = preg_replace( $accents_regex, '$1', htmlentities( $string, ENT_QUOTES, 'UTF-8' ) );
+    $string = preg_replace("/[^a-z0-9]/u", "$separator", $string);
+    $string = preg_replace("/[$separator]+/u", "$separator", $string);
+    return $string;
   }
 }
