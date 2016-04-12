@@ -20,7 +20,9 @@ define(function(require){
       Description = require('views/description_view.admin'),
       Option      = require('text!templates/option_item.admin.html'),
       Section_nav = require('text!templates/section_selector.admin.html'),
-      Categories  = require('categories');
+      Categories  = require('categories'),
+      Branches    = require('ramos'),
+      Programs    = require('programas');
 
 
   //
@@ -58,6 +60,10 @@ define(function(require){
 
       // [ UPDATE CATEGORY ]
       "change #survey-category" : 'update_category',
+
+      // [ UPDATE BRANCH ]
+      "change #survey-branch"  : 'update_branch',
+      "change #survey-program" : 'update_program', 
 
       // [ LIMIT TAGS AND SUBCATEGORIES ]
       "change input[name='survey-subs[]']" : "limit_subs",
@@ -143,6 +149,9 @@ define(function(require){
 
       // [ ENABLE THE CATEGORY SELECTOR ]
       this.render_category();
+
+      // [ ENABLE THE BRANCH SELECTOR ]
+      this.render_branch();
     },
 
     //
@@ -157,7 +166,101 @@ define(function(require){
       }
     },
 
-    // [ THE RENDER ]
+    // [ RENDER BRANCHES ]
+    //
+    //
+    render_branch : function(){
+      this.branches = new Backbone.Collection(Branches.list);
+      this.programs = new Backbone.Collection(Programs.list);
+
+      var branch  = this.categories.findWhere({nombre : this.blueprint.branch}),
+          unit    = branch && this.blueprint.unit ? this.blueprint.unit : "",
+          program = branch && this.blueprint.program ? this.blueprint.program : "";
+
+      // RENDER BRANCH
+      this.branches.each(function(branch){
+        var name = branch.get("nombre");
+
+        if(name == this.blueprint.branch){
+          this.$("#survey-branch").append("<option selected>" + name + "</option>");
+        }
+        else{
+          this.$("#survey-branch").append("<option>" + name + "</option>");
+        }
+
+      }, this);
+
+      // RENDER UNITS
+      if(branch){
+        branch.get('unidades').forEach(function(unit){
+          var name = unit;
+          if(name == this.blueprint.unit){
+            this.$("#survey-unit").append("<option selected>" + name + "</option>");
+          }
+          else{
+            this.$("#survey-unit").append("<option>" + name + "</option>");
+          }
+        }, this);
+      }
+
+      // RENDER PROGRAMS
+      if(branch){
+        var programas = this.programs.where({ramo : branch.id});
+        programas.forEach(function(p){
+          var name = p.programa;
+          if(name == this.blueprint.program){
+            this.$("#survey-program").append("<option selected>" + name + "</option>");
+          }
+          else{
+            this.$("#survey-program").append("<option>" + name + "</option>");
+          }
+        }, this);
+      }
+    },
+
+    update_branch : function(e){
+      var branch = this.$("#survey-branch").val();
+      this.$("#survey-unit").html("");
+      this.$("#survey-program").html("");
+      this.$("#survey-ptp").val("");
+      if(!branch) return;
+
+      branch = this.branches.findWhere({nombre : branch});
+
+      // RENDER UNITS
+      branch.get('unidades').forEach(function(unit){
+          this.$("#survey-unit").append("<option>" + unit + "</option>");  
+      }, this);
+
+        
+      // RENDER  PROGRAMS
+      var programas = this.programs.where({ramo : branch.id});
+      programas.forEach(function(p){
+        var n = p.get('programa');
+        this.$("#survey-program").append("<option>" + n + "</option>");  
+        this.$("#survey-ptp").val(p.get('ptp'));
+      }, this);
+      
+
+      // RENDER PTP
+    },
+
+    update_program : function(e){
+      var branch = this.$("#survey-branch").val();
+      if(!branch) return;
+
+      branch = this.branches.findWhere({nombre : branch});
+
+      var program = this.$("#survey-program").val();
+      program = this.programs.findWhere({ramo : branch.id, programa : program});
+
+      if(program){
+        this.$("#survey-ptp").val(program.get('ptp'));
+      }
+    },
+
+
+    // [ RENDER CATEGORIES ]
     //
     //
     render_category : function(){
