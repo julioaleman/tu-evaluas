@@ -26,6 +26,8 @@
     <p>Se ha solicitado la autorización para publicar: "{{$status['name']}}"</p>
   @elseif($status['type'] == "cancel")
     <p>Se canceló la petición de autorización.</p> 
+  @elseif($status['type'] == "file create")
+    <p>El archivo para : "{{$status['name']}}" se está generando. Espera un momento.</p>
   @elseif($status['type'] == "authorize create")
     <p>La encuesta: "{{$status['name']}}" se ha publicado</p>
   @elseif($status['type'] == "close create")
