@@ -1,0 +1,10 @@
+[{
+  "nombre" : "moches",
+  "id"     : 23,
+  "unidades" : ["unidad responsable 1", unidad responsable 2"]
+},
+{
+  "nombre" : "más obra pública",
+  "id"     : 33,
+   "unidades" : ["unidad responsable 1", unidad responsable 2"]
+}]

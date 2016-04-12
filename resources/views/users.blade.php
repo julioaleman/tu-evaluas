@@ -83,20 +83,20 @@
             </h3>
            <ul class="list">
             <li class="row los_titles">
-               <div class="col-sm-8">
+               <div class="col-sm-6">
                    <h4>Nombre</h4>
                </div>
-               <div class="col-sm-4">
+               <div class="col-sm-6">
                     <h4>Correo</h4>
                </div>
             </li>
 
           @foreach($admins as $admin)
             <li class="row">
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                <a href="{{url('dashboard/usuario/' . $admin->id)}}">{{$admin->name}}</a>
               </div>
-              <div class="col-sm-4">{{$admin->email}}</div>
+              <div class="col-sm-6">{{$admin->email}}</div>
             </li>
           @endforeach
           </ul>
@@ -120,19 +120,19 @@
 		  @if($user->level == 3)
           	
             <li class="row los_titles">
-               <div class="col-sm-8">
+               <div class="col-sm-6">
                    <h4>Nombre</h4>
                </div>
-               <div class="col-sm-4">
+               <div class="col-sm-6">
                     <h4>Correo</h4>
                </div>
             </li>
           	@foreach($users as $user_fun)
           	  <li class="row">
-          	    <div class="col-sm-8">
+          	    <div class="col-sm-6">
           	     <a href="{{url('dashboard/usuario/' . $user_fun->id)}}">{{$user_fun->name}}</a>
           	    </div>
-          	    <div class="col-sm-4">{{$user_fun->email}}</div>
+          	    <div class="col-sm-6">{{$user_fun->email}}</div>
           	  </li>
           	@endforeach
           @else

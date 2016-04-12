@@ -64,7 +64,7 @@
             
             @if(count($errors))
             <!-- La validación -->
-            <p>Debes escribir el título del cuestionario y agregar un archivo CSV válido</p>
+            <p>Debes escribir el título del cuestionario y agregar un archivo de Excel válido</p>
             @endif
 
             <div class="col-sm-12">
@@ -73,10 +73,10 @@
                 <input type="text" name="title">
               </p>
               <p>
-                <label>Archivo CSV</label>
+                <label>Archivo de Excel</label>
                 <input type="file" name="the-csv">
               </p>
-              <p><a href="{{url('el-csv-para-preguntas')}}" target="_blank">Cómo debe ser el CSV</a></p>
+              <p><a href="{{url('el-csv-para-preguntas')}}" target="_blank">Cómo debe ser el archivo de Excel</a></p>
             </div>
             <div class="col-sm-12">
              <p><input type="submit" value="crear encuesta"></p>
