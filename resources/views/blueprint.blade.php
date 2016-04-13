@@ -323,7 +323,8 @@
           <label>la respuesta es:</label>
           <label><input type="radio" name="type" value="text">abierta</label>
           <label><input type="radio" name="type" value="number">numérica</label>
-          <label><input type="radio" name="type" value="multiple">opción múltiple</label>
+          <label><input type="radio" name="type" value="multiple">opción múltiple (una)</label>
+          <label><input type="radio" name="type" value="multiple-multiple">opción múltiple (varias)</label>
           <label><input type="radio" name="type" value="location">ubicación</label>
         </p>
         <!-- [2] -->

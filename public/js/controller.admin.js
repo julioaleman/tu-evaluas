@@ -434,7 +434,7 @@ define(function(require){
 
         questions = this.collection.filter(function(m){
           var n = m.attributes;
-          return ! n.is_description && n.section_id == section_id && n.type == "integer" && n.options.length;
+          return ! n.is_description && n.section_id == section_id && n.type == "multiple" && n.options.length;
         }, this);
 
         Array.prototype.push.apply(low_questions, questions);
@@ -683,7 +683,7 @@ define(function(require){
 
     _set_is_type : function(e){
       var container = document.querySelector("#survey-add-options ul");
-      if(e.currentTarget.value === 'multiple'){
+      if(e.currentTarget.value == 'multiple' || e.currentTarget.value == 'multiple-multiple'){
         if(! container.getElementsByTagName('li').length){
           this.$(container).append(this.answer_template({
             name     : _.uniqueId('lp'), 
@@ -756,15 +756,18 @@ define(function(require){
         this.$(title_input).addClass('error');
         return;
       }
+      else{
+        this.$(title_input).removeClass('error');
+      }
       question.set({
         section_id     : section,
         blueprint_id   : this.blueprint.id,
         question       : title, 
         is_description : 0,
-        is_location    : type === 'location',
+        // is_location    : type === 'location',
         // aquí puede cambiar la lógica para tener más tipos de respuesta
-        type           : type === 'text' || type === 'location' ? 'text' : 'integer',
-        options        : type !== 'multiple' ? [] : this._get_options(),
+        type           : type,
+        options        : type == 'multiple' || type == 'multiple-multiple' ? this._get_options() : [],
         _token         : document.querySelector("input[name='_token']").value
       });
 
