@@ -29,7 +29,7 @@ define(function(require){
     events : {
       'click a.update'             : 'render_editor',
       'click a.close-editor'       : 'render', // render list view
-      'click a.cancel'             : 'render_editor',
+      'click a.cancel'             : 'render',//'render_editor',
       'click li a'                 : 'remove_option',
       'click a.save'               : '_save',
       'click a.delete'             : '_suicide',
@@ -79,27 +79,38 @@ define(function(require){
     },
 
     render_editor : function(e){
-      if(e !== void 0) e.preventDefault();
+      if(e !== void 0){
+        e.preventDefault();
+        // console.log(e.currentTarget.getAttribute("class"));
+      }
       // [0] configura algunas variables
       var options = this.model.get('options');
       // [1] usa el template
       this.$el.html(this.editor(this.model.attributes));
       this.$('.question-panel-editor').show();
       // [2] selecciona el tipo de pregunta
-      if(Number(this.model.get('is_location'))){
+      //if(Number(this.model.get('is_location'))){
+      if(this.model.get('type') == 'location'){
         this.$('input[value="location"]')[0].checked = 1;
       }
       else if(this.model.get('type') === 'text'){
         this.$('input[value="text"]')[0].checked = 1;
       }
-      else if(options.length){
+      else if(this.model.get('type') == 'multiple'){
         this.$('input[value="multiple"]')[0].checked = 1;
       }
-      else{
+      else if(this.model.get('type') == 'multiple-multiple'){
+        this.$('input[value="multiple-multiple"]')[0].checked = 1;
+      }
+      else if(this.model.get('type') === 'number'){
         this.$('input[value="number"]')[0].checked = 1;
       }
+      else{
+        console.log(this.model.get('type'));
+        alert("pregunta con formato desconocido!");
+      }
       // [3] agrega las secciones, si se necesita
-      if(options.length){
+      if(this.model.get('type') == 'multiple' || this.model.get('type') == 'multiple-multiple'/*options.length*/){
         this._render_options(options);
       }
       // [4] agrega el selector de sección
@@ -222,9 +233,9 @@ define(function(require){
         // blueprint_id   : this.model.id,
         question    : title, 
         section_id  : section,
-        is_location : type === 'location',
-        type        : type === 'text' || type === 'location' ? 'text' : 'integer',
-        options     : type !== 'multiple' ? [] : this._get_options(),
+        //is_location : type === 'location',
+        type        : type,
+        options     : type == 'multiple' || type == 'multiple-multiple' ? this._get_options() : [],
         _token      : document.querySelector("input[name='_token']").value
       });
       
