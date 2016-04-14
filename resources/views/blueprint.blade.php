@@ -26,6 +26,8 @@
     <p>Se ha solicitado la autorización para publicar: "{{$status['name']}}"</p>
   @elseif($status['type'] == "cancel")
     <p>Se canceló la petición de autorización.</p> 
+  @elseif($status['type'] == "file create")
+    <p>El archivo para : "{{$status['name']}}" se está generando. Espera un momento.</p>
   @elseif($status['type'] == "authorize create")
     <p>La encuesta: "{{$status['name']}}" se ha publicado</p>
   @elseif($status['type'] == "close create")
@@ -101,6 +103,7 @@
           </div>
 
           <!-- THE PTP URL -->
+          <!--
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
               <p><strong>link al PTP</strong></p>
@@ -108,6 +111,65 @@
               <p><input type="text" name="survey-ptp" value="{{$blueprint->ptp}}"></p>
             </div>
           </div>
+          -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p><strong>Ramo</strong></p>
+              <p id="js-error-branch" class="error"></p>
+              <p>
+                <select name="survey-branch" id="survey-branch" required>
+                  <option value="">Selecciona un ramo</option>
+                </select>
+              </p>
+            </div>
+
+            <div class="col-sm-10 col-sm-offset-1">
+              <p>Unidad responsable</p>
+              <p id="js-error-unit" class="error"></p>
+              <p>
+                <select name="survey-unit" id="survey-unit" required>
+                  <option value="">Selecciona una unidad responsable</option>
+                </select>
+              </p>
+            </div>
+
+            <div class="col-sm-10 col-sm-offset-1">
+              <p>Programa presupuestario</p>
+              <p id="js-error-program" class="error"></p>
+              <p>
+                <select name="survey-program" id="survey-program" required>
+                  <option value="">Selecciona un programa presupuestario</option>
+                </select>
+              </p>
+            </div>
+          </div>
+
+          <input type="hidden" id="survey-ptp" name="survey-ptp" value="{{$blueprint->ptp}}">
+
+
+
+
+
+
+
+
+
+
 		  
 		  <div class="divider"></div>
           <!-- CATEGORY / DEPENDENCY? -->
@@ -202,16 +264,17 @@
           <div class="col-sm-10 col-sm-offset-1">
           @if($blueprint->csv_file == '')
           <p>
-          <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Crear CSV</a>
+          <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Crear archivos para descargar</a>
           </p>
           @else
           <p>
-          <a download href="{{url('csv/' . $blueprint->csv_file)}}">
-            descargar {{$blueprint->type == "results" ? "resultados" : "CSV"}}
-          </a> <br>
-          @if(!$blueprint->type == "results")
-            <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Generar nuevo CSV</a>
-          @endif
+             @if($blueprint->type == "results")
+               <a download href="{{url('csv/' . $blueprint->csv_file)}}">descargar resultados</a> <br>
+             @else
+               <a download href="{{url('csv/' . $blueprint->csv_file . '.csv')}}">descargar CSV</a> <br>
+               <a download href="{{url('csv/' . $blueprint->csv_file . '.xlsx')}}">descargar XLS</a> <br>
+               <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Generar archivos nuevamente</a>
+             @endif
           </p>
           @endif
 

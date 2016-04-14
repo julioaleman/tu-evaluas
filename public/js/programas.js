@@ -1,4 +1,4 @@
-[
+define({ list : [
 {"programa" : "E-002 - Preservación y difusión del acervo documental de la Nación", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=04E002", "ramo" : 4,"id" : 1},
 {"programa" : "E-003 - Servicios de edición y artes gráficas para el Gobierno Federal", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=04E003", "ramo" : 4,"id" : 2},
 {"programa" : "E-004 - Producción de programas informativos de radio y televisión del Ejecutivo Federal", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=04E004", "ramo" : 4,"id" : 3},
@@ -45,3 +45,4 @@
 {"programa" : "E-005 - Preservación de la integridad territorial y delimitación de las fronteras del país.", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=05E005", "ramo" : 5,"id" : 44},
 {"programa" : "E-006 - Fortalecimiento de las capacidades del Servicio Exterior Mexicano y de la Cancillería.", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=05E006", "ramo" : 5,"id" : 45}
 ]
+});

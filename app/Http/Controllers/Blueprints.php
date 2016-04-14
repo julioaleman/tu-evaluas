@@ -362,70 +362,15 @@ class Blueprints extends Controller
   //
   public function makeCSV(Request $request, $id){
     $user      = Auth::user();
-    $blueprint = Blueprint::with("questions.options")->find($id);
-    $title     = $this->sluggable($blueprint->title);
+    $blueprint = Blueprint::find($id);
+    $path      = base_path();
+
+    if($user->level != 3) die("n______n");
+
+    exec("php {$path}/artisan blueprint:file {$id} xlsx &");
+    exec("php {$path}/artisan blueprint:file {$id} csv &");
     
-    Excel::create($title, function($excel) use($blueprint) {
-      // Set the title
-      $excel->setTitle($blueprint->title);
-      // Chain the setters
-      $excel->setCreator('Tú Evalúas');
-      //->setCompany('Transpar');
-      // Call them separately
-      $excel->setDescription("Resultado desagregados");
-        // add a sheet for each day, and set the date as the name of the sheet
-      $excel->sheet("encuestas", function($sheet) use($blueprint){
-        //var_dump($titles->toArray());
-        $questions = $blueprint->questions;
-        $titles    = $questions->pluck("question");
-        $titles    = $titles->toArray();
-
-        $sheet->appendRow($titles);
-
-        $applicants = $blueprint->applicants()->has("answers")->with("answers")->get();
-
-        foreach($applicants as $applicant){
-          $row  = [];
-          foreach($questions as $question){
-            if($question->is_description){
-              $row[] = "es descripción";
-            }
-            elseif($question->is_location){
-              $inegi_key = $applicant
-                       ->answers()
-                       ->where("question_id", $question->id)
-                       ->get()
-                       ->first();//->text_value;
-              $row[] = $inegi_key ? $inegi_key->text_value : "no dijo de dónde";
-            }
-            elseif($question->type == "text"){
-              $open_answer = $applicant
-                       ->answers()
-                       ->where("question_id", $question->id)
-                       ->get()
-                       ->first();//->text_value;
-              $row[] = $open_answer ? $open_answer->text_value : "no contestó";
-            }
-            elseif($question->options->count()){
-              $row[] = "es opción múltiple";
-            }
-            else{
-              $num_value = $applicant
-                       ->answers()
-                       ->where("question_id", $question->id)
-                       ->get()
-                       ->first();//->text_value;
-              $row[] = $num_value ? $num_value->num_value : "-";
-            }
-          }
-          $sheet->appendRow($row);
-        }
-      });
-    })->store("xlsx", public_path('csv'));
-
-    $request->session()->flash('status', ['type' => 'csv create', 'name' => $blueprint->title]);
-    $blueprint->csv_file = $title . ".xlsx";
-    $blueprint->update();
+    $request->session()->flash('status', ['type' => 'file create', 'name' => $blueprint->title]);
     return redirect("dashboard/encuesta/" . $id);
   }
 
