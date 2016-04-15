@@ -210,8 +210,14 @@ class Applicants extends Controller
         "form_key"     => $applicant->form_key
       ]);
 
-      $answer->text_value = $question->type == "text" ? $request->input('question_value') : null;
-      $answer->num_value  = $question->type == "integer" || $question->type == "number" ? $request->input('question_value') : null;
+      if($question->type == "integer" || $question->type == "number"){
+        $answer->num_value  = $request->input('question_value');
+        $answer->text_value = null;
+      }
+      else{
+        $answer->num_value  = null;
+        $answer->text_value = $request->input('question_value');
+      }
 
       $answer->update();
       $answer->question_value = $request->input('question_value');
