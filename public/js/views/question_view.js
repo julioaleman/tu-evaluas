@@ -15,6 +15,7 @@ define(function(require){
       Description = require('text!templates/survey_description.html'),
       Question    = require('text!templates/survey_question.html'),
       Option      = require('text!templates/survey_option.html'),
+      MultiOption = require('text!templates/survey_option_checkbox.html'),
       Input       = require('text!templates/survey_input.html'),
       Location    = require('text!templates/survey_location.html'),
       Loc_option  = require('text!templates/survey_location_option.html');
@@ -32,8 +33,9 @@ define(function(require){
     events : {
       // [ GENERAL QUESTIONS]
       'click input[type="radio"]'   : 'save_response',
+      'click input[type="checkbox"]'   : 'save_response',
       'blur input[type="text"]'     : 'save_response',
-      'blur input[type="number"]'     : 'save_response',
+      'blur input[type="number"]'   : 'save_response',
       'change input[type="hidden"]' : 'save_response',
 
       // [ LOCATION QUESTIONS]
@@ -56,6 +58,7 @@ define(function(require){
     template : _.template(Question),
     des_temp : _.template(Description),
     opt_temp : _.template(Option),
+    mul_temp : _.template(MultiOption),
     inp_temp : _.template(Input),
     loc_temp : _.template(Location),
     lo_temp  : _.template(Loc_option),
@@ -96,13 +99,18 @@ define(function(require){
       }
 
       // [ THE LOCATION ]
-      else if(Number(this.model.get('is_location'))){
+      else if(this.model.get('type') == "location"){
         this._render_location();
       }
 
       // [ THE MULTIPLE OPTION ] 
-      else if(this.opt.length){
+      else if(this.model.get('type') == "multiple"){
         this._render_radio();
+      }
+
+      // [ THE MULTIPLE OPTION ] 
+      else if(this.model.get('type') == "multiple-multiple"){
+        this._render_checkbox();
       }
 
       // [ THE OPEN QUESTION ]
@@ -129,11 +137,23 @@ define(function(require){
       }, this);
     },
 
+    _render_checkbox : function(model){
+      console.log(this.model.attributes);
+      this.$el.html(this.template(this.model.attributes));
+      // [ THE OPTIONS ]
+      this.opt.each(function(option){
+        // [ A.1 ] le pasa a cada opción el valor del servidor para
+        //         la pregunta a la que pertenece. Si ya fue respondida,
+        //         le agrega el atributo "checked"; si no, no pasa nada. 
+        option.set({default_value : this.model.get('default_value')});
+        this.$el.append(this.mul_temp(option.attributes));
+      }, this);
+    },
+
     _render_location : function(){
       this.$el.html(this.loc_temp(this.model.attributes));
       if(this.model.get('default_value')){
         var location = this.model.get('default_value');
-        console.log(location, this.model.attributes);
         var state    = location.slice(0,2);
         var city     = location.slice(2,5);
         var locality = location.slice(5);
@@ -245,7 +265,20 @@ define(function(require){
       // Cada que se contesta o cambia una respuesta, ésta es enviada al
       // servidor.
       // [1] obtiene y revisa que la respuesta sea válida
-      var res = this.$(e.currentTarget).val();
+      if(this.$(e.currentTarget).attr("type") == "checkbox"){
+        var name  = this.$(e.currentTarget).attr("name"),
+            items = document.querySelectorAll("input[name='" + name + "']:checked"),
+            res   = [];
+            _.each(items, function(el){
+              res.push(el.value);
+            }, this);
+
+            res = res.join(",");
+      }
+      else{
+        var res = this.$(e.currentTarget).val();
+      }
+      
       if(res){
       // [2] genera el objeto de respuesta al servidor
         var server_res = {

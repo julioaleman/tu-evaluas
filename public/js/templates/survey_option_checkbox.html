@@ -1,0 +1,12 @@
+<li>
+  <label>
+    <input type="checkbox" name="<%= 'q' + question_id %>" value="<%= value %>" 
+    <% if(default_value){
+    var options = default_value.split(",");
+      if(options.indexOf(String(value)) != -1){
+        print('checked');
+      }
+    } %>>
+    <%= description %>
+  </label>
+</li>
