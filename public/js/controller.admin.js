@@ -173,7 +173,7 @@ define(function(require){
       this.branches = new Backbone.Collection(Branches.list);
       this.programs = new Backbone.Collection(Programs.list);
 
-      var branch  = this.categories.findWhere({nombre : this.blueprint.branch}),
+      var branch  = this.branches.findWhere({nombre : this.blueprint.branch}),
           unit    = branch && this.blueprint.unit ? this.blueprint.unit : "",
           program = branch && this.blueprint.program ? this.blueprint.program : "";
 
@@ -192,6 +192,7 @@ define(function(require){
 
       // RENDER UNITS
       if(branch){
+
         branch.get('unidades').forEach(function(unit){
           var name = unit;
           if(name == this.blueprint.unit){
@@ -207,7 +208,7 @@ define(function(require){
       if(branch){
         var programas = this.programs.where({ramo : branch.id});
         programas.forEach(function(p){
-          var name = p.programa;
+          var name = p.get('programa');
           if(name == this.blueprint.program){
             this.$("#survey-program").append("<option selected>" + name + "</option>");
           }
