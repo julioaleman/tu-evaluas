@@ -7,9 +7,6 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "league/csv": "^8.0",
-        "guzzlehttp/guzzle": "^6.1",
-        "intervention/image": "^2.3",
         "maatwebsite/excel": "^2.1"
     },
     "require-dev": {
@@ -40,13 +37,11 @@
             "php artisan key:generate"
         ],
         "post-install-cmd": [
-            "php artisan clear-compiled",
+            "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan optimize"
         ],
-        "pre-update-cmd": [
-            "php artisan clear-compiled"
-        ],
         "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
         ]
     },

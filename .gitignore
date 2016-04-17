@@ -1,11 +1,8 @@
-vendor/
-node_modules/
-public/js/bower_components
-public/css/src_sass
-public/storage
-
-.env.*.php
-.env.php
+/vendor
+/node_modules
+/public/storage
+Homestead.yaml
+Homestead.json
 .env
 
 .DS_Store
@@ -17,3 +14,6 @@ public/results/*
 !public/results/index.html
 public/csv/*
 !public/csv/index.html
+
+public/js/bower_components
+public/css/src_sass
