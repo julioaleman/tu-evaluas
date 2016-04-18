@@ -477,7 +477,7 @@ define(function(require){
           options  = question.get('options');
 
           var option   = _.find(options, function(m){
-            return (m.value || m.get('value')) == model.get('value');
+            return (m.description || m.get('description')) == model.get('value');
           }, this),
           o_text   = option.description || option.get('description'),
           text     = document.createTextNode(q_text + ' | R= ' + o_text);
@@ -503,9 +503,12 @@ define(function(require){
       if(question){
         if(question.attributes.options.length){
           _.each(question.attributes.options, function(option){
+            answers_list += "<option class='rule-answer-option'>" + (option.description || option.get('description')) + "</option>";
+            /*
             answers_list += "<option class='rule-answer-option' value='" 
                          + (option.value || option.get('value')) +"'>" 
                          + (option.description || option.get('description')) + "</option>";
+            */
           }, this);
           answers.innerHTML = answers_list;
           answers.style.display = "";

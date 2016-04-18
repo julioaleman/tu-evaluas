@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "maatwebsite/excel": "^2.1",
         "league/csv": "^8.0",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
