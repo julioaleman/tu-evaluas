@@ -111,7 +111,9 @@ class Users extends Controller
 
     $this->validate($request, $rules);
 
-    $user->name = $request->name;
+    $user->name   = $request->name;
+    $user->branch = $request->branch;
+    $user->unit   = $request->unit;
     if(!empty($pass)) $user->password = Hash::make($request->password);
 
     if($user->level == 3) $user->level = empty($user->level) || empty($request->level) ? 2 : $request->level;
