@@ -86,11 +86,14 @@
             
             <ul class="list">
               <li class="row los_titles">
-                 <div class="col-sm-6">
+                 <div class="col-sm-3">
                    <h4>Nombre</h4>
                  </div>
                  <div class="col-sm-3">
                     <h4>Estado</h4>
+                 </div>
+                  <div class="col-sm-3">
+                    <h4>Visitas | envíos | generados</h4>
                  </div>
                  <div class="col-sm-3">
                     <h4>Acciones</h4>
@@ -98,7 +101,7 @@
               </li>
             <?php foreach($surveys as $survey): ?>
               <li class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                 <a href="{{url('dashboard/encuesta/' . $survey->id)}}">{{$survey->title}}</a>
                 </div>
                 <div class="col-sm-3">
@@ -116,6 +119,11 @@
                 oculta
                 @endif
                 </div>
+
+                <div class="col-sm-3">
+                {{$survey->applicants()->with('answers')->count()}} | 0 | {{$survey->applicants()->count()}}
+                </div>
+
                  <div class="col-sm-3">
                   <a href="{{url('dashboard/encuesta/test/' . $survey->id)}}" class="btn_test">Previsualizar</a>
                   <a data-title="{{$survey->title}}" href="{{url('dashboard/encuestas/eliminar/' . $survey->id)}}" class="danger">Eliminar</a>
