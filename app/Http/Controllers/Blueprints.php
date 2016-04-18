@@ -164,7 +164,7 @@ class Blueprints extends Controller
     //  $blueprint->is_closed   = $request->input("is_closed") ? 1 : 0; 
     $blueprint->banner      = isset($name) ? $name : $blueprint->banner;
     $blueprint->ptp         = $request->input("survey-ptp", null);
-    $blueprint->unit        = $request->input("survey-unit", null);
+    // $blueprint->unit        = $request->input("survey-unit", null);
     $blueprint->branch      = $request->input("survey-branch", null);
     $blueprint->program     = $request->input("survey-program", null);
     $blueprint->save();

@@ -138,6 +138,7 @@
               </p>
             </div>
 
+            <!--
             <div class="col-sm-10 col-sm-offset-1">
               <p>Unidad responsable</p>
               <p id="js-error-unit" class="error"></p>
@@ -147,6 +148,7 @@
                 </select>
               </p>
             </div>
+            -->
 
             <div class="col-sm-10 col-sm-offset-1">
               <p>Programa presupuestario</p>

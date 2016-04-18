@@ -174,7 +174,7 @@ define(function(require){
       this.programs = new Backbone.Collection(Programs.list);
 
       var branch  = this.branches.findWhere({nombre : this.blueprint.branch}),
-          unit    = branch && this.blueprint.unit ? this.blueprint.unit : "",
+          // unit    = branch && this.blueprint.unit ? this.blueprint.unit : "",
           program = branch && this.blueprint.program ? this.blueprint.program : "";
 
       // RENDER BRANCH
@@ -191,6 +191,7 @@ define(function(require){
       }, this);
 
       // RENDER UNITS
+      /*
       if(branch){
 
         branch.get('unidades').forEach(function(unit){
@@ -203,6 +204,7 @@ define(function(require){
           }
         }, this);
       }
+      */
 
       // RENDER PROGRAMS
       if(branch){
@@ -221,7 +223,7 @@ define(function(require){
 
     update_branch : function(e){
       var branch = this.$("#survey-branch").val();
-      this.$("#survey-unit").html("");
+      //this.$("#survey-unit").html("");
       this.$("#survey-program").html("");
       this.$("#survey-ptp").val("");
       if(!branch) return;
@@ -229,9 +231,11 @@ define(function(require){
       branch = this.branches.findWhere({nombre : branch});
 
       // RENDER UNITS
+      /*
       branch.get('unidades').forEach(function(unit){
           this.$("#survey-unit").append("<option>" + unit + "</option>");  
       }, this);
+      */
 
         
       // RENDER  PROGRAMS

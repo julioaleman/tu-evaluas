@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "maatwebsite/excel": "^2.1",
-        "league/csv": "^8.0"
+        "league/csv": "^8.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

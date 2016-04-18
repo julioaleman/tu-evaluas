@@ -44,6 +44,8 @@ class Users extends Controller
   //
   //
   public function store(Request $request){
+    $u = Auth::user();
+    if($u->level != 3) return redirect("dashboard/usuarios");
     // fix posible trail spaces on the email
     $email = trim($request->input('email'));
     $request->merge(['email' => $email]);
