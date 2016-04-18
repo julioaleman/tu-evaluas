@@ -25,7 +25,7 @@ Route::get('/', "Frontend@index");
 |
 */
 
-Route::group(['middleware' => 'web'], function () {
+//Route::group(['middleware' => 'web'], function () {
   // FRONT END
   Route::get('que-es', "Frontend@about");
   Route::get('preguntas-frecuentes', "Frontend@faqs");
@@ -116,4 +116,4 @@ Route::group(['middleware' => 'web'], function () {
     Route::delete('dashboard/reglas/{id}', 'BlueprintApi@deleteRule');
 
   });
-});
+//});

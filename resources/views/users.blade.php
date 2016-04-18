@@ -60,6 +60,18 @@
           		  <p><label>Nombre</label><input id="the-new-name" type="text" name="name" value="{{old('name')}}"></p>
           		  <p><label>Correo</label><input id="the-new-email" type="text" name="email" value="{{old('email')}}"></p>
           		  <p><label>Contraseña</label><input id="the-new-pass" type="password" name="password"></p>
+                <p>
+                  <label>Ramo</label>
+                  <select name="branch" id="branch">
+                    <option value="">Selecciona un ramo</option>
+                  </select>
+                </p>
+                <p>
+                  <label>Unidad responsable</label>
+                  <select name="unit" id="unit">
+                    <option value="">Selecciona una unidad responsable</option>
+                  </select>
+                </p>
           		  <p>Tipo de usuario</p>
           		  <ul class="options">
           		    <li><label><input type="radio" name="level" value="2" checked>Funcionario</label></li>
@@ -166,10 +178,13 @@
   </div>
 </div>
 
-<script src="/js/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/js/bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
-<script src="/js/bower_components/typeahead.js/dist/bloodhound.min.js"></script>
-<script src="/js/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{url('')}}/js/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="{{url('')}}/js/bower_components/d3/d3.js"></script>
+<script src="{{url('')}}/js/bower_components/underscore/underscore.js"></script>
+<script src="{{url('')}}/js/bower_components/backbone/backbone.js"></script>
+<script src="{{url('')}}/js/bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
+<script src="{{url('')}}/js/bower_components/typeahead.js/dist/bloodhound.min.js"></script>
+<script src="{{url('')}}/js/bower_components/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
   /*
@@ -221,6 +236,26 @@
 
 
 <script>
+var path  = "{{url('')}}" + "/js/ramos.json",
+    ramos, units, ramo; 
+
+$("#branch").on("change", function(e){
+  var val = e.currentTarget.value;
+  if(val){
+    ramo  = ramos.findWhere({nombre : val});
+    units = ramo.get('unidades');
+    $(".remove-me").remove();
+    units.forEach(function(u){
+      $("#unit").append("<option class='remove-me'>" + u + "</option>");
+    }, this);
+  }
+});
+d3.json(path, function(error, data){
+  ramos = new Backbone.Collection(data);
+  ramos.each(function(r){
+    $("#branch").append("<option>" + r.get('nombre') + "</option>");
+  });
+});
 /*
   // more crapy validation
   var form = document.getElementById('add-admin-form'),

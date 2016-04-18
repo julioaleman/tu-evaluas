@@ -58,11 +58,14 @@ class Users extends Controller
       'password.required' => 'Debes escribir el password del usuario',
       'password.min'      => 'El password debe tener por lo menos 8 caracteres',
     ];
+
     // validate the user
     $this->validate($request, [
+      
       'name'     => 'required|max:255',
       'email'    => 'required|email|unique:users|max:255',
       'password' => 'required|min:8',
+      
     ], $messages);
 
     $user = new User();
@@ -70,10 +73,12 @@ class Users extends Controller
     $user->email    = $request->email;
     $user->password = Hash::make($request->password);
     $user->level    = $request->level;
+    $user->branch   = $request->branch;
+    $user->unit     = $request->unit;
     $user->save();
 
     $request->session()->flash('status', ['type' => 'create', 'name' => $user->name]);
-    return redirect("dashboard/usuarios");
+    return redirect("dashboard/usuario/" . $user->id);
   }
 
   //
