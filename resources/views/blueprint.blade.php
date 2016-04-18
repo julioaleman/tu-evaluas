@@ -327,7 +327,9 @@
           <label><input type="radio" name="type" value="number">numérica</label>
           <label><input type="radio" name="type" value="multiple">opción múltiple (una)</label>
           <label><input type="radio" name="type" value="multiple-multiple">opción múltiple (varias)</label>
-          <label><input type="radio" name="type" value="location">ubicación</label>
+          <label><input type="radio" name="type" value="location-a">ubicación (estado)</label>
+          <label><input type="radio" name="type" value="location-b">ubicación (estado, municipio)</label>
+          <label><input type="radio" name="type" value="location-c">ubicación (estado, municipio, localidad)</label>
         </p>
         <!-- [2] -->
         

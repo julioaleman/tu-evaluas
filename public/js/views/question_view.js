@@ -92,6 +92,7 @@ define(function(require){
     //
     render : function(){
       // [ THE QUESTION TYPES ]
+      var type = this.model.get('type');
 
       // [ THE DESCRIPTION ] 
       if(Number(this.model.get('is_description'))){
@@ -99,7 +100,7 @@ define(function(require){
       }
 
       // [ THE LOCATION ]
-      else if(this.model.get('type') == "location"){
+      else if(["location-a", "location-b", "location-c"].indexOf(type) != -1){
         this._render_location();
       }
 

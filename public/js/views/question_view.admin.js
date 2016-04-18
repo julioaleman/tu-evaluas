@@ -90,8 +90,14 @@ define(function(require){
       this.$('.question-panel-editor').show();
       // [2] selecciona el tipo de pregunta
       //if(Number(this.model.get('is_location'))){
-      if(this.model.get('type') == 'location'){
-        this.$('input[value="location"]')[0].checked = 1;
+      if(this.model.get('type') == 'location-a'){
+        this.$('input[value="location-a"]')[0].checked = 1;
+      }
+      else if(this.model.get('type') == 'location-b'){
+        this.$('input[value="location-b"]')[0].checked = 1;
+      }
+      else if(this.model.get('type') == 'location-c'){
+        this.$('input[value="location-c"]')[0].checked = 1;
       }
       else if(this.model.get('type') === 'text'){
         this.$('input[value="text"]')[0].checked = 1;

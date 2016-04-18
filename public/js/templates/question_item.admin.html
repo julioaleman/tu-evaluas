@@ -19,7 +19,10 @@
     <label><input type="radio" name="type_<%= id %>" value="number">numérica</label>
     <label><input type="radio" name="type_<%= id %>" value="multiple">opción múltiple (una)</label>
     <label><input type="radio" name="type_<%= id %>" value="multiple-multiple">opción múltiple (varias)</label>
-    <label><input type="radio" name="type_<%= id %>" value="location">ubicación</label>
+    <!--<label><input type="radio" name="type_<%= id %>" value="location">ubicación</label>-->
+    <label><input type="radio" name="type_<%= id %>" value="location-a">ubicación (estado)</label>
+    <label><input type="radio" name="type_<%= id %>" value="location-b">ubicación (estado, municipio)</label>
+    <label><input type="radio" name="type_<%= id %>" value="location-c">ubicación (estado, municipio, localidad)</label>
   </p>
   <!-- [2] define a la sección a la que pertenece la pregunta -->
   <p id="survey-section-selector-<%= id %>" class="section-container" style="display:none">
