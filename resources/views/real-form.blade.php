@@ -25,6 +25,11 @@
 
   <div class="container cuestiona">
     <h1>{{$blueprint->title}}</h1>
+
+    @if($is_admin && !$blueprint->is_visible)
+      <p class="warning">La encuesta está oculta, pero al ser un usuario registrado, puedes verla :D</p>
+    @endif
+
     <div id="main" class="row">
       <div class="col-sm-12">
         <form id="survey">

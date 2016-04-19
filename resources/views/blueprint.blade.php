@@ -234,23 +234,24 @@
           </div>
         </form>
     <!-- IS VISIBLE -->
-          @if($user->level ==3)
-      <div class="divider"></div>
+      @if($user->level ==3)
+        <div class="divider"></div>
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
             @if($blueprint->is_public)
               <p>
-              <a href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Cerrar encuesta</a></p>
+              <a href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Terminar encuesta</a></p>
             @else
               <p>
-              <a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Publicar encuesta</a></p>
+              <a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Iniciar encuesta</a></p>
             @endif
             </div>
           </div>
-          @endif
-
-      <div class="divider"></div>
+          <div class="divider"></div>
+        @endif
+          
           <!-- IS CLOSED -->
+          <!--
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
             @if($blueprint->is_closed)
@@ -261,6 +262,8 @@
             </div>
           </div>   
 		<div class="divider"></div>
+    -->
+
         <!-- CREATE/GET CSV -->
         <div class="row">
           <div class="col-sm-10 col-sm-offset-1">

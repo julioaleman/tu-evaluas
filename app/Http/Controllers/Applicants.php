@@ -179,9 +179,29 @@ class Applicants extends Controller
   // [ DISPLAY FORM ]
   //
   //
-  public function displayForm($form_key){
+  public function displayForm($form_key = null){
+    // [0] sin clave, reenvía a resultados
+    if(!$form_key){
+      return redirect('resultados');
+    }
+
+    // [1] obtiene los datos para armar la encuesta
+    $user      = Auth::user();
     $applicant = Applicant::where("form_key", $form_key)->first();
-    $blueprint = $applicant->blueprint; 
+    $blueprint = $applicant->blueprint;
+    $is_admin  = (bool)$user;
+
+    // [2] si la encuestas es visible y ha terminado, revisa los datos
+    if($blueprint->is_closed && $bluprint->is_visible){
+      return redirect('resultado/'. $blueprint->id);
+    }
+
+    // [3] Es posible que el usuario lo vea estando oculto, si está identificado. 
+    //     Si no, regresa a la página de resultados
+    if(!$blueprint->is_visble && ! $is_admin){
+      return redirect('resultados');
+    }
+
 
     $data = [];
     $data['applicant'] = $applicant;
@@ -191,6 +211,7 @@ class Applicants extends Controller
     $data['options']   = $blueprint->options;
     $data['answers']   = Answer::where("form_key", $form_key)->get();
     $data['is_test']   = false;
+    $data['is_admin']  = $is_admin;
     return view("real-form")->with($data);
   }
 

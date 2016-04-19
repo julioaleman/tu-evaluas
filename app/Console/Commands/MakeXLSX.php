@@ -78,7 +78,7 @@ class MakeXLSX extends Command
             if($question->is_description){
               $row[] = "es descripción";
             }
-            elseif($question->is_location){
+            elseif($question->type == "location-a"){
               $inegi_key = $applicant
                        ->answers()
                        ->where("question_id", $question->id)
@@ -86,7 +86,24 @@ class MakeXLSX extends Command
                        ->first();//->text_value;
               $row[] = $inegi_key ? $inegi_key->text_value : "no dijo de dónde";
             }
-            elseif($question->type == "text"){
+            elseif($question->type == "location-b"){
+              $inegi_key = $applicant
+                       ->answers()
+                       ->where("question_id", $question->id)
+                       ->get()
+                       ->first();//->text_value;
+              $row[] = $inegi_key ? $inegi_key->text_value : "no dijo de dónde";
+            }
+            elseif($question->type == "location-c"){
+              $inegi_key = $applicant
+                       ->answers()
+                       ->where("question_id", $question->id)
+                       ->get()
+                       ->first();//->text_value;
+              $row[] = $inegi_key ? $inegi_key->text_value : "no dijo de dónde";
+            }
+            
+            elseif(in_array($question->type, ['text', 'multiple', 'multiple-multiple'])){
               $open_answer = $applicant
                        ->answers()
                        ->where("question_id", $question->id)
@@ -94,9 +111,7 @@ class MakeXLSX extends Command
                        ->first();//->text_value;
               $row[] = $open_answer ? $open_answer->text_value : "no contestó";
             }
-            elseif($question->options->count()){
-              $row[] = "es opción múltiple";
-            }
+            
             else{
               $num_value = $applicant
                        ->answers()
