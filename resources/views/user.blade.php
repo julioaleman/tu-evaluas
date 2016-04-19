@@ -41,12 +41,17 @@
               </label></li>
             </ul>
             @endif
-            <p>
-              <input type="submit" value="editar">
+            <div class="row">
+	            <div class="divider"></div>
+            	<div class="col-sm-2">
+              <input type="submit" value="Editar">
+            	</div>
               @if($user->id != $_user->id)
-              <a data-title="{{$_user->email}}" id="kill-him" href="{{url('dashboard/usuario/eliminar/' . $_user->id)}}">Eliminar!</a>
+              <div class="col-sm-3">
+              <a data-title="{{$_user->email}}" id="kill-him" class="btn_deafult" href="{{url('dashboard/usuario/eliminar/' . $_user->id)}}">Eliminar!</a>
+              </div>
               @endif
-            </p>
+            </div>
             </div>
   </form>
 </div>
