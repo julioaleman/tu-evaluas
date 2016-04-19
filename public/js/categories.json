@@ -1,12 +1,12 @@
 [{
   "name" : "Defensa Nacional",
-  "sub"  : ["Servicio militar","Derechos humanos","Investigación","Desarrollo","Equipamiento militar","Igualdad de género","Emergencias", "Educación militar","Justicia militar","Becas a familiares"],
+  "sub"  : ["Servicio militar","Derechos humanos","Investigación","Desarrollo","Equipamiento militar","Igualdad de género","Emergencias","Educación militar","Justicia militar","Becas a familiares"],
   "tags" : ["Niños", "Niñas", "Jóvenes", "Adultos", "Adultos mayores", "Militares", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Hombres", "Mujeres"]
 },
 {
   "name" : "Educación",
   "sub"  : ["Títulos","Cédulas","Certificados","Becas","Libros","Indígenas","Deporte","Tecnología","Infraestructura educativa"],
-  "tags" : ["Prescolar", "Primaria", "Secundaria", "Preparatoria", "Técnica", "Adultos", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Hombres", "Mujeres"]
+  "tags" : ["Prescolar", "Primaria", "Secundaria", "Preparatoria", "Técnica", "Licenciatura", "Posgrados", "Adultos", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Hombres", "Mujeres"]
 },
 {
   "name" : "Salud",
@@ -15,7 +15,7 @@
 },
 {
   "name" : "Gobernación",
-  "sub"  : ["Violencia","Delitos","Sociedad Civil","Prevención social","Género","Sistema penitenciario","Servicios migratorios","Seguridad Pública","Seguridad Privada","Derechos Humanos","Radio","Televisión"],
+  "sub"  : ["Violencia","Delitos","Sociedad civil","Prevención social","Género","Sistema penitenciario","Servicios migratorios","Seguridad pública","Seguridad privada","Derechos humanos","Radio","Televisión"],
   "tags" : ["Niños", "Niñas", "Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Hombres", "Mujeres"]
 },
 {
@@ -25,8 +25,8 @@
 },
 {
   "name" : "Hacienda y Crédito Público",
-  "sub"  : ["Pago de impuestos","Declaraciones","Devoluciones","Deducciones","Contabilidad electrónica","Firma","Factura","RFC","Obligaciones fiscales","Estímulos fiscales","Enajenación de bienes","Subastas","Bolsa de valores","Inclusión financiera","Fideicomisos","Banca de desarrollo","Transparencia presupuestaria",],
-  "tags" : ["Jóvenes", "Hombres", "Mujeres", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Funcionarios públicos", "Empresas", "PYMES"]
+  "sub"  : ["Pago de impuestos","Declaraciones","Devoluciones","Deducciones","Contabilidad electrónica","Firma","Factura","RFC","Obligaciones fiscales","Estímulos fiscales","Enajenación de bienes","Subastas","Bolsa de valores","Inclusión financiera","Fideicomisos","Banca de desarrollo","Transparencia presupuestaria"],
+  "tags" : ["Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Funcionarios públicos", "Empresas", "PYMES", "Hombres", "Mujeres"]
 },
 {
   "name" : "Desarrollo Social",
@@ -36,16 +36,16 @@
 {
   "name" : "Medio Ambiente",
   "sub"  : ["Protección","Inspección","Regulación","Permisos","Agua","Suelos","Bosques","Áreas naturales","Vida silvestre","Minería","Contaminación","Cambio climático","Cacería","Investigación","Capacitación ambiental"],
-  "tags" : ["Niños","Niñas","Jóvenes", "Hombres", "Mujeres", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Empresas", "PYMES"]
+  "tags" : ["Niños", "Niñas", "Jóvenes", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Empresas", "PYMES", "Hombres", "Mujeres"]
 },
 {
   "name" : "Energía",
   "sub"  : ["Electricidad","Luz","Petróleo","Permisos","Pagos","Reportes"],
-  "tags" : ["Jóvenes", "Hombres", "Mujeres", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Empresas", "PYMES"]
+  "tags" : ["Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Empresas", "PYMES", "Hombres", "Mujeres"]
 },{
   "name" : "Economía",
-  "sub"  : ["Importación","Exportación","Permisos","Registro","Consumidor","Créditos","Inversión","Empleo","Industria","Agricultura","Ganadería","Pesca","Campo","Emprendedurismo","Mercados","Comercialización","Innovación","Tecnología"],
-  "tags" : ["Jóvenes", "Hombres", "Mujeres", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Empresas", "PYMES"]
+  "sub"  : ["Importación","Exportación","Permisos","Registro","Consumidor","Créditos","Premios","Inversión","Empleo","Industria","Agricultura","Ganadería","Pesca","Campo","Emprendedurismo","Mercados","Comercialización","Innovación","Tecnología"],
+  "tags" : ["Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Empresas", "PYMES", "Hombres", "Mujeres"]
 },
 {
   "name" : "Comunicaciones y Transportes",
@@ -55,12 +55,12 @@
 {
   "name" : "Trabajo",
   "sub"  : ["Negociación","Justicia laboral","Empleo","Capacitacion","Sindicatos","Prestaciones adicionales","Derechos","Patrones","Seguridad social","Pensiones","Créditos","Fideicomisos"],
-  "tags" : ["Jóvenes", "Hombres", "Mujeres", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Empresas", "PYMES"]
+  "tags" : ["Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Empresas", "PYMES",  "Hombres", "Mujeres"]
 },
 {
   "name" : "Desarrollo Territorial",
   "sub"  : ["Justicia","Conflictos","Desarrollo","Propiedad","Prevención de riesgos","Infraestructura","Agricultura","Movilidad","Vivienda","Apoyos","Rural","Urbano"],
-  "tags" : ["Niños", "niñas", "jóvenes", "adultos", "adultos mayores", "hombres", "mujeres", "empresas", "negocios"]
+  "tags" : ["Niños", "Niñas", "Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Hombres", "Mujeres"]
 },{
   "name" : "Turismo",
   "sub"  : ["Promoción","Inversión","Competitividad","Innovación","Artesanías","Turistas","Guías","Destinos turísticos","Pueblos Mágicos","Viajes","Infraestructura"],
@@ -68,13 +68,13 @@
 },
 {"name" : "Ciencia y Tecnología",
   "sub"  : ["Investigación","Desarrollo","Innovación","Capacidades","Apoyos","Infraestructura","Investigadores","Centros","Becas de posgrado","Ciencia","Tecnología"],
-  "tags" : ["Niños", "Niñas", "Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Hombres", "Mujeres", "Empresas", "PYMES", "Instituciones educativas"]
+  "tags" : ["Niños", "Niñas", "Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Empresas", "PYMES", "Instituciones educativas", "Hombres", "Mujeres"]
 },
 {"name" : "IMSS-ISSSTE",
   "sub"  : ["Enfermedades","Investigación","Desarrollo","Prevención","Infraestructura","Hospitales","Consultas","Médicos","Medicamentos","Pensiones","Jubilaciones","Prestaciones"],
-  "tags" : ["Niños", "Niñas", "Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Hombres", "Mujeres", "Empresas", "PYMES"]
+  "tags" : ["Niños", "Niñas", "Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Empresas", "PYMES", "Hombres", "Mujeres"]
 },
 {"name" : "Cultura",
-  "sub"  : ["Artes","Cultura","Obras de arte","Apoyos","Artistas","Educación","Espacios Culturales","Patrimonio Cultural","Impulso","Convocatorias",],
-  "tags" : ["Niños", "Niñas", "Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Hombres", "Mujeres", "Empresas", "PYMES"]  
+  "sub"  : ["Artes","Cultura","Obras de arte","Apoyos","Artistas","Educación","Espacios Culturales","Patrimonio Cultural","Impulso","Convocatorias"],
+  "tags" : ["Niños", "Niñas", "Jóvenes", "Adultos", "Adultos mayores", "Comunidad LGBT", "Indígenas", "Personas con discapacidad", "Migrantes", "Empresas", "PYMES", "Hombres", "Mujeres"]  
 }]
