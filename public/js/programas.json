@@ -303,7 +303,7 @@
 {"programa" : "S-201 - Seguro Médico Siglo XXI", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=12S201", "ramo" : 12,"id" : 302},
 {"programa" : "S-202 - Calidad en la Atención Médica", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=12S202", "ramo" : 12,"id" : 303},
 {"programa" : "S-250 - Programa de Fortalecimiento a las Procuradurías de la Defensa del Menor y la Familia", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=12S250", "ramo" : 12,"id" : 304},
-{"programa" : "S-251 - Programa de Desarrollo Comunitario "Comunidad DIFerente"", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=12S251", "ramo" : 12,"id" : 305},
+{"programa" : "S-251 - Programa de Desarrollo Comunitario Comunidad DIFerente", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=12S251", "ramo" : 12,"id" : 305},
 {"programa" : "U-005 - Seguro Popular", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=12U005", "ramo" : 12,"id" : 306},
 {"programa" : "U-006 - Fortalecimiento de las Redes de Servicios de Salud", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=12U006", "ramo" : 12,"id" : 307},
 {"programa" : "U-007 - Reducción de la mortalidad materna y calidad en la atención obstétrica", "ptp" : "https://www.sistemas.hacienda.gob.mx/ptpsed/datosProgramaLlave.do?id=12U007", "ramo" : 12,"id" : 308},
