@@ -78,7 +78,8 @@ Route::get('/', "Frontend@index");
 
     Route::get('dashboard/encuestas/autorizar/confirmar/{id}/{single?}', "Blueprints@confirmAuthBlueprint");
     Route::get('dashboard/encuestas/cerrar/confirmar/{id}/{single?}', "Blueprints@closeAuthBlueprint");
-    Route::get('dashboard/encuestas/terminar/confirmar/{id}/{single?}', "Blueprints@finishAuthBlueprint");
+    Route::get('dashboard/encuestas/ocultar/confirmar/{id}', "Blueprints@hideAuthBlueprint");
+    Route::get('dashboard/encuestas/mostrar/confirmar/{id}', "Blueprints@showAuthBlueprint");
 
     // SEARCH
     Route::get('dashboard/encuestas/buscar/json', 'Blueprints@search');

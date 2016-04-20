@@ -303,7 +303,7 @@ class Blueprints extends Controller
   }
 
   //
-  // [ C L O S E   B L U E P R I N T ]
+  // [ F I N I S H   B L U E P R I N T ]
   //
   //
   public function closeAuthBlueprint(Request $request, $id, $single = false){
@@ -311,10 +311,11 @@ class Blueprints extends Controller
     if($user->level == 3){
       $blueprint = Blueprint::find($id);
       $blueprint->is_public  = 0;
-      $blueprint->is_visible = 0;
+      $blueprint->is_visible = 1;
+      $blueprint->is_closed  = 1;
       $blueprint->pending    = 0;
       $blueprint->update();
-      $request->session()->flash('status', ['type' => 'close create', 'name' => $blueprint->title]);
+      $request->session()->flash('status', ['type' => 'finish create', 'name' => $blueprint->title]);
     }
     if($single){
       return redirect("dashboard/encuesta/" . $id);
@@ -325,27 +326,35 @@ class Blueprints extends Controller
   }
 
   //
-  // [ F I N I S H   B L U E P R I N T ]
+  // [ H I D E   B L U E P R I N T ]
   //
   //
-  public function finishAuthBlueprint(Request $request, $id, $single = false){
+  public function hideAuthBlueprint(Request $request, $id){
     $user = Auth::user();
     if($user->level == 3){
       $blueprint = Blueprint::find($id);
-      $blueprint->is_public  = 0;
-      $blueprint->pending    = 0;
-      $blueprint->is_visible = 1;
-      $blueprint->is_closed  = 1;
+      $blueprint->is_visible = 0;
       $blueprint->update();
-      $request->session()->flash('status', ['type' => 'finish create', 'name' => $blueprint->title]);
+      $request->session()->flash('status', ['type' => 'hide create', 'name' => $blueprint->title]);
     }
 
-    if($single){
-      return redirect("dashboard/encuesta/" . $id);
+    return redirect("dashboard/encuesta/" . $id);
+  }
+
+  //
+  // [ S H O W   B L U E P R I N T ]
+  //
+  //
+  public function showAuthBlueprint(Request $request, $id){
+    $user = Auth::user();
+    if($user->level == 3){
+      $blueprint = Blueprint::find($id);
+      $blueprint->is_visible = 1;
+      $blueprint->update();
+      $request->session()->flash('status', ['type' => 'show create', 'name' => $blueprint->title]);
     }
-    else{
-      return redirect("dashboard/encuestas/");
-    }
+
+    return redirect("dashboard/encuesta/" . $id);
   }
 
   //

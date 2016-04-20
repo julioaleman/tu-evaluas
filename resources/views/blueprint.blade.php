@@ -30,8 +30,10 @@
     <p>El archivo para : "{{$status['name']}}" se está generando. Espera un momento.</p>
   @elseif($status['type'] == "authorize create")
     <p>La encuesta: "{{$status['name']}}" se ha publicado</p>
-  @elseif($status['type'] == "close create")
+  @elseif($status['type'] == "hide create")
     <p>La encuesta: "{{$status['name']}}" se ha ocultado</p>
+  @elseif($status['type'] == "show create")
+    <p>La encuesta: "{{$status['name']}}" es visible</p>
   @elseif($status['type'] == "finish create")
     <p>La encuesta: "{{$status['name']}}" ha terminado</p>
    @elseif($status['type'] == "csv create")
@@ -204,16 +206,6 @@
               <!-- survey-tags-->
             </div>
           </div>
-		 @if($user->level == 3)
-		  <div class="divider"></div>
-		  <!-- checkbox -->
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-              <p>
-              <input type="checkbox" name="yes" value="yes">  <strong> Ocultar encuesta</strong></p>
-            </div>
-          </div>
-          @endif
           
 		  <div class="divider"></div>
           <!-- BANNER -->
@@ -233,58 +225,70 @@
             </div>
           </div>
         </form>
-    <!-- IS VISIBLE -->
-      @if($user->level ==3)
         <div class="divider"></div>
+
+        <!-- BLUEPRINT CONTROL -->
+        @if($user->level ==3)
+        <h2>Controles</h2>
+        @if($blueprint->type == "regular" || $blueprint->type == "generated")
+          <!-- PUBLICAR  / TERMINAR ENCUESTA : ADMIN  -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-            @if($blueprint->is_public)
               <p>
-              <a href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Terminar encuesta</a></p>
-            @else
-              <p>
-              <a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Iniciar encuesta</a></p>
-            @endif
+              @if($blueprint->is_public)
+                <a href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Terminar encuesta</a>
+              @elseif($blueprint->is_closed)
+                <a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Iniciar encuesta nuevamente</a>
+              @else
+                <a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Iniciar encuesta</a>
+              @endif
+              </p>
             </div>
           </div>
           <div class="divider"></div>
         @endif
-          
-          <!-- IS CLOSED -->
-          <!--
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-            @if($blueprint->is_closed)
-              <p>La encuesta ha terminado</p>
-            @else
-              <p><a href="{{url('dashboard/encuestas/terminar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Terminar encuesta</a></p>
-            @endif
-            </div>
-          </div>   
-		<div class="divider"></div>
-    -->
 
-        <!-- CREATE/GET CSV -->
+        <!-- GENERAR ARCHIVOS PARA DESCARGA : ADMIN  -->
         <div class="row">
           <div class="col-sm-10 col-sm-offset-1">
-          @if($blueprint->csv_file == '')
-          <p>
-          <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Crear archivos para descargar</a>
-          </p>
-          @else
-          <p>
-             @if($blueprint->type == "results")
-               <a download href="{{url('csv/' . $blueprint->csv_file)}}">descargar resultados</a> <br>
-             @else
-               <a download href="{{url('csv/' . $blueprint->csv_file . '.csv')}}">descargar CSV</a> <br>
-               <a download href="{{url('csv/' . $blueprint->csv_file . '.xlsx')}}">descargar XLS</a> <br>
-               <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Generar archivos nuevamente</a>
-             @endif
-          </p>
-          @endif
-
+            <p>
+            @if($blueprint->csv_file == '' && ($blueprint->is_closed || $blueprint->is_public))
+              <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Crear archivos para descargar</a>
+            @elseif($blueprint->type == "results")
+              <a download href="{{url('csv/' . $blueprint->csv_file)}}">descargar resultados</a>
+            @elseif(!empty($blueprint->csv_file))
+              <a download href="{{url('csv/' . $blueprint->csv_file . '.csv')}}">descargar CSV</a> <br>
+              <a download href="{{url('csv/' . $blueprint->csv_file . '.xlsx')}}">descargar XLS</a> <br>
+              <a href="{{url('dashboard/encuestas/crear/csv/' . $blueprint->id)}}" class="create-survey-btn">Generar archivos nuevamente</a>
+            @else
+              Para descargar o generar archivos, es necesario que la encuesta esté en curso o haya terminado.
+            @endif
+            </p>
           </div>
         </div>
+        <div class="divider"></div>
+
+        <!-- OCULTAR / MOSTRAR LA ENCUESTA : ADMIN  -->
+        @if($blueprint->is_closed || $blueprint->is_public)
+         <div class="row">
+          <div class="col-sm-10 col-sm-offset-1">
+          <p>
+            @if($blueprint->is_visible)
+              <a href="{{url('dashboard/encuestas/ocultar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Ocultar encuesta</a>
+            @else
+              <a href="{{url('dashboard/encuestas/mostrar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Mostrar encuesta</a>
+            @endif
+            </p>
+          </div>
+        </div>
+        <div class="divider"></div>
+        @endif
+
+
+        @endif
+
+
+
       </section>
     </div>
     <!-- { THE BLUEPRINT ENDS } -->
