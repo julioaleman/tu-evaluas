@@ -700,9 +700,15 @@ define(function(require){
           }));
         }
         this.$('#survey-add-options').show();
+        this.$("#personal-warning").hide();
+      }
+      else if(e.currentTarget.value== "personal"){
+        this.$("#personal-warning").show();
+        this.$('#survey-add-options').hide();
       }
       else{
         this.$('#survey-add-options').hide();
+        this.$("#personal-warning").hide();
       }
     },
 

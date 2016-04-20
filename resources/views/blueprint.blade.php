@@ -333,9 +333,16 @@
           <label><input type="radio" name="type" value="location-a">ubicación (estado)</label>
           <label><input type="radio" name="type" value="location-b">ubicación (estado, municipio)</label>
           <label><input type="radio" name="type" value="location-c">ubicación (estado, municipio, localidad)</label>
+          <label><input type="radio" name="type" value="personal">Información personal</label>
         </p>
         <!-- [2] -->
         
+        <!-- [3] muestra el aviso sobre la información personal -->
+        <div id="personal-warning" style="display:none">
+          <h4>Información personal</h4>
+          <p>La información caapturada en este campo, no estará disponible en línea.</p>
+        </div>
+
         <!-- [4] agrega las respuestas para opción múltiple -->
         <div id="survey-add-options" style="display:none">
           <h4>Opciones de respuesta:</h4>

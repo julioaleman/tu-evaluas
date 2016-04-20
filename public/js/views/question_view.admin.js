@@ -102,6 +102,9 @@ define(function(require){
       else if(this.model.get('type') === 'text'){
         this.$('input[value="text"]')[0].checked = 1;
       }
+      else if(this.model.get('type') === 'personal'){
+        this.$('input[value="personal"]')[0].checked = 1;
+      }
       else if(this.model.get('type') == 'multiple'){
         this.$('input[value="multiple"]')[0].checked = 1;
       }
