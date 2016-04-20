@@ -244,16 +244,18 @@ class Applicants extends Controller
       $answer->question_value = $request->input('question_value');
       $answer->new_token      = csrf_token();
     }
+
     else{
       $question = Question::find($request->input('question_id'));
       $answer   = new Answer([
         "blueprint_id" => $question->blueprint->id,
         "question_id"  => $question->id,
-        "form_key"     => "xxx"//$applicant->form_key
+        "form_key"     => "xxx",//$applicant->form_key
       ]);
 
-      $answer->text_value = $question->type == "text" ? $request->input('question_value') : null;
-      $answer->num_value  = $question->type == "integer" || $question->type == "number" ? $request->input('question_value') : null;
+      $answer->num_value  = ($question->type == "number" ? $request->input('question_value') : null);
+      $answer->text_value = ($question->type != "number" ? $request->input('question_value') : null);
+      $answer->question   = $question;
 
       //$answer->update();
       $answer->question_value = $request->input('question_value');
