@@ -56,13 +56,14 @@ class Frontend extends Controller
   //
   function results(Request $request, $page = 1){
     if(empty($request->all())){
-      $blueprints = Blueprint::where("is_public", 1)
-      ->orWhere("is_visible", 1)
+      $blueprints = Blueprint::where("is_visible", 1)
+      //->orWhere("is_public", 1)
       ->skip(($page-1) * self::PAGE_SIZE)->take(self::PAGE_SIZE)->get();
       $total = Blueprint::where("is_public", 1)->count();
     }
     else{
-      $blueprints = Blueprint::where("is_public", 1)->where(function($q) use($request){
+      $blueprints = Blueprint::where("is_visible", 1)->where(function($q) use($request){
+      //$blueprints = Blueprint::where("is_public", 1)->where(function($q) use($request){
         // search title
         if($request->input("title", null)){
           $q->where("title", "like", "%". $request->input("title") . "%");
