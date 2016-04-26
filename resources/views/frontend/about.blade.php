@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container">
-  <div class="row">
-    <article>
-      <div class="col-sm-8 col-sm-offset-2">
-        <h1>¿Qué es <strong>Tú Evalúas</strong>?</h1>
+    	<hr>
+  <section class="programs row">
+        <div class="col-sm-8 col-sm-offset-2">
+        <h2 text-align="right" class="intro">¿Qué es <strong>Tú Evalúas</strong>?</h2>
+        <hr class="red">
         <p><strong>Tú Evalúas</strong> es una plataforma digital que <strong>tiene como objetivo evaluar el desempeño</strong> de los programas públicos 
           federales mediante la participación ciudadana. A través de <strong>Tú Evalúas</strong> podrás calificar los procesos seguidos 
           por cada programa y expresar tu 
@@ -21,6 +21,7 @@
           con respecto a los programas públicos federales para que quien lo desee (ciudadanos, 
           asociaciones, gobierno o la comunidad en conjunto) pueda dar seguimiento al pulso ciudadano.
         </p>
+        <hr>
         <h2>Nosotros</h2>
         <p>Esta iniciativa nace como parte del proyecto <a href="http://www.presidencia.gob.mx/agentesdeinnovacion/">Agentes de Innovación</a> 
           de la <a href="http://www.presidencia.gob.mx/edn/">Coordinación de la Estrategia Digital Nacional de 
@@ -37,9 +38,9 @@
           de los objetivos y 
           las políticas públicas de las dependencias del gobierno federal. Mediante la aplicación de cuestionarios a beneficiarios y no beneficiarios de los programas públicos federales y la publicidad de las encuestas de satisfacción, será posible medir el desempeño de los programas desde una perspectiva ciudadana, así como dar a conocer esa perspectiva a los tomadores de decisiones y al público en general.
         </p>
-      </div>
-    </article>
-  </div>
-</div>
+        <br>
+        <br>
+    </div>
+  </section>
 
 @endsection
