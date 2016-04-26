@@ -24,7 +24,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-8 col-sm-offset-2">
-					<h3 align="center"	><br>Participantes <strong>Tú Evalúas</strong></h3>
+					<h5 align="center">Participantes <strong>Tú Evalúas</strong></h5>
 					<div class="row">
 						<p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/sedesol_.png') }}"></a></p>
                         <p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/prospera_.png') }}"></a></p>
