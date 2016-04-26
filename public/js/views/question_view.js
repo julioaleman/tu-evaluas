@@ -48,8 +48,8 @@ define(function(require){
     // SET THE CONTAINER
     // -----------------
     //
-    tagName : 'div',
-    className : 'col-sm-10 col-sm-offset-1 count',
+    tagName : 'li',
+    className : 'count',
 
     // -----------------
     // SET THE TEMPLATES
