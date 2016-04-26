@@ -5,10 +5,9 @@
         <title><?php echo $title;?></title>
 		<meta name="description" content="<?php echo $description;?>">
         <meta name="viewport" content="width=device-width">
-		<link rel="shortcut icon" href="/img/favicon.ico">
-		<link rel="stylesheet" type="text/css"  href="/css/normalize.css">
-		<link rel="stylesheet" type="text/css" href="/css/styles.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/alice.css"/>
+		<!-- Codigo GOB.MX CSS -->
+		<link href="https://framework-gb.cdn.gob.mx/favicon.ico" rel="shortcut icon">
+		<link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
     </head>
 <body <?php echo (!isset($body_class)) ? '' : 'class="' . $body_class . '"';?>>
 		<!--nav-->

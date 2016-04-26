@@ -1,53 +1,37 @@
 <footer>
 	<!-- equipo-->
-	<div class="container">
-		<div class="row integrantes equipo">
-			<div class="col-sm-8 col-sm-offset-2">
-			<h3>Equipo <strong>Tú Evalúas</strong></h3>
-			<ul class="row">
-				<li class="col-xs-4"><span class="presidencia">Presidencia</span></li>
-				<li class="col-xs-4"><a href="http://www.presidencia.gob.mx/edn/" class="mx_digital">Estrategia Digital</a></li>
-				<li class="col-xs-4"><span class="shcp">SHCP</span></li>
-				<li class="col-xs-4"><a href="http://www.transparenciapresupuestaria.gob.mx/" class="transparencia">Transparencia Presupuestaria</a></li>
-				<li class="col-xs-4"><a href="http://www.crea.org.mx/" class="crea">CREA A.C.</a></li>
-				<li class="col-xs-4"><a href="http://gobiernofacil.com" class="gobiernofacil" title="Gobierno Fácil">Gobierno Fácil</a></li>
-			</ul>
-			</div>
-		</div>
-	</div>
-	<!-- participantes-->
-	<div class="integrantes participantes">
+	<div class="equipo_tuevaluas" style=" top:100px; left:100px; width:auto; background-color:#F6F6F6">
 		<div class="container">
-			<div class="row">
+			<div class="row integrantes equipo">
 				<div class="col-sm-8 col-sm-offset-2">
-					<h3>Participantes <strong>Tú Evalúas</strong></h3>
-					<ul class="row">
-						<li class="col-xs-2"></li>
-						<li class="col-xs-4"><a href="http://www.vas.gob.mx/swb/swb/PORTALVAS/home" class="prospera">Sedesol Prospera</a></li>
-						<li class="col-xs-4"><a href="https://www.inadem.gob.mx/" class="inadem">INADEM</a></li>
-					</ul>
+					<h3 align="center"><br>Equipo <strong>Tú Evalúas</strong></h3>
+					<div class="row">
+						<p class="col-xs-4"><img src="{{ url('img/presidencia_.png') }}"></p>
+	                    <p class="col-xs-4"><a href="http://www.transparenciapresupuestaria.gob.mx"><img src="{{ url('img/transparencia_presupuestaria_.png') }}"></a></p>
+						<p class="col-xs-4"><img src="{{ url('img/shcp_.png') }}"></p>
+					</div>
+					<div class="row">
+						<p class="col-xs-4 col-xs-offset-2"><a href="http://wwwcrea.org.mx"><img src="{{ url('img/crea_emp_.png') }}"></a></p>
+						<p class="col-xs-4"><a href="http://www.gobiernofacil.com"><img src="{{ url('img/gobierno_facil_.png') }}"></a><br><br></p>
+					</div>
+					
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<div class="links_bottom">
+	<!-- participantes-->
+	<div class="main-footer">
 		<div class="container">
 			<div class="row">
-			<div class="col-sm-3">
-				<p><span class="tu_evaluas">Tú Evalúas</span> ©2015</p>
+				<div class="col-sm-8 col-sm-offset-2">
+					<h5 align="center">Participantes <strong>Tú Evalúas</strong></h5>
+					<div class="row">
+						<p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/sedesol_.png') }}"></a></p>
+                        <p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/prospera_.png') }}"></a></p>
+						<p class="col-xs-4"><a href="http://www.inadem.gob.mx"><img src="{{ url('img/inadem_.png') }}"></p>
+					</div>
+				</div>
 			</div>
-			<div class="col-sm-9">
-				<ul>
-					<li><a href="{{url('que-es')}}">¿Qué es?</a></li>					
-					<li><a href="{{url('resultados')}}">Resultados</a></li>
-					<li><a href="{{url('preguntas-frecuentes')}}">Preguntas Frecuentes</a></li>
-					<li><a href="{{url('terminos-condiciones')}}">Términos y Condiciones</a></li>
-					<li><a href="{{url('aviso-privacidad')}}">Privacidad</a></li>
-					<li><a href="{{url('contacto')}}">Contacto</a></li>
-				</ul>
-			</div>
-		</div>
 		</div>
 	</div>
 </footer>
@@ -62,3 +46,5 @@
   ga('send', 'pageview');
 
 </script>
+<!-- JS -->
+    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>

@@ -1,11 +1,13 @@
 @extends('layouts.master')
 
 @section('content')
+<hr>
 <div class="container">
 	<div class="row">
 		<article class="data_hm">
 			<div class="col-sm-8 col-sm-offset-2">
 				<h1>Resultados de Cuestionario: <strong>{{ $blueprint->title }}</strong></h1>
+		<hr class="red">
 				<?php /*if($file): ?><section class="row">
 					
 					

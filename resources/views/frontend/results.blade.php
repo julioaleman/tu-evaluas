@@ -1,99 +1,92 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container">
+<hr>
+<div class="container.vertical-buffer">
 	<div class="row">
-		<article class="data_hm">
-			<div class="col-sm-8 col-sm-offset-2">
-				<h1>Resultados de cuestionarios en <strong>Tú Evalúas</strong></h1>
-				
-				<section>
-					@if ($surveys->count() > 0)
-					<!-- FILTRAR RESULTADOS -->
-					<h2 class="toggle">Filtrar resultados</h2>
-					<form style="display: none" id="fbp" name="filter-blueprints" method="get" action="{{url('resultados')}}" class="form_search">
-				    	<?php $category = $request->input('category') ? $categories->where("name", $request->input('category'))->first() : null; ?>
-						{!! csrf_field() !!}
-						<div class="row">
-							<div class="divider"></div>
-							<div class="col-sm-2">
-							<h3>Título: </h3>
+	<div class="col-sm-8 col-sm-offset-2">
+		<h2 class="intro">Resultados en cuestionarios <strong>Tú Evalúas</strong><br><br></h2>
+		<hr class="red">
+        @if ($surveys->count() > 0)
+		<form id="fbp" name="filter-blueprints" method="get" action="{{url('resultados')}}" class="form_search">
+			<?php $category = $request->input('category') ? $categories->where("name", $request->input('category'))->first() : null; ?>
+			{!! csrf_field() !!}
+        <div class="panel-group ficha-collapse" id="accordion">
+	    	<div class="panel panel-default">
+				<div class="panel-heading">
+			  		<h4 class="panel-title">
+			  			<a data-parent="#accordion" data-toggle="collapse" href="#panel-01" aria-expanded="true" aria-controls="panel-01">
+			  			Filtrar Resultados
+        				</a>
+      				</h4>
+	  				<button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-01"></button>
+    			</div>
+				<div class="panel-collapse collapse in" id="panel-01">
+					<div class="panel-body">
+  						<div class="row">
+  							<div  align="center" class="col-md-2">Título: </div>
+  							<div class="col-md-9">
+	  							<input class="form-control" name="title" placeholder="Título de la encuesta" type="text" value="{{$request->input('title')}}" >
+	  						</div>
+                		</div>
+						<hr>
+						<div class="row" align="center">
+							<div class="col-md-4">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+									Categoría<span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										@foreach($categories as $cat)
+										<li><a href="#">{{$cat->name}}</a></li>
+										@endforeach
+									</ul>
 							</div>
-							<div class="col-sm-10">
-								<input type="text" name="title" value="{{$request->input('title')}}" class="advanced_search">
+							<div class="col-md-4">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+									Subcategoría<span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										@if($category)
+										@foreach($category->sub as $sub)
+										<li><a href="#">{{$sub}} </a></li>
+										@endforeach
+										@endif
+									</ul>
 							</div>
-						</div>
-						
-						<div class="row">
-							<div class="divider"></div>
-							<div class="col-sm-4">
-								<h3>Categoría</h3>
-								<select name="category" id="survey-category">
-								  <option value="">Selecciona una categoría</option>
-								  @foreach($categories as $cat)
-								  <option value="{{$cat->name}}" {{$category && $category->name == $cat->name ? 'selected' : ''}}>{{$cat->name}}</option>
-								  @endforeach
-								</select>
-							</div>
-							
-							<!-- SUBCATEGORY -->
-							<div class="col-sm-4">
-								<h3>Subcategoría</h3>
-								<ul id="sub-list">
-									@if($category)
-									  @foreach($category->sub as $sub)
-									  <li><label><input type="checkbox" value="{{$sub}}" name="survey-subs[]" {{in_array($sub, $request->input('survey-subs', [])) ? 'checked' : ''}}> {{$sub}}</label></li>
-
-									  @endforeach
+							<div class="col-md-4">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+									Etiquetas<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+								@if($category)
+              					  @foreach($category->tags as $tag)
+									<li><a href="#">{{$tag}}</a></li>
+									@endforeach
 									@endif
 								</ul>
 							</div>
-							
-							<!-- TAGS -->
-							<div class="col-sm-4">
-								<h3>Etiquetas</h3>
-								<ul id="tag-list">
-              						@if($category)
-              						  @foreach($category->tags as $tag)
-              						  <li><label><input type="checkbox" value="{{$tag}}" name="survey-tags[]" {{in_array($tag, $request->input('survey-tags', [])) ? 'checked' : ''}}> {{$tag}}</label></li>
-              						  @endforeach
-              						@endif
-              					</ul>
-							</div>
+						</div>        
+						<hr>
+						<div class="bottom-buffer">
+							<div align="right" class="col-md-2">
+								<button type="button" class="btn btn-primary">Filtrar Resultados</button>
+						    </div>
 						</div>
-						<div class="row">
-							<div class="divider"></div>
-                        	<div class="col-sm-8">
-	                        	<input type="submit" value="Filtrar resultados" class="btn">
-                        	</div>
-						</div>
-          				</form>
-		  				
-
-						@foreach($surveys as $survey)
-							<h2><a href="{{ url('resultados/'. $survey->id)}}">{{ $survey->title}}</h2>
-							<a href="{{url('resultado/'. $survey->id) }}">
-								<figure>
-									<img src="{{url('img/programas/'.(empty($survey->banner) ? "default.jpg":$survey->banner))}}">
-								</figure>
-							</a>
-							<p class="lead">
-								<!-- aquí se agregará la descripción de cada encuesta-->
-								<a href="{{ url('resultado/'.$survey->id)}}" class="btn"> Consulta los resultados</a>
-							</p>
-						@endforeach
-
-						<ul id="pagination">
-							@for($i = 1; $i <= $pages; $i++)
-							<li><a href="{{url('resultados/' . $i) . '?' . http_build_query($request->all())}}" {{$page == $i ? 'class="current"' : ''}}>{{$i}}</a></li>
-							@endfor
-						</ul>
-					@else 
-						<h2>Estamos trabajando para mejorar la descarga de los resultados de las encuestas. ¡Pronto estaremos de vuelta!</h2>
-					@endif
-				</section>
-			</div>			
-		</article>
+					</div>
+				</div>
+			</div>
+        </div>
+		</form>
+        @foreach($surveys as $survey)
+        <hr>
+    	<h2><a href="{{ url('resultado/'. $survey->id)}}">{{ $survey->title}}</a></h2>
+    	<div align="center" class="vertical-buffer">
+    		<a href="{{url('resultado/'. $survey->id) }}">
+			<img src="{{url('img/programas/'.(empty($survey->banner) ? "default.jpg":$survey->banner))}}">
+			</a>
+        </div>
+  		<button type="button" class="btn btn-primary">Consultar Resultados</button>
+  		@endforeach
+        @endif
+        <hr>
+	</div>
 	</div>
 </div>
 
