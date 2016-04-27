@@ -5,20 +5,25 @@
 	<title>Encuesta en Tú Evalúas</title>
 </head>
 
-<body style="padding: 0 20px 20px; color: #011C26;font-family: sans-serif;">
-<!-- saludo -->
-<h2 style="  margin:20px auto;    text-align: center; background: #f9f9f9;border-bottom: 5px solid #FF6F69;padding: 30px 0 20px;font: 700 24px sans-serif;">
-¡Hola!</h2>
-<p style="padding: 0 20px;line-height: 1.4; color: #666;">Bienvenido a la plataforma <strong>Tú Evalúas</strong> mediante la cual podrás expresar 
-tu opinión acerca de los programas del Gobierno Federal. Para ello, te 
-pedimos que nos ayudes a responder una encuesta que te 
-tomará alrededor de 5 minutos.</p>
+<body style="color:#F6F6F6; padding-left:250px; padding-right:250px">
+		<h1 style="font-family: 'Open Sans Light', Helvetica, Arial, sans-serif ;color:#545454; font-size:38px; line-height:1.428; padding-top:-top: 25px; padding-bottom: 2.5px;">¡Hola!</h1>
+    	<hr style="border-top: 1px solid #DDDDDD; 
+   			border-bottom:none;  
+   			border-left: 1px solid #D0021B;; 
+   			border-right:none; 
+   			height: 6px;
+			border-left-width: 35px">
+       	<p style="font-family: 'Open Sans Light', Helvetica, Arial, sans-serif ;color:#545454; font-size:16px; line-height:1.428; text-align:justify">
+        Bienvenido a la plataforma Tú Evalúas mediante la cual podrás expresar tu opinión acerca de los programas del Gobierno Federal. 
+    	Para ello, te pedimos que nos ayudes a responder una encuesta que te tomará alrededor de 5 minutos.</p>
 
-<p style="padding: 0 20px;line-height: 1.4; color: #666;">Toda la información que nos proporciones será confidencial y utilizada 
-únicamente para conocer tu opinión de los apoyos o servicios que recibes.</p>
+		<p style="font-family: 'Open Sans Light', Helvetica, Arial, sans-serif ;color:#545454; font-size:16px; line-height:1.428; text-align:justify">
+        Toda la información que nos proporciones será confidencial y utilizada únicamente para conocer tu opinión de los apoyos o servicios que recibes.</p>
 
-<p style="padding: 0 20px;line-height: 1.4; color: #666;">Si estás de acuerdo con participar en la encuesta, por favor da 
-clic en el siguiente vínculo: <a href="{{url('encuesta/' . $applicant->form_key)}}" style="background: #FF6F69;color: white;padding: 3px 5px;text-decoration: none;">tuevaluas.com.mx</a></p>
-<p style="padding: 30px 20px;line-height: 1.4; color: #999; font-size: 14px">Esta dirección de correo electrónico no está habilitada para recibir mensajes.</p>
+		<p style="font-family: 'Open Sans Light', Helvetica, Arial, sans-serif ;color:#545454; font-size:16px; line-height:1.428; text-align:justify">
+        Si estás de acuerdo con participar en la encuesta, por favor da clic en el siguiente vínculo: <a href="{{url('encuesta/' . $applicant->form_key)}}" style="color:#12C">tuevaluas.com.mx</a></p>
+
+		<p style="font-family: 'Open Sans Light', Helvetica, Arial, sans-serif ;color:#545454; font-size:16px; line-height:1.428; text-align:justify">
+        Esta dirección de correo electrónico no está habilitada para recibir mensajes.</p>
 </body>
 </html>
