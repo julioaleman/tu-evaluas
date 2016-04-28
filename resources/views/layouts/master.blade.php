@@ -10,13 +10,17 @@
 		<link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
     </head>
 <body <?php echo (!isset($body_class)) ? '' : 'class="' . $body_class . '"';?>>
+	<main role="main">
 		<!--nav-->
 	    @include('layouts.nav')         
 	    
-	    <!--content-->
+	    <div class="container vertical-buffer">
+		<!--content-->
         @yield('content')
 			
          <!--footer-->
 		@include('layouts.footer')
-    </body>
+	    </div>
+	</main>
+ </body>
 </html>

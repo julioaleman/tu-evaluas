@@ -1,40 +1,31 @@
-<footer>
-	<!-- equipo-->
-	<div class="equipo_tuevaluas" style=" top:100px; left:100px; width:auto; background-color:#F6F6F6">
-		<div class="container">
-			<div class="row integrantes equipo">
-				<div class="col-sm-8 col-sm-offset-2">
-					<h3 align="center"><br>Equipo <strong>Tú Evalúas</strong></h3>
-					<div class="row">
-						<p class="col-xs-4"><img src="{{ url('img/presidencia_.png') }}"></p>
-	                    <p class="col-xs-4"><a href="http://www.transparenciapresupuestaria.gob.mx"><img src="{{ url('img/transparencia_presupuestaria_.png') }}"></a></p>
-						<p class="col-xs-4"><img src="{{ url('img/shcp_.png') }}"></p>
-					</div>
-					<div class="row">
-						<p class="col-xs-4 col-xs-offset-2"><a href="http://wwwcrea.org.mx"><img src="{{ url('img/crea_emp_.png') }}"></a></p>
-						<p class="col-xs-4"><a href="http://www.gobiernofacil.com"><img src="{{ url('img/gobierno_facil_.png') }}"></a><br><br></p>
-					</div>
-					
-				</div>
-			</div>
+<!-- equipo-->
+<div class="row">
+	<div class="col-md-12">		
+		<h3>Equipo <strong>Tú evalúas</strong></h3>
+		<div class="row">
+		   <p class="col-xs-4"><img src="{{ url('img/presidencia_.png') }}"></p>
+	        <p class="col-xs-4"><a href="http://www.transparenciapresupuestaria.gob.mx"><img src="{{ url('img/transparencia_presupuestaria_.png') }}"></a></p>
+		   <p class="col-xs-4"><img src="{{ url('img/shcp_.png') }}"></p>
+		</div>
+		<div class="row">
+		   <p class="col-xs-4 col-xs-offset-2"><a href="http://wwwcrea.org.mx"><img src="{{ url('img/crea_emp_.png') }}"></a></p>
+		   <p class="col-xs-4"><a href="http://www.gobiernofacil.com"><img src="{{ url('img/gobierno_facil_.png') }}"></a><br><br></p>
 		</div>
 	</div>
-	<!-- participantes-->
-	<div class="main-footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-8 col-sm-offset-2">
-					<h5 align="center">Participantes <strong>Tú Evalúas</strong></h5>
-					<div class="row">
-						<p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/sedesol_.png') }}"></a></p>
-                        <p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/prospera_.png') }}"></a></p>
-						<p class="col-xs-4"><a href="http://www.inadem.gob.mx"><img src="{{ url('img/inadem_.png') }}"></p>
-					</div>
-				</div>
-			</div>
+</div>
+
+<!-- participantes-->
+<div class="row">
+	<div class="col-md-12">
+		<h3>Participantes <strong>Tú evalúas</strong></h3>
+		<div class="row">
+			<p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/sedesol_.png') }}"></a></p>
+            <p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/prospera_.png') }}"></a></p>
+			<p class="col-xs-4"><a href="http://www.inadem.gob.mx"><img src="{{ url('img/inadem_.png') }}"></p>
 		</div>
 	</div>
-</footer>
+</div>
+
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -47,4 +38,4 @@
 
 </script>
 <!-- JS -->
-    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+<script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
