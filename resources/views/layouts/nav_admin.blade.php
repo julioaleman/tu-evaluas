@@ -38,7 +38,11 @@
 
           <li class="{{$body_class == 'applicants' ? 'current' : ''}}">
           <a href="{{url('dashboard/encuestados')}}">Enviar encuestas</a>
-        </li>
+          </li>
+
+          <li class="{{$body_class == 'advanced-search' ? 'current' : ''}}">
+          <a href="{{url('dashboard/encuestas/buscar/avanzado')}}">Búsqueda avanzada</a>
+          </li>
          <!--
          <li><a href="{{url('dashboard/datos')}}">Datos abiertos</a></li>
           <li><a href="{{url('dashboard/correos')}}">Correos</a></li>-->

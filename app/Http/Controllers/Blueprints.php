@@ -17,6 +17,8 @@ use Excel;
 
 class Blueprints extends Controller
 {
+  const PAGE_SIZE = 50;
+
   //
   // [ L I S T ]
   //
@@ -33,6 +35,80 @@ class Blueprints extends Controller
     $data['status']      = session('status');
 
     return view("blueprints")->with($data);
+  }
+
+  //
+  // [ SEARCH ]
+  //
+  //
+  function searchBlueprints(Request $request, $page = 1){
+    if(empty($request->all())){
+      $blueprints = Blueprint::skip(($page-1) * self::PAGE_SIZE)->take(self::PAGE_SIZE)->get();
+      $total      = Blueprint::count();
+    }
+    else{
+      $blueprints = $this->_search($request)
+                    ->skip(($page-1) * self::PAGE_SIZE)
+                    ->take(self::PAGE_SIZE)
+                    ->get();
+      $total      = $this->_search($request)->count();
+    }
+
+    $categories = file_get_contents(public_path() . "/". "js/categories.json");
+    $data = [];
+    $data['surveys']     = $blueprints;
+    $data['title']       = 'Resultados | Tú Evalúas';
+    $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
+    $data['body_class']  = 'advanced-search';
+    $data['categories']  = collect(json_decode($categories));
+    $data['request']     = $request;
+    $data['page']        = $page;
+    $data['total']       = $total;
+    $data['user']        = Auth::user();
+    $data['pages']       = ceil($total/self::PAGE_SIZE);
+    return view("blueprint-search")->with($data);
+  }
+
+  private function _search($request){
+    $title       = $request->input("title", null);
+    $category    = $request->input("category", null);
+    $survey_subs = $request->input("survey-subs", null);
+    $tags        = $request->input("survey-tags", null);
+
+    $query = Blueprint::where(function($q) use($request, $title, $category, $tags, $survey_subs){
+      // search title
+      if(!empty($title)){
+        $q->where("title", "like", "%". $request->input("title") . "%");
+      }
+        // search category
+      if(!empty($category)){
+        $q->where("category", $request->input("category"));
+      }
+      // search subcategory
+      if(!empty($survey_subs)){
+        $subs = $request->input("survey-subs");
+        $q->where(function($q) use($subs){
+          $first = array_shift($subs);
+          $q->where("subcategory", "like", "%" . $first . "%");
+          foreach($subs as $sub){
+            $q->orWhere("subcategory", "like", "%" . $sub . "%");
+          }
+        });
+      }
+      // search tags
+      if(!empty($tags)){
+        $tags = $request->input("survey-tags");
+        $q->where(function($q) use($tags){
+          $first = array_shift($tags);
+          $q->where("tags", "like", "%" . $first . "%");
+          foreach($tags as $tag){
+            $q->orWhere("tags", "like", "%" . $tag . "%");
+          }
+        });
+      }
+    });
+
+    return $query;
   }
 
   //

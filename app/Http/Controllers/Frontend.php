@@ -12,7 +12,7 @@ use App\Models\Answer;
 
 class Frontend extends Controller
 {
-  const PAGE_SIZE = 3;
+  const PAGE_SIZE = 50;
   //
   //
   //
