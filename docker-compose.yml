@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  tu_evaluas:
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - mariadb:mariadb_server
+    volumes:
+      - ./docker/env:/var/www/laravel/.env
+    depends_on:
+      - mariadb
+    networks:
+      - database
+
+  mariadb:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_DATABASE=tu_evaluas_db 
+    volumes:
+      - records:/var/lib/mysql
+    networks:
+      database:
+          aliases:
+            - mariadb
+            - db
+            - mysql
+
+networks:
+  database:
+
+volumes:
+  records: {}
