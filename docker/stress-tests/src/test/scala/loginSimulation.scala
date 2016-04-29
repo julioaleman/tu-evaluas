@@ -1,10 +1,10 @@
-package gobiernofacil.tuevaluas.index
+package gobiernofacil.tuevaluas.login
 
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import scala.concurrent.duration._
 
-class TuEvaluasSimulation extends Simulation {
+class TuEvaluasLoginSimulation extends Simulation {
   val domain = "http://tuevaluas.testing.kaltia.org"
   val httpConf = http 
       .baseURL(domain)
@@ -15,19 +15,22 @@ class TuEvaluasSimulation extends Simulation {
       .userAgentHeader("Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0")
 
   val scn = scenario("Tu Evaluas Simulation")
-      .exec(http("Load index")
-          .get("/"))
-          .pause(3)
-      .exec(http("Load about")
-          .get("/que-es"))
-          .pause(3)
-      .exec(http("FAQ")
-          .get("/preguntas-frecuentes"))
-          .pause(3)
-      .exec(http("Results")
-          .get("/resultados"))
+      .exec(http("Load login")
+          .get("/login")
+          .check(css("[name=_token]", "value").saveAs("auth_token")))
+          .pause(4)
+      .exec(http("Login User")
+          .post("/login")
+          .formParam("email", "howdy@gobiernofacil.com")
+          .formParam("password", "OlgaBreeskin")
+          .formParam("_token", "${auth_token}"))
+          .pause(5)
+      .exec(http("Log out")
+          .get("/logout")
+          .check(status.is(200)))
 
   setUp(
-      scn.inject(atOnceUsers(15))
+      scn.inject(atOnceUsers(5))
         ).protocols(httpConf)
 }
+
