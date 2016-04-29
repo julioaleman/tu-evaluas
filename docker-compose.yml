@@ -10,6 +10,8 @@ services:
       - mariadb:mariadb_server
     volumes:
       - ./docker/env:/var/www/laravel/.env
+    environment:
+      - APP_LOG=errorlog 
     depends_on:
       - mariadb
     networks:
