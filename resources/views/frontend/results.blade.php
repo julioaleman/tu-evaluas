@@ -8,7 +8,7 @@
 	    <li><a href="#"><i class="icon icon-home"></i></a></li>
 	    <li><a href="https://www.gob.mx">Inicio</a></li>
 	    <li><a href="{{ url('')}}">Tú Evalúas</a></li>
-        <li class="active">¿Qué es?</li>
+        <li class="active">Resultados</li>
 	  </ol>
 	</div>
 </div>
