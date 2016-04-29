@@ -1,12 +1,26 @@
 @extends('layouts.master')
 
 @section('content')
-<hr>
-<div class="container.vertical-buffer">
+<!--breadcrumb-->
+<div class="row">
+	<div class="col-sm-8">
+	  <ol class="breadcrumb">
+	    <li><a href="#"><i class="icon icon-home"></i></a></li>
+	    <li><a href="https://www.gob.mx">Inicio</a></li>
+	    <li><a href="{{ url('')}}">Tú Evalúas</a></li>
+        <li class="active">¿Qué es?</li>
+	  </ol>
+	</div>
+</div>
+<div class="bottom-buffer">
 	<div class="row">
-	<div class="col-sm-8 col-sm-offset-2">
-		<h2 class="intro">Resultados en cuestionarios <strong>Tú Evalúas</strong><br><br></h2>
-		<hr class="red">
+		<div class="col-md-8">
+			<h2>Resultados en cuestionarios <strong>Tú Evalúas</strong></h2>
+			<hr class="red">
+		</div>
+	</div>
+</div>
+<div class="col-md-8">
         @if ($surveys->count() > 0)
 		<form id="fbp" name="filter-blueprints" method="get" action="{{url('resultados')}}" class="form_search">
 			<?php $category = $request->input('category') ? $categories->where("name", $request->input('category'))->first() : null; ?>
@@ -86,9 +100,8 @@
   		@endforeach
         @endif
         <hr>
-	</div>
-	</div>
 </div>
+
 
 <script src="{{url('js/bower_components/jquery/dist/jquery.min.js')}}"></script>
 <script>
