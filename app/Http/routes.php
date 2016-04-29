@@ -84,6 +84,7 @@ Route::get('/', "Frontend@index");
     // SEARCH
     Route::get('dashboard/encuestas/buscar/json', 'Blueprints@search');
     Route::get('dashboard/usuarios/buscar/json', 'Users@search');
+    Route::get('dashboard/encuestas/buscar/avanzado/{page?}', 'Blueprints@searchBlueprints');
     
     // BLUEPRINT CRUD
     Route::get('dashboard/encuestas/crear/csv/{id}', 'Blueprints@makeCSV');
