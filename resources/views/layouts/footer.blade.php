@@ -21,7 +21,7 @@
 		<div class="row">
 			<p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/sedesol_.png') }}"></a></p>
             <p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/prospera_.png') }}"></a></p>
-			<p class="col-xs-4"><a href="http://www.inadem.gob.mx"><img src="{{ url('img/inadem_.png') }}"></p>
+			<p class="col-xs-4"><a href="http://www.inadem.gob.mx"><img src="{{ url('img/inadem_.png') }}"></a></p>
 		</div>
 	</div>
 </div>
