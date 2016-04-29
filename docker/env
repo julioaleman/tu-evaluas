@@ -1,14 +1,14 @@
 APP_ENV=local
 APP_DEBUG=true
-APP_KEY=SomeRandomString
-APP_URL=http://localhost
+APP_KEY=base64:bj+7uM6lmjOO3esE43HbKQ5Sxnyxc4NDXcsJly/1Dhk=
+APP_URL=http://0.0.0.0
 
 DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
+DB_HOST=mariadb_server
 DB_PORT=3306
-DB_DATABASE=homestead
-DB_USERNAME=homestead
-DB_PASSWORD=secret
+DB_DATABASE=tu_evaluas_db
+DB_USERNAME=root
+DB_PASSWORD=docker
 
 CACHE_DRIVER=file
 SESSION_DRIVER=file
