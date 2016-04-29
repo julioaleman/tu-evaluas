@@ -62,72 +62,12 @@ class Frontend extends Controller
       $total = Blueprint::where("is_public", 1)->count();
     }
     else{
-      $blueprints = Blueprint::where("is_visible", 1)->where(function($q) use($request){
-      //$blueprints = Blueprint::where("is_public", 1)->where(function($q) use($request){
-        // search title
-        if($request->input("title", null)){
-          $q->where("title", "like", "%". $request->input("title") . "%");
-        }
-        // search category
-        if($request->input("category", null)){
-          $q->where("category", $request->input("category"));
-        }
-        // search subcategory
-        if($request->input("survey-subs", null)){
-          $subs = $request->input("survey-subs");
-          $q->where(function($q) use($subs){
-            $first = array_shift($subs);
-            $q->where("subcategory", "like", "%" . $first . "%");
-            foreach($subs as $sub){
-              $q->orWhere("subcategory", "like", "%" . $sub . "%");
-            }
-          });
-        }
-        // search tags
-        if($request->input("survey-tags", null)){
-          $tags = $request->input("survey-tags");
-          $q->where(function($q) use($tags){
-            $first = array_shift($tags);
-            $q->where("tags", "like", "%" . $first . "%");
-            foreach($tags as $tag){
-              $q->orWhere("tags", "like", "%" . $tag . "%");
-            }
-          });
-        }
-      })->skip(($page-1) * self::PAGE_SIZE)->take(self::PAGE_SIZE)->get();
-
-      $total = Blueprint::where("is_public", 1)->where(function($q) use($request){
-        // search title
-        if($request->input("title", null)){
-          $q->where("title", "like", "%". $request->input("title") . "%");
-        }
-        // search category
-        if($request->input("category", null)){
-          $q->where("category", $request->input("category"));
-        }
-        // search subcategory
-        if($request->input("survey-subs", null)){
-          $subs = $request->input("survey-subs");
-          $q->where(function($q) use($subs){
-            $first = array_shift($subs);
-            $q->where("subcategory", "like", "%" . $first . "%");
-            foreach($subs as $sub){
-              $q->orWhere("subcategory", "like", "%" . $sub . "%");
-            }
-          });
-        }
-        // search tags
-        if($request->input("survey-tags", null)){
-          $tags = $request->input("survey-tags");
-          $q->where(function($q) use($tags){
-            $first = array_shift($tags);
-            $q->where("tags", "like", "%" . $first . "%");
-            foreach($tags as $tag){
-              $q->orWhere("tags", "like", "%" . $tag . "%");
-            }
-          });
-        }
-      })->count();
+      $blueprints = $this->_search($request)
+                    ->where("is_visible", 1)
+                    ->skip(($page-1) * self::PAGE_SIZE)
+                    ->take(self::PAGE_SIZE)
+                    ->get();
+      $total      = $this->_search($request)->where("is_visible", 1)->count();
     }
     $categories = file_get_contents(public_path() . "/". "js/categories.json");
     $data = [];
@@ -141,6 +81,75 @@ class Frontend extends Controller
     $data['total']       = $total;
     $data['pages']       = ceil($total/self::PAGE_SIZE);
     return view("frontend.results")->with($data);
+  }
+
+  //
+  //
+  //
+  //
+  function openData(Request $request, $page = 1){
+      $blueprints = Blueprint::where("is_visible", 1)->whereNotNull("csv_file")
+      ->skip(($page-1) * self::PAGE_SIZE)->take(self::PAGE_SIZE)->get();
+      $total = Blueprint::where("is_public", 1)->whereNotNull("csv_file")->count();
+
+    $categories = file_get_contents(public_path() . "/". "js/categories.json");
+    $data = [];
+    $data['surveys']     = $blueprints;
+    $data['title']       = 'Resultados | Tú Evalúas';
+    $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
+    $data['body_class']  = 'results';
+    $data['categories']  = collect(json_decode($categories));
+    $data['request']     = $request;
+    $data['page']        = $page;
+    $data['total']       = $total;
+    $data['pages']       = ceil($total/self::PAGE_SIZE);
+    return view("frontend.open-data")->with($data);
+  }
+
+  //
+  // [ S E A R C H   Q U E R Y ]
+  //
+  //
+  private function _search($request){
+    $title       = $request->input("title", null);
+    $category    = $request->input("category", null);
+    $survey_subs = $request->input("survey-subs", null);
+    $tags        = $request->input("survey-tags", null);
+
+    $query = Blueprint::where(function($q) use($request, $title, $category, $tags, $survey_subs){
+      // search title
+      if(!empty($title)){
+        $q->where("title", "like", "%". $request->input("title") . "%");
+      }
+        // search category
+      if(!empty($category)){
+        $q->where("category", $request->input("category"));
+      }
+      // search subcategory
+      if(!empty($survey_subs)){
+        $subs = $request->input("survey-subs");
+        $q->where(function($q) use($subs){
+          $first = array_shift($subs);
+          $q->where("subcategory", "like", "%" . $first . "%");
+          foreach($subs as $sub){
+            $q->orWhere("subcategory", "like", "%" . $sub . "%");
+          }
+        });
+      }
+      // search tags
+      if(!empty($tags)){
+        $tags = $request->input("survey-tags");
+        $q->where(function($q) use($tags){
+          $first = array_shift($tags);
+          $q->where("tags", "like", "%" . $first . "%");
+          foreach($tags as $tag){
+            $q->orWhere("tags", "like", "%" . $tag . "%");
+          }
+        });
+      }
+    });
+
+    return $query;
   }
 
   //
