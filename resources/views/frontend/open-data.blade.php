@@ -1,21 +1,34 @@
 @extends('layouts.master')
 
 @section('content')
-<hr>
-<div class="container.vertical-buffer">
-	<div class="row">
-	<div class="col-sm-8 col-sm-offset-2">
-		<h2 class="intro">Datos abiertos en <strong>Tú Evalúas</strong><br><br></h2>
+<!--breadcrumb-->
+<div class="row">
+	<div class="col-sm-8">
+	  <ol class="breadcrumb">
+	    <li><a href="#"><i class="icon icon-home"></i></a></li>
+	    <li><a href="https://www.gob.mx">Inicio</a></li>
+	    <li><a href="{{ url('')}}">Tú Evalúas</a></li>
+        <li class="active">Datos Abiertos</li>
+	  </ol>
+	</div>
+</div>
+<div class="row top-buffer">
+	<div class="col-md-8">
+		<h1>Datos Abiertos</h1>
 		<hr class="red">
+
         @if ($surveys->count() > 0)
           @foreach($surveys as $survey)
-          <hr>
-    	  <h2><a href="{{ url('resultado/'. $survey->id)}}">{{ $survey->title}}</a></h2>
-    	  <p><a href="{{$survey->ptp}}">programa presupuestario</a></p>
+    	  <h3><a href="{{ url('resultado/'. $survey->id)}}">{{ $survey->title}}</a></h3>
     	  <p>
-    	    <a href="{{url('csv/' . $survey->csv_file . '.xlsx')}}">xlsx</a>
-    	    <a href="{{url('csv/' . $survey->csv_file . '.csv')}}">csv</a>
+    	    <a href="{{url('csv/' . $survey->csv_file . '.xlsx')}}" class="btn btn-primary btn-sm">XLSX</a>
+    	    <a href="{{url('csv/' . $survey->csv_file . '.csv')}}" class="btn btn-primary btn-sm">CSV</a>
     	  </p>
+    	  <div class="row">
+			<div class="col-md-8">
+				<a href="{{$survey->ptp}}" class="btn btn-primary">Conoce el desempeño del programa presupuestario</a>
+			</div>
+		  </div>
   		  @endforeach
   		  
   		  <ul id="pagination">
@@ -29,7 +42,6 @@
         <p>Aún no hay datos abiertos disponibles :(</p>
         @endif
         <hr>
-	</div>
 	</div>
 </div>
 @endsection
