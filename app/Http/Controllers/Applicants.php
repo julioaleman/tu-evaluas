@@ -11,6 +11,8 @@ use League\Csv\Writer;
 use League\Csv\Reader;
 use Excel;
 use Auth;
+use Artisan;
+use Storage;
 
 use App\User;
 use App\Models\Blueprint;
@@ -134,14 +136,37 @@ class Applicants extends Controller
     })->export($type);
   }
 
+  //
+  // [ SEND AND INVITATION TO A LIST OF EMAILS ] 
+  //
+  //
   function sendEmails(Request $request){
     if (! $request->hasFile('list')) return redirect("dashboard/encuestados");
 
     $user      = Auth::user();
     $creator   = $user->id;
+    $path      = base_path();
+    $blueprint = (int)$request->input('id');
+    $key       = uniqid();
+    $file      = Storage::put($key . ".xlsx",file_get_contents($request->file('list')->getRealPath()));
+
+    $exitCode = Artisan::call('email:send', [
+        'blueprint' => $blueprint, 
+        'key' => $key, 
+        'file' => $file, 
+        'creator' => $creator, 
+    ]);
+
+    // exec("php {$path}/artisan emails:send {$blueprint} {$key} {$file} {$creator} &");
+    die(":D");
+
+
+
+    $user      = Auth::user();
+    $creator   = $user->id;
     $blueprint = Blueprint::find($request->input('id'));
-    $file     = $request->file("list");
-    $fileUrl = $file->getPathName(); //. '/' . $file->getClientOriginalName();
+    $file      = $request->file("list");
+    $fileUrl   = $file->getPathName(); //. '/' . $file->getClientOriginalName();
 
     $reader = Reader::createFromPath($fileUrl);
     $results = $reader->fetch();
