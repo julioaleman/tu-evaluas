@@ -69,6 +69,10 @@ class Blueprints extends Controller
     return view("blueprint-search")->with($data);
   }
 
+  //
+  // [ S E A R C H   Q U E R Y ]
+  //
+  //
   private function _search($request){
     $title       = $request->input("title", null);
     $category    = $request->input("category", null);

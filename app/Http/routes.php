@@ -30,6 +30,7 @@ Route::get('/', "Frontend@index");
   Route::get('que-es', "Frontend@about");
   Route::get('preguntas-frecuentes', "Frontend@faqs");
   Route::get('resultados/{page?}', "Frontend@results");
+  Route::get('datos-abiertos/{page?}', "Frontend@openData");
   Route::get('resultado/{id}', "Frontend@result")->where('id', '[0-9]+');
 
   Route::get('terminos-condiciones', "Frontend@terms");
