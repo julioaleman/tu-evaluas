@@ -5,7 +5,7 @@
 	<title>Encuesta en Tú Evalúas</title>
 </head>
 <body>
-		<h1 style="color:#545454; font-family: 'Open Sans Light', Helvetica, Arial, sans-serif; font-size:38px; line-height:1.428; text-align:left; padding-top:-top: 25px; padding-bottom: 2.5px;">¡Hola!</h1>
+		<h1 style="color:#545454; font-family: 'Open Sans Light', Helvetica, Arial, sans-serif; font-size:38px; line-height:1.428; text-align:left; padding-top:25px; padding-bottom: 2.5px;">¡Hola!</h1>
     	<hr style="border-top: 1px solid #DDDDDD; 
    			border-bottom:none;  
    			border-left: 1px solid #D0021B;; 
