@@ -220,7 +220,7 @@ class Applicants extends Controller
 
     // [3] Es posible que el usuario lo vea estando oculto, si está identificado. 
     //     Si no, regresa a la página de resultados
-    if(!$blueprint->is_visble && ! $is_admin){
+    if($blueprint->is_visible == 0 && ! $is_admin){
       return redirect('resultados');
     }
 

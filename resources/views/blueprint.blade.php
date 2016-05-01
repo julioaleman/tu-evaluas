@@ -228,7 +228,7 @@
           <div class="col-sm-10 col-sm-offset-1">
           <p>
             @if($blueprint->is_visible)
-              <a href="{{url('dashboard/encuestas/ocultar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Ocultar encuesta</a>
+              <a href="{{url('dashboard/encuestas/ocultar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Cancelar encuesta</a>
             @else
               <a href="{{url('dashboard/encuestas/mostrar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Mostrar encuesta</a>
             @endif
