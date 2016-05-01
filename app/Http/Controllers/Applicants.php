@@ -21,6 +21,7 @@ use App\Models\City;
 use App\Models\Location;
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\MailgunEmail;
 
 class Applicants extends Controller
 {
@@ -60,7 +61,7 @@ class Applicants extends Controller
 
     $messages = [
       'email.required' => 'El correo debe ser válido',
-      'email.email' => 'El correo debe ser válido'
+      'email.email'    => 'El correo debe ser válido'
     ];
 
     // validate the title
@@ -81,6 +82,17 @@ class Applicants extends Controller
     ]);
 
     $this->sendForm($applicant);
+
+    $update = $blueprint->emails + 1;
+    $blueprint->emails = $update;
+    $blueprint->update();
+
+    $mailgun = new MailgunEmail([
+      "blueprint" => $blueprint->id,
+      "emails"    => 1
+    ]);
+
+    $mailgun->save();
 
     $request->session()->flash('status', [
       'type' => 'create', 
@@ -150,42 +162,9 @@ class Applicants extends Controller
     $key       = uniqid();
     $file      = Storage::put($key . ".xlsx",file_get_contents($request->file('list')->getRealPath()));
 
-    $exitCode = Artisan::call('email:send', [
-        'blueprint' => $blueprint, 
-        'key' => $key, 
-        'file' => $file, 
-        'creator' => $creator, 
-    ]);
+    exec("php {$path}/artisan emails:send {$blueprint} {$key} {$file} {$creator} > /dev/null &");
 
-    // exec("php {$path}/artisan emails:send {$blueprint} {$key} {$file} {$creator} &");
-    die(":D");
-
-
-
-    $user      = Auth::user();
-    $creator   = $user->id;
-    $blueprint = Blueprint::find($request->input('id'));
-    $file      = $request->file("list");
-    $fileUrl   = $file->getPathName(); //. '/' . $file->getClientOriginalName();
-
-    $reader = Reader::createFromPath($fileUrl);
-    $results = $reader->fetch();
-
-    // fake limit 
-    $limit   = 5;
-    $counter = 0;
-
-    foreach ($results as $row) {
-      $form_key  = md5('blueprint' . $blueprint->id . $row[0]);
-      $applicant = Applicant::firstOrCreate([
-        "blueprint_id" => $blueprint->id, 
-        "form_key"     => $form_key, 
-        "user_email"   => $row[0]
-      ]);
-      if($counter > $limit) break;
-      $this->sendForm($applicant);
-      $counter++;
-    }
+    
 
     $request->session()->flash('status', [
       'type' => 'create', 

@@ -19,6 +19,7 @@ use App\Models\City;
 use App\Models\Location;
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\MailgunEmail;
 
 class SendEmails extends Command
 {
@@ -65,62 +66,35 @@ class SendEmails extends Command
       }
 
       $counter = 0;
-      Excel::load("storage/app/" . $_key . ".xlsx", function($reader) use($blueprint, $counter){
-      $reader->each(function($row) use($blueprint, $counter){
-        
-        if(trim($row->correo) != "" && filter_var($row->correo, FILTER_VALIDATE_EMAIL) ){
-          $form_key  = md5('blueprint' . $blueprint->id . $row->correo);
+      Excel::load("storage/app/" . $_key . ".xlsx", function($reader) use($blueprint, $counter, $_key){
+        $reader->each(function($row) use($blueprint, $counter, $_key){
+          if(trim($row->correo) != "" && filter_var($row->correo, FILTER_VALIDATE_EMAIL) ){
+            
+            $form_key  = md5('blueprint' . $blueprint->id . $row->correo);
+            
+            $applicant = Applicant::firstOrCreate([
+              "blueprint_id" => $blueprint->id, 
+              "form_key"     => $form_key, 
+              "user_email"   => $row->correo,
+              "temporal_key" => $_key
+            ]);
 
-          $applicant = Applicant::firstOrCreate([
-            "blueprint_id" => $blueprint->id, 
-            "form_key"     => $form_key, 
-            "user_email"   => $row->correo
-          ]);
+            $path = base_path();
+            exec("php {$path}/artisan email:send {$applicant->id} > /dev/null &");
 
-          $this->sendForm($applicant);
-          $counter++;
+            $update = $blueprint->emails + 1;
+            $blueprint->emails = $update;
+            $blueprint->update();
+          }
+        });
+      })->first();
 
-        /*
-          $form_key  = md5('blueprint' . $blueprint->id . $row[0]);
-          $applicant = Applicant::firstOrCreate([
-            "blueprint_id" => $blueprint->id, 
-            "form_key"     => $form_key, 
-            "user_email"   => $row[0]
-          ]);
+      $total = Applicant::where("temporal_key", $_key)->count();
+      $mailgun = new MailgunEmail([
+        "blueprint" => $blueprint->id,
+        "emails"    => $total
+      ]);
 
-          $this->sendForm($applicant);
-          $counter++;*/
-        }
-
-      });
-    })->first();
-
-      /*
-      $reader  = Reader::createFromPath(storage_path($_key));
-      $results = $reader->fetch();
-
-      $counter = 0;
-
-      foreach ($results as $row) {
-        $form_key  = md5('blueprint' . $blueprint->id . $row[0]);
-        $applicant = Applicant::firstOrCreate([
-        "blueprint_id" => $blueprint->id, 
-        "form_key"     => $form_key, 
-        "user_email"   => $row[0]
-        ]);
-
-        $this->sendForm($applicant);
-        $counter++;
-      }
-      */
-
-      Log::info("La encuesta {$blueprint->title} se ha enviado a {$counter} usuarios");
-    }
-
-    private function sendForm($applicant){
-      Mail::send('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant) {
-        $m->from('howdy@tuevaluas.com.mx', 'Howdy friend');
-        $m->to($applicant->user_email, "amigo")->subject('Invitación a opinar!');
-      });
+      $mailgun->save();
     }
 }
