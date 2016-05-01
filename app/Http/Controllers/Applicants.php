@@ -168,7 +168,7 @@ class Applicants extends Controller
 
     $request->session()->flash('status', [
       'type' => 'create', 
-      'name' => "los correos se han enviado!"
+      'name' => "los correos se están enviando! Durante el envío de correos, no es posible hacer otro envío masivo."
     ]);
 
     return redirect('dashboard/encuestados');
