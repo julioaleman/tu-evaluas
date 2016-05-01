@@ -71,7 +71,7 @@
 			    </div>
 			</div>     
 			@elseif($blueprint->is_public)
-			<a href="{{url('dashboard/encuestas/ocultar/' . $blueprint->id)}}" class="btn_test preview">Oculta la encuesta</a>
+			<a href="{{url('dashboard/encuestas/ocultar/' . $blueprint->id)}}" class="btn_test preview">Cancelar la encuesta</a>
 			<div class="row">
 			  <div class="col-sm-10 col-sm-offset-1">
 			      <p>Si ocultas la encuesta, ni los resultados ni las preguntas estarán disponibles en línea.</p>
