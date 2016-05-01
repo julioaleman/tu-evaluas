@@ -35,7 +35,8 @@ define(function(require){
     // [ SET THE CONTAINER ]
     //
     //
-    tagName : 'ol',
+    tagName : 'div',
+    className : 'form-group',
 
     // 
     // [ THE TEMPLATES ]

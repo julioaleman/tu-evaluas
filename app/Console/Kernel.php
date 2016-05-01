@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
       Commands\MakeXLSX::class,
+      Commands\SendEmails::class,
+      Commands\SendEmail::class,
         // Commands\Inspire::class,
     ];
 

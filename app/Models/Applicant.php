@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Applicant extends Model
 {
-  protected $fillable = ["blueprint_id", "form_key", "user_email"];
+  protected $fillable = ["blueprint_id", "form_key", "user_email", "temporal_key"];
+  
   public function blueprint(){
     return $this->belongsTo('App\Models\Blueprint');
   }
