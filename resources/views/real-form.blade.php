@@ -13,19 +13,45 @@
     <link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
 </head>
 <body>
+<main role="main">
 <!--nav-->
-@include('layouts.nav') 
+<?php /* @include('layouts.nav') */ ?>
 
-<hr>
-<div class="container cuestiona">
-    <h1 align="center">{{$blueprint->title}}</h1>
-    <hr class="red">
+<div class="container bottom-buffer">
+<!--breadcrumb-->
+<div class="row">
+	<div class="col-sm-8">
+	  <ol class="breadcrumb">
+	    <li><a href="#"><i class="icon icon-home"></i></a></li>
+	    <li><a href="https://www.gob.mx">Inicio</a></li>
+	    <li><a href="{{ url('')}}">Tú Evalúas</a></li>
+        <li class="active">Encuesta:  {{$blueprint->title}}</li>
+	  </ol>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-md-12 bottom-buffer">
+		<!--egb_div class="contenedor vertical-buffer"-->
+			<image src="{{url('img/logov0_.png')}}"></image>
+		<!--egb_/div-->
+	</div>
+</div>
+<div class="row bottom-buffer">
+	<div class="col-md-8">
+		<h1>{{$blueprint->title}}</h1>
+		<hr class="red">
+	</div>
+</div>
+<div class="bottom-buffer">
     @if($is_admin && !$blueprint->is_visible)
       <p class="warning">La encuesta está oculta, pero al ser un usuario registrado, puedes verla :D</p>
     @endif
-
+</div>
+<div class="bottom-buffer">
     <div id="main" class="row">
-    	<div class="col-sm-10 col-sm-offset-1">
+		<div class="col-md-8">
     	  <form id="survey" role="form">
     	  	{!! csrf_field() !!}
     	  	<p id="annoying-message" style="display: none">Debes contestar las preguntas para avanzar a la siguiente sección ;D 
@@ -37,7 +63,8 @@
   
 <!--footer-->
 @include('layouts.footer')
-
+</div>
+</main>
 <!-- JS STUFF -->
   <script>
   var agentesFormSettings = {
