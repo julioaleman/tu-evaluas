@@ -104,30 +104,6 @@
             </div>
           </div>
 
-          <!-- THE PTP URL -->
-          <!--
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-              <p><strong>link al PTP</strong></p>
-              <p id="js-error-ptp" class="error"></p>
-              <p><input type="text" name="survey-ptp" value="{{$blueprint->ptp}}"></p>
-            </div>
-          </div>
-          -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           <div class="divider"></div>
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
@@ -139,18 +115,6 @@
                 </select>
               </p>
             </div>
-
-            <!--
-            <div class="col-sm-10 col-sm-offset-1">
-              <p>Unidad responsable</p>
-              <p id="js-error-unit" class="error"></p>
-              <p>
-                <select name="survey-unit" id="survey-unit" required>
-                  <option value="">Selecciona una unidad responsable</option>
-                </select>
-              </p>
-            </div>
-            -->
 
             <div class="col-sm-10 col-sm-offset-1">
               <p>Programa presupuestario</p>
@@ -165,16 +129,6 @@
 
           <input type="hidden" id="survey-ptp" name="survey-ptp" value="{{$blueprint->ptp}}">
 
-
-
-
-
-
-
-
-
-
-		  
 		  <div class="divider"></div>
           <!-- CATEGORY / DEPENDENCY? -->
           <div class="row">

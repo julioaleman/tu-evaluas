@@ -72,6 +72,15 @@ class Applicants extends Controller
     $email     = $request->input("email");
     $form_key  = md5('blueprint' . $blueprint->id . $email);
 
+    if(!$blueprint->is_visible){
+      $request->session()->flash('status', [
+        'type' => 'create-fail send-fail', 
+        'name' => "la encuesta no es pública, y no se pueden enviar correos!"
+      ]);
+
+      return redirect('dashboard/encuestados');
+    }
+
     $applicant = Applicant::firstOrCreate([
       "blueprint_id" => $blueprint->id, 
       "form_key"     => $form_key, 
@@ -140,8 +149,8 @@ class Applicants extends Controller
     $user      = Auth::user();
     $creator   = $user->id;
     $blueprint = Blueprint::find($request->input('id'));
-    $file     = $request->file("list");
-    $fileUrl = $file->getPathName(); //. '/' . $file->getClientOriginalName();
+    $file      = $request->file("list");
+    $fileUrl   = $file->getPathName(); //. '/' . $file->getClientOriginalName();
 
     $reader = Reader::createFromPath($fileUrl);
     $results = $reader->fetch();
