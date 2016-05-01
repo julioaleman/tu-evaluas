@@ -121,7 +121,7 @@
                 </div>
 
                 <div class="col-sm-3">
-                {{$survey->applicants()->with('answers')->count()}} | 0 | {{$survey->applicants()->count()}}
+                {{$survey->applicants()->has('answers')->count()}} | {{$survey->emails()->sum("emails")}} | {{$survey->applicants()->count()}}
                 </div>
 
                  <div class="col-sm-3">

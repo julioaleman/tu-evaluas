@@ -11,6 +11,8 @@ use League\Csv\Writer;
 use League\Csv\Reader;
 use Excel;
 use Auth;
+use Artisan;
+use Storage;
 
 use App\User;
 use App\Models\Blueprint;
@@ -19,6 +21,7 @@ use App\Models\City;
 use App\Models\Location;
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\MailgunEmail;
 
 class Applicants extends Controller
 {
@@ -58,7 +61,7 @@ class Applicants extends Controller
 
     $messages = [
       'email.required' => 'El correo debe ser válido',
-      'email.email' => 'El correo debe ser válido'
+      'email.email'    => 'El correo debe ser válido'
     ];
 
     // validate the title
@@ -79,6 +82,17 @@ class Applicants extends Controller
     ]);
 
     $this->sendForm($applicant);
+
+    $update = $blueprint->emails + 1;
+    $blueprint->emails = $update;
+    $blueprint->update();
+
+    $mailgun = new MailgunEmail([
+      "blueprint" => $blueprint->id,
+      "emails"    => 1
+    ]);
+
+    $mailgun->save();
 
     $request->session()->flash('status', [
       'type' => 'create', 
@@ -134,37 +148,27 @@ class Applicants extends Controller
     })->export($type);
   }
 
+  //
+  // [ SEND AND INVITATION TO A LIST OF EMAILS ] 
+  //
+  //
   function sendEmails(Request $request){
     if (! $request->hasFile('list')) return redirect("dashboard/encuestados");
 
     $user      = Auth::user();
     $creator   = $user->id;
-    $blueprint = Blueprint::find($request->input('id'));
-    $file     = $request->file("list");
-    $fileUrl = $file->getPathName(); //. '/' . $file->getClientOriginalName();
+    $path      = base_path();
+    $blueprint = (int)$request->input('id');
+    $key       = uniqid();
+    $file      = Storage::put($key . ".xlsx",file_get_contents($request->file('list')->getRealPath()));
 
-    $reader = Reader::createFromPath($fileUrl);
-    $results = $reader->fetch();
+    exec("php {$path}/artisan emails:send {$blueprint} {$key} {$file} {$creator} > /dev/null &");
 
-    // fake limit 
-    $limit   = 5;
-    $counter = 0;
-
-    foreach ($results as $row) {
-      $form_key  = md5('blueprint' . $blueprint->id . $row[0]);
-      $applicant = Applicant::firstOrCreate([
-        "blueprint_id" => $blueprint->id, 
-        "form_key"     => $form_key, 
-        "user_email"   => $row[0]
-      ]);
-      if($counter > $limit) break;
-      $this->sendForm($applicant);
-      $counter++;
-    }
+    
 
     $request->session()->flash('status', [
       'type' => 'create', 
-      'name' => "los correos se han enviado!"
+      'name' => "los correos se están enviando! Durante el envío de correos, no es posible hacer otro envío masivo."
     ]);
 
     return redirect('dashboard/encuestados');

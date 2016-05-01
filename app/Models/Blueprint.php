@@ -27,4 +27,8 @@ class Blueprint extends Model
   public function options(){
     return $this->hasMany('App\Models\Option');
   }
+
+  public function emails(){
+    return $this->hasMany('App\Models\MailgunEmail', 'blueprint');
+  }
 }
