@@ -30,6 +30,8 @@ class Applicants extends Controller
   * --------------------------------------------------------------------------------
   */
 
+  const HEADER = "Invitación a opinar!";
+
   // 
   // [ OPTIONS FOR SUBMIT FORMS ]
   //
@@ -74,6 +76,9 @@ class Applicants extends Controller
     $blueprint = Blueprint::find($request->input('id'));
     $email     = $request->input("email");
     $form_key  = md5('blueprint' . $blueprint->id . $email);
+    $_header   = $request->input('header', null);
+    $header    = $_header ? $_header : self::HEADER;
+    // escapeshellarg($_header)
 
     if(!$blueprint->is_visible){
       $request->session()->flash('status', [
@@ -90,7 +95,7 @@ class Applicants extends Controller
       "user_email"   => $email
     ]);
 
-    $this->sendForm($applicant);
+    $this->sendForm($applicant, $header);
 
     $update = $blueprint->emails + 1;
     $blueprint->emails = $update;
@@ -172,6 +177,9 @@ class Applicants extends Controller
     $key       = uniqid();
     $file      = Storage::put($key . ".xlsx",file_get_contents($request->file('list')->getRealPath()));
 
+    $_header   = $request->input('header', null);
+    $header    = $_header ? escapeshellarg($_header) : escapeshellarg(self::HEADER);
+
     if(!$blueprint->is_visible){
       $request->session()->flash('status', [
         'type' => 'create-fail send-fail', 
@@ -181,7 +189,7 @@ class Applicants extends Controller
       return redirect('dashboard/encuestados');
     }
 
-    exec("php {$path}/artisan emails:send {$blueprint->id} {$key} {$file} {$creator} > /dev/null &");
+    exec("php {$path}/artisan emails:send {$blueprint->id} {$key} {$file} {$creator} {$header} > /dev/null &");
 
 
     $request->session()->flash('status', [
@@ -315,7 +323,7 @@ class Applicants extends Controller
   // [ SEND MAIL WITH MAILGUN ]
   //
   //
-  public function sendForm($applicant){
+  public function sendForm($applicant, $header){
     /*
     Mail::send('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant) {
       $m->from('howdy@tuevaluas.com.mx', 'Howdy friend');
@@ -323,9 +331,9 @@ class Applicants extends Controller
     });
     */
 
-    Mail::queue('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant){
-      $m->from('howdy@tuevaluas.com.mx', 'Howdy friend');
-      $m->to($applicant->user_email, "amigo")->subject('Invitación a opinar!');
+    Mail::queue('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant, $header){
+      $m->from('howdy@tuevaluas.com.mx', 'Tú Evalúas');
+      $m->to($applicant->user_email, "amigo")->subject($header);
     });
   }
 

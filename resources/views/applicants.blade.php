@@ -34,10 +34,10 @@
 			<form id="mail-to-someone" action="{{url('dashboard/encuestados/enviar/uno')}}" method="post" class="col-sm-12">
 			  {!! csrf_field() !!}
 			  
-			  	<p>
-			  		Correo
-			  	<input name="email" type="email"> 
-			  	</p>
+          <p>
+            Encabezado
+          <input name="header" type="header"> 
+          </p>
 			  	<p> Selecciona encuesta:<br>	
 			  	<select name="id">
 			    @foreach($blueprints as $bp)
@@ -45,6 +45,12 @@
 			    @endforeach
 			  </select>
 			  	</p>
+
+          <p>
+            Correo
+          <input name="email" type="email"> 
+          </p>
+
 			  	<div class="divider"></div>
 			  	<p>
 			  		<input type="submit" value="Enviar Encuesta">
@@ -60,6 +66,10 @@
 		<h2>Envía la invitación a una lista de correos</h2>
 		<form id="sent-to-all" enctype="multipart/form-data" action="{{url('dashboard/encuestados/enviar/todos')}}" method="post" class="col-sm-12">
 		  {!! csrf_field() !!}
+      <p>
+            Encabezado
+          <input name="header" type="text"> 
+          </p>
 		  <p><strong>Selecciona encuesta</strong>:<br>  
 		  <select name="id">
 		    @foreach($blueprints as $bp)
