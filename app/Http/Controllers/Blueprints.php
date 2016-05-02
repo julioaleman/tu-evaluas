@@ -14,6 +14,7 @@ use Image;
 use League\Csv\Reader;
 use League\Csv\Writer;
 use Excel;
+use Artisan;
 
 class Blueprints extends Controller
 {
@@ -159,6 +160,7 @@ class Blueprints extends Controller
 
     return view("add_blueprints")->with($data);
   }
+
   //
   // [ C R E A T E ]
   //
@@ -492,8 +494,10 @@ class Blueprints extends Controller
 
     if($user->level != 3) die("n______n");
 
-    exec("php {$path}/artisan blueprint:file {$id} xlsx &");
-    exec("php {$path}/artisan blueprint:file {$id} csv &");
+
+
+    exec("php {$path}/artisan blueprint:file {$id} xlsx > /dev/null &");
+    exec("php {$path}/artisan blueprint:file {$id} csv > /dev/null &");
     
     $request->session()->flash('status', ['type' => 'file create', 'name' => $blueprint->title]);
     return redirect("dashboard/encuesta/" . $id);

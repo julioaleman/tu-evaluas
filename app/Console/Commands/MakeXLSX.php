@@ -8,6 +8,8 @@ use Auth;
 
 use App\User;
 use App\Models\Blueprint;
+use App\Models\Location;
+use App\Models\City;
 use Image;
 use League\Csv\Reader;
 use League\Csv\Writer;
@@ -15,6 +17,40 @@ use Excel;
 
 class MakeXLSX extends Command
 {
+  public $states = [
+    "01" => "Aguascalientes",
+    "02" => "Baja California",
+    "03" => "Baja California Sur",
+    "04" => "Campeche",
+    "05" => "Coahuila de Zaragoza",
+    "06" => "Colima",
+    "07" => "Chiapas",
+    "08" => "Chihuahua",
+    "09" => "Distrito Federal",
+    "10" => "Durango",
+    "11" => "Guanajuato",
+    "12" => "Guerrero",
+    "13" => "Hidalgo",
+    "14" => "Jalisco",
+    "15" => "México",
+    "16" => "Michoacán de Ocampo",
+    "17" => "Morelos",
+    "18" => "Nayarit",
+    "19" => "Nuevo León",
+    "20" => "Oaxaca",
+    "21" => "Puebla",
+    "22" => "Querétaro",
+    "23" => "Quintana Roo",
+    "24" => "San Luis Potosí",
+    "25" => "Sinaloa",
+    "26" => "Sonora",
+    "27" => "Tabasco",
+    "28" => "Tamaulipas",
+    "29" => "Tlaxcala",
+    "30" => "Veracruz de Ignacio de la Llave",
+    "31" => "Yucatán",
+    "32" => "Zacatecas"
+  ];
     /**
      * The name and signature of the console command.
      *
@@ -75,33 +111,21 @@ class MakeXLSX extends Command
         foreach($applicants as $applicant){
           $row  = [];
           foreach($questions as $question){
+
+
             if($question->is_description){
               $row[] = "es descripción";
             }
-            elseif($question->type == "location-a"){
+
+            elseif(in_array($question->type, ['location-a', 'location-b', 'location-c'])){
               $inegi_key = $applicant
                        ->answers()
                        ->where("question_id", $question->id)
                        ->get()
-                       ->first();//->text_value;
-              $row[] = $inegi_key ? $inegi_key->text_value : "no dijo de dónde";
+                       ->first();
+              $row[] = $this->find_location($question->type, $inegi_key);
             }
-            elseif($question->type == "location-b"){
-              $inegi_key = $applicant
-                       ->answers()
-                       ->where("question_id", $question->id)
-                       ->get()
-                       ->first();//->text_value;
-              $row[] = $inegi_key ? $inegi_key->text_value : "no dijo de dónde";
-            }
-            elseif($question->type == "location-c"){
-              $inegi_key = $applicant
-                       ->answers()
-                       ->where("question_id", $question->id)
-                       ->get()
-                       ->first();//->text_value;
-              $row[] = $inegi_key ? $inegi_key->text_value : "no dijo de dónde";
-            }
+            
             
             elseif(in_array($question->type, ['text', 'multiple', 'multiple-multiple'])){
               $open_answer = $applicant
@@ -130,6 +154,48 @@ class MakeXLSX extends Command
     $blueprint->update();
 
     $this->info('El archivo se guardó!');
+  }
+
+  private function find_location($question_type, $inegi_key){
+    if(!$inegi_key) return "-";
+    
+    switch($question_type){
+      case "location-a":
+        $key = substr($inegi_key->text_value, 0, 2);
+        $name = !empty($key) ? $this->states[$key] : "-";
+        break;
+      case "location-b":
+        $state_key = substr($inegi_key->text_value, 0, 2);
+        $state_name = !empty($state_key) ? $this->states[$state_key] : "-";
+
+        $city_key  = substr($inegi_key->text_value, 2, 3);
+        $city      = !empty($city_key) ? City::where("clave", $city_key)->where("estado_id", (int)$state_key)->first() : null;
+        $city_name = $city ? $city->nombre : "-";
+
+        $name = $city_name . ", " . $state_name;
+        break;
+
+      case "location-c":
+        $state_key  = substr($inegi_key->text_value, 0, 2);
+        $state_name = !empty($state_key) ? $this->states[$state_key] : "-";
+
+        $city_key  = substr($inegi_key->text_value, 2, 3);
+        $city      = !empty($city_key) ? City::where("clave", $city_key)->where("estado_id", (int)$state_key)->first() : null;
+        $city_name = $city ? $city->nombre : "-";
+
+        $location_key  = substr($inegi_key->text_value, 5, 4);
+        $location = !empty($location_key) ? Location::where("clave", $location_key)->where("municipio_id", $city->id)->first() : null;
+        $location_name = $location ? $location->nombre : "-";
+
+        $name =  $location_name . ", " . $city_name . ", " . $state_name;
+        break;
+
+      default:
+        $name = "-";
+        break;
+    }
+
+    return $name;
   }
 
   //
