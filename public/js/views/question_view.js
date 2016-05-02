@@ -48,8 +48,8 @@ define(function(require){
     // SET THE CONTAINER
     // -----------------
     //
-    tagName : 'li',
-    className : 'count',
+    tagName : 'div',
+  //  className : 'count',
 
     // -----------------
     // SET THE TEMPLATES

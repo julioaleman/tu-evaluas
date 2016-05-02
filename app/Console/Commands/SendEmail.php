@@ -27,7 +27,7 @@ class SendEmail extends Command
      *
      * @var string
      */
-    protected $signature = 'email:send {applicant}';
+    protected $signature = 'email:send {applicant} {header}';
 
     /**
      * The console command description.
@@ -54,11 +54,12 @@ class SendEmail extends Command
     public function handle()
     {
       $_applicant = $this->argument('applicant');
-      $applicant = Applicant::find($_applicant);
-      
-      Mail::send('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant) {
-        $m->from('howdy@tuevaluas.com.mx', 'Howdy friend');
-        $m->to($applicant->user_email, "amigo")->subject('Invitación a opinar!');
+      $_header    = $this->argument('header');
+      $applicant  = Applicant::find($_applicant);
+
+      Mail::send('email.invitation', ['applicant' => $applicant], function ($m) use ($applicant, $_header) {
+        $m->from('howdy@tuevaluas.com.mx', 'Tú Evalúas');
+        $m->to($applicant->user_email, "amigo")->subject($_header);
       });
     }
 }

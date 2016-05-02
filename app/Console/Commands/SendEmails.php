@@ -28,7 +28,7 @@ class SendEmails extends Command
      *
      * @var string
      */
-    protected $signature = 'emails:send {blueprint} {key} {file} {creator}';
+    protected $signature = 'emails:send {blueprint} {key} {file} {creator} {header}';
 
     /**
      * The console command description.
@@ -58,6 +58,7 @@ class SendEmails extends Command
       $_blueprint = $this->argument('blueprint');
       $_file      = $this->argument('file');
       $_creator   = $this->argument('creator');
+      $_header    = escapeshellarg($this->argument('header'));
 
       $blueprint = Blueprint::find($_blueprint);
       if(!$blueprint){
@@ -69,8 +70,8 @@ class SendEmails extends Command
       $blueprint->update();
 
       $counter = 0;
-      Excel::load("storage/app/" . $_key . ".xlsx", function($reader) use($blueprint, $counter, $_key){
-        $reader->each(function($row) use($blueprint, $counter, $_key){
+      Excel::load("storage/app/" . $_key . ".xlsx", function($reader) use($blueprint, $counter, $_key, $_header){
+        $reader->each(function($row) use($blueprint, $counter, $_key, $_header){
           if(trim($row->correo) != "" && filter_var($row->correo, FILTER_VALIDATE_EMAIL) ){
             
             $form_key  = md5('blueprint' . $blueprint->id . $row->correo);
@@ -83,7 +84,7 @@ class SendEmails extends Command
             ]);
 
             $path = base_path();
-            exec("php {$path}/artisan email:send {$applicant->id} > /dev/null &");
+            exec("php {$path}/artisan email:send {$applicant->id} {$_header} > /dev/null &");
 
             $update = $blueprint->emails + 1;
             $blueprint->emails = $update;
