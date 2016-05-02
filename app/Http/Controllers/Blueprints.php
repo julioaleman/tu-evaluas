@@ -38,20 +38,37 @@ class Blueprints extends Controller
   }
 
   //
-  // [ SEARCH ]
+  // [ S E A R C H ]
   //
   //
   function searchBlueprints(Request $request, $page = 1){
+    $user = Auth::user();
+
     if(empty($request->all())){
-      $blueprints = Blueprint::skip(($page-1) * self::PAGE_SIZE)->take(self::PAGE_SIZE)->get();
-      $total      = Blueprint::count();
+      if($user->level == 3){
+        $blueprints = Blueprint::skip(($page-1) * self::PAGE_SIZE)->take(self::PAGE_SIZE)->get();
+        $total      = Blueprint::count();
+      }
+      else{
+        $blueprints = $user->blueprints()->skip(($page-1) * self::PAGE_SIZE)->take(self::PAGE_SIZE)->get();
+        $total      = $user->blueprints()->count();
+      }
     }
     else{
-      $blueprints = $this->_search($request)
+      if($user->level == 3){
+        $blueprints = $this->_search($request)
                     ->skip(($page-1) * self::PAGE_SIZE)
                     ->take(self::PAGE_SIZE)
                     ->get();
-      $total      = $this->_search($request)->count();
+        $total      = $this->_search($request)->count();
+      }else{
+        $blueprints = $this->_search($request)
+                    ->skip(($page-1) * self::PAGE_SIZE)
+                    ->take(self::PAGE_SIZE)
+                    ->where("user_id", $user->id)
+                    ->get();
+        $total      = $this->_search($request)->where("user_id", $user->id)->count();
+      }
     }
 
     $categories = file_get_contents(public_path() . "/". "js/categories.json");
@@ -64,7 +81,7 @@ class Blueprints extends Controller
     $data['request']     = $request;
     $data['page']        = $page;
     $data['total']       = $total;
-    $data['user']        = Auth::user();
+    $data['user']        = $user;
     $data['pages']       = ceil($total/self::PAGE_SIZE);
     return view("blueprint-search")->with($data);
   }

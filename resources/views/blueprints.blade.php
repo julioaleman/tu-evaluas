@@ -139,10 +139,10 @@
   </div>
 </div>
 
-<script src="/js/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/js/bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
-<script src="/js/bower_components/typeahead.js/dist/bloodhound.min.js"></script>
-<script src="/js/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{url('js/bower_components/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{url('js/bower_components/typeahead.js/dist/typeahead.jquery.min.js')}}"></script>
+<script src="{{url('js/bower_components/typeahead.js/dist/bloodhound.min.js')}}"></script>
+<script src="{{url('js/bower_components/sweetalert/dist/sweetalert.min.js')}}"></script>
 <script>
   /*
    * ENABLE THE USERS AND SURVEY SEARCH
@@ -209,6 +209,7 @@
     });
 
 
+    @if($user->level == 3)
     // THE USERS SEARCH
     //
     //
@@ -237,14 +238,17 @@
       display: 'email',
       source: users
     });
+    @endif
+
+
 
     $('.typeahead').bind('typeahead:select', function(ev, suggestion){
-      console.log(suggestion);
+      console.log(ev, suggestion);
       if(suggestion.email){
         window.location.href = "{{url('dashboard/usuario')}}/" + suggestion.id;
       }
       else{
-        window.location.href = "{{url('dashboard/encuestas')}}/" + suggestion.id;
+        window.location.href = "{{url('dashboard/encuesta')}}/" + suggestion.id;
       }
     });
   });
