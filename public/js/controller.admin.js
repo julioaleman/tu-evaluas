@@ -14,6 +14,7 @@ define(function(require){
   var Backbone    = require('backbone'),
       Velocity    = require('velocity'),
       d3          = require('d3'),
+      sweetalert  = require('sweetalert'),
       validation  = require("jquery-validation"),
       //aditional   = require("additional-methods"),
       Question    = require('views/question_view.admin'),
@@ -68,6 +69,9 @@ define(function(require){
       // [ LIMIT TAGS AND SUBCATEGORIES ]
       "change input[name='survey-subs[]']" : "limit_subs",
       "change input[name='survey-tags[]']" : "limit_tags",
+
+      // [ END SURVEY ]
+      "click #finish-survey-btn" : "finish_survey_alert"
       
     },
 
@@ -979,6 +983,49 @@ define(function(require){
     // O T H E R   S T U F F
     // --------------------------------------------------------------------------------
     //
+
+    // [ SHOW THE CLOSE SURVEY ALERT ]
+    //
+    //
+    finish_survey_alert : function(e){
+      e.preventDefault();
+       var url  = $(e.currentTarget).attr("href"),
+          title = $(e.currentTarget).attr("data-title");
+
+      swal({
+        title: "Terminar encuesta", 
+        text: title, 
+        type: "warning",
+        confirmButtonText : "Terminar",
+        //confirmButtonColor: "#ec6c62"
+        showCancelButton: true,
+        cancelButtonText : "Mejor no",
+      }, function(){
+        window.location.href = url;
+      });
+      /*
+$("ul.list").on("click", ".danger", function(e){
+      e.preventDefault();
+      var url   = $(this).attr("href"),
+          title = $(this).attr("data-title");
+      deleteSurvey(url, title);
+    });
+
+    function deleteSurvey(url, title){
+      swal({
+        title: "Eliminar encuesta", 
+        text: "Vas a eliminar \"" + title + "\" del sistema. Esto no se puede deshacer!", 
+        type: "warning",
+        confirmButtonText : "Eliminar",
+        //confirmButtonColor: "#ec6c62"
+        showCancelButton: true,
+        cancelButtonText : "Mejor no",
+      }, function(){
+        window.location.href = url;
+      });
+    }
+      */
+    },
 
     // [ SHOW THE NEW BANNER ]
     //

@@ -198,7 +198,7 @@
             <div class="col-sm-10 col-sm-offset-1">
               <p>
               @if($blueprint->is_public)
-                <a href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Terminar encuesta</a>
+                <a data-title="Deseas terminar la encuesta? Para reiniciarla es necesario pedir autorización. También es posible ocultar la encuesta con el botón de 'cancelar encuesta'." id="finish-survey-btn" href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Terminar encuesta</a>
               @elseif($blueprint->is_closed)
                 <a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Iniciar encuesta nuevamente</a>
               @else
