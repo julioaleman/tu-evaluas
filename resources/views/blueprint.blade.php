@@ -104,6 +104,14 @@
             </div>
           </div>
 
+           <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <p><strong>Descripción</strong></p>
+              <p id="js-error-description" class="error"></p>
+              <p><textarea name="survey-description">{{$blueprint->description}}</textarea></p>
+            </div>
+          </div>
+
           <div class="divider"></div>
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
