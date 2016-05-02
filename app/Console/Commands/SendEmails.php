@@ -65,6 +65,9 @@ class SendEmails extends Command
         return;
       }
 
+      $blueprint->sending_emails = 1;
+      $blueprint->update();
+
       $counter = 0;
       Excel::load("storage/app/" . $_key . ".xlsx", function($reader) use($blueprint, $counter, $_key){
         $reader->each(function($row) use($blueprint, $counter, $_key){
@@ -96,5 +99,8 @@ class SendEmails extends Command
       ]);
 
       $mailgun->save();
+
+      $blueprint->sending_emails = 0;
+      $blueprint->update();
     }
 }
