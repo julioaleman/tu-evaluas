@@ -83,6 +83,8 @@ class Blueprints extends Controller
     $data['total']       = $total;
     $data['user']        = $user;
     $data['pages']       = ceil($total/self::PAGE_SIZE);
+
+
     return view("blueprint-search")->with($data);
   }
 
@@ -99,10 +101,19 @@ class Blueprints extends Controller
     $query = Blueprint::where(function($q) use($request, $title, $category, $tags, $survey_subs){
       // search title
       if(!empty($title)){
-        $q->where("title", "like", "%". $request->input("title") . "%");
+        //$q->where("title", "like", "%". $request->input("title") . "%");
+        $q->where(function($query) use($title){
+            $query->where("title", "like", "%{$title}%")
+            ->orWhere("category", "like", "%{$title}%")
+            ->orWhere("subcategory", "like", "%{$title}%")
+            ->orWhere("branch", "like", "%{$title}%")
+            ->orWhere("unit", "like", "%{$title}%")
+            ->orWhere("tags", "like",  "%{$title}%");
+        });
       }
         // search category
       if(!empty($category)){
+        echo "zzzzzzzzzzzzzzzzz";
         $q->where("category", $request->input("category"));
       }
       // search subcategory

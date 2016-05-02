@@ -38,14 +38,22 @@
 				<div class="panel-collapse collapse in" id="panel-01">
 					<div class="panel-body">
   						<div class="row">
-  							<div  align="center" class="col-md-2">Título: </div>
+  							<div  align="center" class="col-md-2">Busca por atención: </div>
   							<div class="col-md-9">
-	  							<input class="form-control" name="title" placeholder="Título de la encuesta" type="text" value="{{$request->input('title')}}" >
+
+	  							<input class="form-control" name="title" placeholder="Palabra clave" type="text" value="{{$request->input('title')}}" >
 	  						</div>
                 		</div>
 						<hr>
 						<div class="row" align="center">
 							<div class="col-md-4">
+							  <select name="category" id="survey-category" class="form-control">
+                                <option value="">Selecciona una categoría</option>
+                                @foreach($categories as $cat)
+                                <option value="{{$cat->name}}" {{$category && $category->name == $cat->name ? 'selected' : ''}}>{{$cat->name}}</option>
+                                @endforeach
+                              </select>
+							<?php /* LO QUE DEBERÍA BORRAR: 
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 									Categoría<span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
@@ -53,8 +61,18 @@
 										<li><a href="#">{{$cat->name}}</a></li>
 										@endforeach
 									</ul>
+									*/ ?>
 							</div>
 							<div class="col-md-4">
+							  <p>Subcategoría</p>
+							  <ul id="sub-list">
+							  @if($category)
+							    @foreach($category->sub as $sub)
+							    <li><label><input type="checkbox" value="{{$sub}}" name="survey-subs[]" {{in_array($sub, $request->input('survey-subs', [])) ? 'checked' : ''}}> {{$sub}}</label></li>
+							    @endforeach
+							  @endif
+							  </ul>
+							  <!--
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 									Subcategoría<span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
@@ -64,8 +82,18 @@
 										@endforeach
 										@endif
 									</ul>
+									-->
 							</div>
 							<div class="col-md-4">
+							  <p>Etiquetas</p>
+							  <ul id="tag-list">
+							  @if($category)
+							    @foreach($category->tags as $tag)
+							    <li><label><input type="checkbox" value="{{$tag}}" name="survey-tags[]" {{in_array($tag, $request->input('survey-tags', [])) ? 'checked' : ''}}> {{$tag}}</label></li>
+							    @endforeach
+							  @endif
+							  </ul>
+							<!--
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 									Etiquetas<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
@@ -75,6 +103,7 @@
 									@endforeach
 									@endif
 								</ul>
+								-->
 							</div>
 						</div>        
 						<hr>
@@ -113,6 +142,7 @@
   	});
 
   	$('#survey-category').on('change', function(e){
+  		console.log(e);
   		var value = e.currentTarget.value, 
   		   category = categories.filter(function(cat){
   			   return cat.name == value;

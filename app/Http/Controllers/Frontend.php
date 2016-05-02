@@ -119,7 +119,16 @@ class Frontend extends Controller
     $query = Blueprint::where(function($q) use($request, $title, $category, $tags, $survey_subs){
       // search title
       if(!empty($title)){
-        $q->where("title", "like", "%". $request->input("title") . "%");
+        //$q->where("title", "like", "%". $request->input("title") . "%");
+        //$q->where("title", "like", "%". $request->input("title") . "%");
+        $q->where(function($query) use($title){
+            $query->where("title", "like", "%{$title}%")
+            ->orWhere("category", "like", "%{$title}%")
+            ->orWhere("subcategory", "like", "%{$title}%")
+            ->orWhere("branch", "like", "%{$title}%")
+            ->orWhere("unit", "like", "%{$title}%")
+            ->orWhere("tags", "like",  "%{$title}%");
+        });
       }
         // search category
       if(!empty($category)){
