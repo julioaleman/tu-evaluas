@@ -18,11 +18,10 @@
 
 @if($status)
   <div class="{{$status['type']}}"> 
-  @if($status['type'] == "create")
     <p>{{$status['name']}}</p>  
-  @endif
   </div>
 @endif
+
  <!-- ERROR / SUCCESS MESSAGE ENDS -->
 
   	<p>Para enviar las encuestas, <strong>Tú Evalúas</strong> tiene tres métodos diferentes:</p>
@@ -78,7 +77,8 @@
 		  </select>
 		  </p>
 		  <p>Lista de correos <br>
-		    <span class="instructions">(debe ser un archivo de texto/csv con la lista de correos, un correo por renglón)</span> <br><br>
+		    <span class="instructions">El archivo debe tener debe tener un encaexado con el nombre de "correo",
+		     y abajo la lista de correos. <a href="{{url('ejemplo-correos.xlsx')}}">Aquí hay un ejemplo.</a></span> <br><br>
 		    <input type="file" name="list">
 		  </p>
 		  

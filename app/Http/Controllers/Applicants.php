@@ -82,7 +82,7 @@ class Applicants extends Controller
 
     if(!$blueprint->is_visible){
       $request->session()->flash('status', [
-        'type' => 'create-fail send-fail', 
+        'type' => 'create-fail send-fail alert', 
         'name' => "la encuesta no es pública, y no se pueden enviar correos!"
       ]);
 
