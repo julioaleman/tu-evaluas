@@ -10,6 +10,7 @@ use App\User;
 use App\Models\Blueprint;
 use App\Models\Location;
 use App\Models\City;
+use App\Models\Option;
 use Image;
 use League\Csv\Reader;
 use League\Csv\Writer;
@@ -103,16 +104,16 @@ class MakeXLSX extends Command
         $questions = $blueprint->questions;
         $titles    = $questions->pluck("question");
         $titles    = $titles->toArray();
-
+        array_unshift($titles, "id");
         $sheet->appendRow($titles);
 
         $applicants = $blueprint->applicants()->has("answers")->with("answers")->get();
 
         foreach($applicants as $applicant){
           $row  = [];
+          $row[] = $applicant->id;
           foreach($questions as $question){
-
-
+            
             if($question->is_description){
               $row[] = "es descripción";
             }
@@ -125,9 +126,28 @@ class MakeXLSX extends Command
                        ->first();
               $row[] = $this->find_location($question->type, $inegi_key);
             }
+
+            elseif($question->type == "multiple-multiple"){
+              $open_answer = $applicant
+                       ->answers()
+                       ->where("question_id", $question->id)
+                       ->get()
+                       ->first();
+              
+              if($open_answer && !empty($open_answer->text_value)){
+                $r = Option::whereIn("value", explode(",",$open_answer->text_value))
+                ->where("blueprint_id", $blueprint->id)
+                ->where("question_id", $question->id)
+                ->lists('description')->toArray();
+                $row[] = implode(",", $r);
+              }
+              else{
+                $row[] = "no contestó";
+              }
+            }
             
             
-            elseif(in_array($question->type, ['text', 'multiple', 'multiple-multiple'])){
+            elseif(in_array($question->type, ['text', 'multiple'])){
               $open_answer = $applicant
                        ->answers()
                        ->where("question_id", $question->id)
