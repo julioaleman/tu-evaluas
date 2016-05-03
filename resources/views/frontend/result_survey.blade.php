@@ -18,8 +18,31 @@
 					<h2>Respuestas</h2>
 						
 					<!-- comienza lista de preguntas-->
-					<ol>
-						@foreach($blueprint->questions as $question)
+					<ul>
+				    @foreach($blueprint->questions as $question)
+				    <li>
+				    	@if($question->is_description)
+				    	  <p>{{$question->question}}</p>
+				    	
+				    	@elseif($question->type == "personal")
+				    	  <h5>{{$question->question}}</h5>
+				    	  <p>[ es un dato personal ]</p>
+				    	@
+				    	
+				    	@elseif($question->type == "number") 
+				    	<h5>{{$question->question}}</h5>
+				    	  resultados : {{$question->answers->count()}} 
+				    	  min : {{$question->answers->min()->num_value}} 
+				    	  max : {{$question->answers->max()->num_value}} 
+				    	  promedio : {{$question->answers->avg('num_value')}} 
+				    	
+				    	@elseif($question->type == "text")
+				    	  <h5>{{$question->question}}</h5>
+				    	  <p>[ las preguntas abiertas estarán disponibles al terminar la encuesta en formato abierto ]</p>
+				    	@endif
+				    </li>
+				    <?php 
+				    /*
 						<li {!! $question->options->count() == 0 ? "class='hide'" :'' !!}>
 							<h3>{{ $question->question }}</h3>
 							@if($question->options->count() > 0)
@@ -53,8 +76,9 @@
 							<!--pronto-->
 							@endif			
 						</li>
-						@endforeach
-					</ol>
+					*/ ?>
+				    @endforeach
+					</ul>
 				</div>
 			</div>			
 		</article>

@@ -1003,28 +1003,6 @@ define(function(require){
       }, function(){
         window.location.href = url;
       });
-      /*
-$("ul.list").on("click", ".danger", function(e){
-      e.preventDefault();
-      var url   = $(this).attr("href"),
-          title = $(this).attr("data-title");
-      deleteSurvey(url, title);
-    });
-
-    function deleteSurvey(url, title){
-      swal({
-        title: "Eliminar encuesta", 
-        text: "Vas a eliminar \"" + title + "\" del sistema. Esto no se puede deshacer!", 
-        type: "warning",
-        confirmButtonText : "Eliminar",
-        //confirmButtonColor: "#ec6c62"
-        showCancelButton: true,
-        cancelButtonText : "Mejor no",
-      }, function(){
-        window.location.href = url;
-      });
-    }
-      */
     },
 
     // [ SHOW THE NEW BANNER ]

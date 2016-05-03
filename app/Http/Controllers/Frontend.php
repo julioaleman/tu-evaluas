@@ -166,7 +166,7 @@ class Frontend extends Controller
   //
   //
   function result($id){
-    $blueprint = Blueprint::with(["questions.options", "rules"])->find($id);
+    $blueprint = Blueprint::with(["questions.options"])->find($id);
 
 
     if(!$blueprint) die("Este formulario no existe!");
