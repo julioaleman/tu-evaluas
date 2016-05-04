@@ -306,7 +306,7 @@
         <!-- [3] muestra el aviso sobre la información personal -->
         <div id="personal-warning" style="display:none">
           <h4>Información personal</h4>
-          <p>La información caapturada en este campo, no estará disponible en línea.</p>
+          <p>La información capturada en este campo, no estará disponible en línea.</p>
         </div>
 
         <!-- [4] agrega las respuestas para opción múltiple -->
