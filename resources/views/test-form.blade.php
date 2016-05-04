@@ -4,112 +4,65 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="es" class="no-js"> <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
+  	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{{$blueprint->title}} | Tú Evalúas</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{{url('img/favicon.ico')}}">
-  <link rel="stylesheet" href="{{url('css/normalize.css')}}">
-    <link rel="stylesheet" href="{{url('css/styles.css')}}">
+    <title>{{$blueprint->title}} | Tú Evalúas</title>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Codigo GOB.MX CSS -->
+    <link href="https://framework-gb.cdn.gob.mx/favicon.ico" rel="shortcut icon">
+    <link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
 </head>
 <body>
-<header class="pg">
-  <div class="clearfix">
-    <nav class="col-sm-3 col-sm-offset-1">
-      <a href="{{url('')}}" class="tuevaluas">Tú evalúas</a>
-    </nav>
-    <nav class="col-sm-1 col-sm-offset-7">
-      <ul>
-        <li><a href="{{url('logout')}}">Salir</a></li>
-      </ul>
-    </nav>
-  </div> 
-  <nav class="nav_back test">
-	  <div class="container">
-	    <div class="row">
-	        <ul>
-	        
-	
-	          <li class="">
-	            <a href="{{ url('dashboard/encuesta/' . $blueprint->id) }}">&lt; Regresar a editar encuesta</a>
-	          </li>
-	
-	          
-	        </ul>
-	    </div>
-	  </div>
-	</nav> 
-</header>
-
-<div class="container">
-	<div class="col-sm-12">
+<main role="main">
+<div class="container bottom-buffer">
+	<!--breadcrumb-->
+	<div class="row">
+		<div class="col-md-12">
+		  <ol class="breadcrumb">
+		    <li><a href="#"><i class="icon icon-home"></i></a></li>
+		    <li><a href="https://www.gob.mx">Inicio</a></li>
+		    <li><a href="{{ url('dashboard')}}">Tú Evalúas</a></li>
+		    <li><a href="{{ url('dashboard/encuesta/' . $blueprint->id) }}"> Regresar a editar encuesta</a></li>
+	        <li class="active">Previsualizar Encuesta:  {{$blueprint->title}}</li>
+		  </ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 bottom-buffer">
+			<!--egb_div class="contenedor vertical-buffer"-->
+				<image src="{{url('img/logov0_.png')}}"></image>
+			<!--egb_/div-->
+		</div>
+	</div>	
+	<div class="alert alert-warning">
 		<p class="instructions">Esta es la pre visualización de tu encuesta, lo que los usuarios verán cuando reciban el correo para contestarla.</p>
 	</div>
+
+<div class="row bottom-buffer">
+	<div class="col-md-8">
+		<h1>{{$blueprint->title}}</h1>
+		<hr class="red">
+	</div>
+</div>
+<div class="bottom-buffer">
+    <div id="main" class="row">
+		<div class="col-md-8">
+    	  <form id="survey" role="form">
+    	  	{!! csrf_field() !!}
+    	  	<p id="annoying-message" style="display: none">Debes contestar las preguntas para avanzar a la siguiente sección ;D 
+		  	    <a href="#" class="close-me">x</a></p>
+    	  </form>
+    	</div>
+    </div>
 </div>
 
-  <div class="container cuestiona">
-    <h1>{{$blueprint->title}}</h1>
-    <div id="main" class="row">
-      <div class="col-sm-12">
-        <form id="survey">
-        {!! csrf_field() !!}
-        <p id="annoying-message" style="display: none">Debes contestar las preguntas para avanzar a la siguiente sección ;D <a href="#" class="close-me">x</a></p>
-          </form>
-      </div>
-    </div>
-  </div>
+
   
-<footer>
-  <div class="container">
-    <div class="row integrantes">
-      <div class="col-sm-10 col-sm-offset-1">
-      <h3>Equipo <strong>Tú Evalúas</strong></h3>
-      <ul class="row">
-        <li class="col-xs-4"><span class="presidencia">Presidencia</span></li>
-        <li class="col-xs-4"><a href="http://www.presidencia.gob.mx/edn/" class="mx_digital">Estrategia Digital</a></li>
-        <li class="col-xs-4"><span class="shcp">SHCP</span></li>
-        <li class="col-xs-4"><a href="http://www.transparenciapresupuestaria.gob.mx/" class="transparencia">Transparencia Presupuestaria</a></li>
-        <li class="col-xs-4"><a href="http://www.crea.org.mx/" class="crea">CREA A.C.</a></li>
-        <li class="col-xs-4"><a href="http://gobiernofacil.com" class="gobiernofacil" title="Gobierno Fácil">Gobierno Fácil</a></li>
-      </ul>
-      </div>
-    </div>
-  </div>
-  <!-- participantes-->
-  <div class="integrantes participantes">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-          <h3>Participantes <strong>Tú Evalúas</strong></h3>
-          <ul class="row">
-            <li class="col-xs-4"></li>
-            <li class="col-xs-4"><a href="http://www.vas.gob.mx/swb/swb/PORTALVAS/home" class="prospera">Sedesol Prospera</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="links_bottom">
-    <div class="container">
-      <div class="row">
-      <div class="col-sm-3">
-        <p><span class="tu_evaluas">Tú Evalúas</span> ©2015</p>
-      </div>
-      <div class="col-sm-9">
-        <ul>
-          <li><a href="{{url('que-es')}}">¿Qué es?</a></li> 
-          <li><a href="{{url('resultados')}}">Resultados</a></li>
-          <li><a href="{{url('preguntas-frecuentes')}}">Preguntas Frecuentes</a></li>
-          <li><a href="{{url('terminos')}}">Términos y Condiciones</a></li>
-          <li><a href="{{url('privacidad')}}">Privacidad</a></li>
-          <li><a href="{{url('contacto')}}">Contacto</a></li>
-        </ul>
-      </div>
-    </div>
-    </div>
-  </div>
-</footer>
   
+<!--footer-->
+@include('layouts.footer')
+</div>
+</main>  
   <!-- JS STUFF -->
   <script>
   var agentesFormSettings = {
