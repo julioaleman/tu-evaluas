@@ -1156,6 +1156,11 @@ div.delete p, div.update p, div.create p {
   color: white;
   padding: 5px; }
 
+div.create-fail.send-fail.alert p {
+  background: red;
+  color: white;
+  padding: 5px; }
+
 header.pg {
   background: #f9f9f9; }
   header.pg nav {
