@@ -117,7 +117,7 @@
 	  @endif
 	  
       <!--  users list-->
-      <div class="col-sm-8">  
+      <div class="{{ $user->level == 3 ? 'col-sm-8' : 'col-sm-12'}}">  
         <section class="box">
 	        @if($user->level == 3)
 			<h2>Funcionarios Públicos</h2>
@@ -152,10 +152,10 @@
                <div class="col-sm-4">
                    <h4>Nombre</h4>
                </div>
-               <div class="col-sm-4">
+               <div class="col-sm-5">
                     <h4>Correo</h4>
                </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <h4>Tipo de Usuario</h4>
                </div>
             </li>
@@ -163,8 +163,8 @@
               <div class="col-sm-4">
                <a href="{{url('dashboard/usuario/' . $user->id)}}">{{$user->name}}</a>
               </div>
-              <div class="col-sm-4">{{$user->email}}</div>
-              <div class="col-sm-4">
+              <div class="col-sm-5">{{$user->email}}</div>
+              <div class="col-sm-3">
                     <p>Funcionario público</p>
                </div>
             </li>
