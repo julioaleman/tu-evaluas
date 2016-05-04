@@ -106,18 +106,18 @@
 			</div>
         </div>
 		</form>
-		</div>
-		<div class="bottom-buffer">
-            <div class="col-md-8">
+</div>
+<div class="bottom-buffer">
+    <div class="col-md-8">
         @foreach($surveys as $survey)
     	<h2 class="vertical-buffer"><a href="{{ url('resultado/'. $survey->id)}}">{{ $survey->title}}</a></h2>
   		<button type="button" class="btn btn-primary">Consultar Resultados</button>
         <hr>
   		@endforeach
-        @endif
-            </div>
-		</div>
-
+        
+    </div>
+</div>
+@endif
 
 <script src="{{url('js/bower_components/jquery/dist/jquery.min.js')}}"></script>
 <script>
