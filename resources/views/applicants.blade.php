@@ -77,7 +77,7 @@
 		  </select>
 		  </p>
 		  <p>Lista de correos <br>
-		    <span class="instructions">El archivo debe tener debe tener un encaexado con el nombre de "correo",
+		    <span class="instructions">El archivo debe tener un encabezado con el nombre de "correo",
 		     y abajo la lista de correos. <a href="{{url('ejemplo-correos.xlsx')}}">Aquí hay un ejemplo.</a></span> <br><br>
 		    <input type="file" name="list">
 		  </p>
