@@ -45,8 +45,8 @@
 	  						</div>
                 		</div>
 						<hr>
-						<div class="row" align="center">
-							<div class="col-md-4">
+						<div class="row">
+							<div class="col-md-6">
 							  <select name="category" id="survey-category" class="form-control">
                                 <option value="">Selecciona una categoría</option>
                                 @foreach($categories as $cat)
@@ -63,30 +63,19 @@
 									</ul>
 									*/ ?>
 							</div>
-							<div class="col-md-4">
-							  <p>Subcategoría</p>
-							  <ul id="sub-list">
+							<div class="col-md-3">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Subcategoría<span class="caret"></span></a>
+							  <ul id="sub-list" class="dropdown-menu" role="menu">
 							  @if($category)
 							    @foreach($category->sub as $sub)
 							    <li><label><input type="checkbox" value="{{$sub}}" name="survey-subs[]" {{in_array($sub, $request->input('survey-subs', [])) ? 'checked' : ''}}> {{$sub}}</label></li>
 							    @endforeach
 							  @endif
 							  </ul>
-							  <!--
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-									Subcategoría<span class="caret"></span></a>
-									<ul class="dropdown-menu" role="menu">
-										@if($category)
-										@foreach($category->sub as $sub)
-										<li><a href="#">{{$sub}} </a></li>
-										@endforeach
-										@endif
-									</ul>
-									-->
 							</div>
-							<div class="col-md-4">
-							  <p>Etiquetas</p>
-							  <ul id="tag-list">
+							<div class="col-md-3">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Etiquetas<span class="caret"></span></a>
+							  <ul id="tag-list" class="dropdown-menu" role="menu">
 							  @if($category)
 							    @foreach($category->tags as $tag)
 							    <li><label><input type="checkbox" value="{{$tag}}" name="survey-tags[]" {{in_array($tag, $request->input('survey-tags', [])) ? 'checked' : ''}}> {{$tag}}</label></li>
