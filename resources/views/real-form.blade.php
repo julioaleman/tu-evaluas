@@ -46,7 +46,9 @@
 </div>
 <div class="bottom-buffer">
     @if($is_admin && !$blueprint->is_visible)
+    <div class="alert alert-danger">
       <p class="warning">La encuesta está oculta, pero al ser un usuario registrado, puedes verla :D</p>
+    </div>
     @endif
 </div>
 <div class="bottom-buffer">

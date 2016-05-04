@@ -12,9 +12,9 @@
 	  </ol>
 	</div>
 </div>
-<div class="row top-buffer">
+				<div class="bottom-buffer">
 	<div class="col-md-8">
-		<h1>Datos Abiertos</h1>
+		<h2>Datos Abiertos</h2>
 		<hr class="red">
 
         @if ($surveys->count() > 0)
