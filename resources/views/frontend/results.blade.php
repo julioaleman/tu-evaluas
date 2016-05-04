@@ -20,8 +20,9 @@
 		</div>
 	</div>
 </div>
+@if ($surveys->count() > 0)
+
 <div class="col-md-8">
-        @if ($surveys->count() > 0)
 		<form id="fbp" name="filter-blueprints" method="get" action="{{url('resultados')}}" class="form_search">
 			<?php $category = $request->input('category') ? $categories->where("name", $request->input('category'))->first() : null; ?>
 			{!! csrf_field() !!}
@@ -117,6 +118,13 @@
         
     </div>
 </div>
+
+@else
+<div class="col-md-8">
+    <p>Estamos actualizando los resultados de los cuestionarios, pronto más información.</p>
+    <hr>
+</div>
+
 @endif
 
 <script src="{{url('js/bower_components/jquery/dist/jquery.min.js')}}"></script>
