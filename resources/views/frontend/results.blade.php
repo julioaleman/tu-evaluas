@@ -117,19 +117,17 @@
 			</div>
         </div>
 		</form>
+		</div>
+		<div class="bottom-buffer">
+            <div class="col-md-8">
         @foreach($surveys as $survey)
-        <hr>
-    	<h2><a href="{{ url('resultado/'. $survey->id)}}">{{ $survey->title}}</a></h2>
-    	<div align="center" class="vertical-buffer">
-    		<a href="{{url('resultado/'. $survey->id) }}">
-			<img src="{{url('img/programas/'.(empty($survey->banner) ? "default.jpg":$survey->banner))}}">
-			</a>
-        </div>
+    	<h2 class="vertical-buffer"><a href="{{ url('resultado/'. $survey->id)}}">{{ $survey->title}}</a></h2>
   		<button type="button" class="btn btn-primary">Consultar Resultados</button>
+        <hr>
   		@endforeach
         @endif
-        <hr>
-</div>
+            </div>
+		</div>
 
 
 <script src="{{url('js/bower_components/jquery/dist/jquery.min.js')}}"></script>
