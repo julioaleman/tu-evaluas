@@ -21,21 +21,53 @@
 					<ul>
 				    @foreach($blueprint->questions as $question)
 				    <li>
+				      <!-- DESCRIPCIONES -->
 				    	@if($question->is_description)
 				    	  <p>{{$question->question}}</p>
 				    	
+				    	 <!-- INFORMACIÓN PERSONAL -->
 				    	@elseif($question->type == "personal")
 				    	  <h5>{{$question->question}}</h5>
 				    	  <p>[ es un dato personal ]</p>
-				    	@
 				    	
+				    	 <!-- RESPUESTA MÚLTIPLE (una) -->
+				    	@elseif($question->type == "multiple")
+				    	  <h5>{{$question->question}}</h5>
+				    	  <?php 
+				    	    $options = $question->options;
+				    	    $total   = $question->answers->count();
+				    	  ?>
+				    	  @foreach($options as $option)
+				    	     <?php 
+				    	       $opt    = $option->description;
+				    	       $num    = $question->answers->where("text_value", $opt)->count(); 
+				    	       $title  = $option->description;
+				    	       $amount =  round(($num / $total) * 100, 2);
+				    	     ?>
+				    	    <p>
+				    	      {{$title}} <strong>{{$amount}}%</strong> <span class="total">({{$num}})</span>
+				    	    </p>
+				    	   	<p>
+				    	   	  <span class="the_bar"> 
+										  <span class="bar" style="
+										  width:{{$amount}}%;
+										  display: inline-block;
+										  background: black;
+										  height: 1em;
+										  "></span>
+										</span>
+									  </p>
+				    	  @endforeach
+				    	
+				    	 <!-- RESPUESTA NUMÉRICA -->
 				    	@elseif($question->type == "number") 
 				    	<h5>{{$question->question}}</h5>
-				    	  resultados : {{$question->answers->count()}} 
-				    	  min : {{$question->answers->min()->num_value}} 
-				    	  max : {{$question->answers->max()->num_value}} 
+				    	  resultados : {{$question->answers->count()}}<br>
+				    	  min : {{$question->answers->min('num_value')}} <br>
+				    	  max : {{$question->answers->max('num_value')}} <br>
 				    	  promedio : {{$question->answers->avg('num_value')}} 
 				    	
+				    	 <!-- PREGUNTA ABIERTA -->
 				    	@elseif($question->type == "text")
 				    	  <h5>{{$question->question}}</h5>
 				    	  <p>[ las preguntas abiertas estarán disponibles al terminar la encuesta en formato abierto ]</p>
