@@ -94,6 +94,8 @@
       });
   </script>
 <!-- DEVELOPMENT SOURCE -->
-<script data-main="{{url('js/main')}}" src="{{url('js/bower_components/requirejs/require.js')}}"></script>
+<script src="{{url('js/bower_components/requirejs/require.js')}}"></script>
+<script src="{{url('js/main-built.js')}}"></script>
+<!--<script data-main="{{url('js/main')}}" src="{{url('js/bower_components/requirejs/require.js')}}"></script>-->
 </body>
 </html>
