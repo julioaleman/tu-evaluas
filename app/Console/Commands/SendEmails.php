@@ -11,6 +11,7 @@ use League\Csv\Reader;
 use Excel;
 use Auth;
 use Log;
+use Hash;
 
 use App\User;
 use App\Models\Blueprint;
@@ -74,7 +75,7 @@ class SendEmails extends Command
         $reader->each(function($row) use($blueprint, $counter, $_key, $_header){
           if(trim($row->correo) != "" && filter_var($row->correo, FILTER_VALIDATE_EMAIL) ){
             
-            $form_key  = md5('blueprint' . $blueprint->id . $row->correo);
+            $form_key  = str_replace("/", "", Hash::make('blueprint' . $blueprint->id . $row->correo));
             
             $applicant = Applicant::firstOrCreate([
               "blueprint_id" => $blueprint->id, 

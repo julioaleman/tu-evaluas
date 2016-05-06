@@ -11,6 +11,7 @@ use League\Csv\Writer;
 use League\Csv\Reader;
 use Excel;
 use Auth;
+use Hash;
 use Artisan;
 use Storage;
 
@@ -75,7 +76,7 @@ class Applicants extends Controller
     $creator   = $user->id;
     $blueprint = Blueprint::find($request->input('id'));
     $email     = $request->input("email");
-    $form_key  = md5('blueprint' . $blueprint->id . $email);
+    $form_key  = str_replace("/", "", Hash::make('blueprint' . $blueprint->id . $email));
     $_header   = $request->input('header', null);
     $header    = $_header ? $_header : self::HEADER;
     // escapeshellarg($_header)
@@ -143,7 +144,7 @@ class Applicants extends Controller
         // add a sheet for each day, and set the date as the name of the sheet
       $excel->sheet("encuestas", function($sheet) use($options){
         foreach($this->makeRange($options['total']) as $i){
-          $form_key = md5('blueprint' . $options['blueprint']->id . uniqid($i));
+          $form_key = str_replace("/", "", Hash::make('blueprint' . $options['blueprint']->id . uniqid($i)));
           
           $applicant = Applicant::firstOrCreate([
             "blueprint_id" => $options['blueprint']->id, 

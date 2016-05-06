@@ -922,6 +922,7 @@ define(function(require){
       }, 'json');
     },
 
+    /*
     // [ UPLOAD RESULTS ]
     //
     //
@@ -978,6 +979,7 @@ define(function(require){
         e.currentTarget.checked = false;
       }
     },
+    */
 
     //
     // O T H E R   S T U F F
