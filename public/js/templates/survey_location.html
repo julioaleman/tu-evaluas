@@ -1,5 +1,5 @@
 <label class="control-label"><%= question %></label>
-
+<div class="form-group">
     <select name="<%= 'st' + id %>" class="estado form-control">
       <option value="00">Selecciona un estado</option>
       <option value="01">Aguascalientes</option>
@@ -35,18 +35,23 @@
       <option value="31">Yucatán</option>
       <option value="32">Zacatecas</option>
     </select>
+</div>
   <% if(type != 'location-a'){ %>
+<div class="form-group">
     <select name="<%= 'mn' + id %>" class="municipio form-control">
       <option value="000">Selecciona un municipio</option>
     </select>
+</div>
   <% }else{ %>
     <input type="hidden" name="<%= 'mn' + id %>" value="000" class="municipio">
   <% } %>
 
   <% if(type == 'location-c'){ %>
+<div class="form-group">
     <select name="<%= 'lc' + id %>" class="localidad form-control">
       <option value="0000">Selecciona una localidad</option>
     </select>
+</div>
   <% }else{ %>
     <input type="hidden" name="<%= 'lc' + id %>" value="0000" class="localidad">
   <% } %>
