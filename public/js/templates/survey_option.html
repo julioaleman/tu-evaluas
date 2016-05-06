@@ -1,7 +1,7 @@
-<li>
-  <label>
-    <input type="radio" name="<%= 'q' + question_id %>" value="<%= description %>" 
-    <% if(default_value && default_value == description) print('checked') %>>
-    <%= description %>
-  </label>
-</li>
+<div class="radio">
+	<label>
+	    <input type="radio" name="<%= 'q' + question_id %>" value="<%= description %>" 
+	    <% if(default_value && default_value == description) print('checked') %>>
+	    <%= description %>
+	</label>
+</div>
