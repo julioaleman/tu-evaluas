@@ -39,9 +39,9 @@ define(function(require){
       'change input[type="hidden"]' : 'save_response',
 
       // [ LOCATION QUESTIONS]
-      'change select[class="estado"]'    : '_update_state',
-      'change select[class="municipio"]' : '_update_city',
-      'change select[class="localidad"]' : '_update_locality',
+      'change select[class~="estado"]'    : '_update_state',
+      'change select[class~="municipio"]' : '_update_city',
+      'change select[class~="localidad"]' : '_update_locality',
     },
 
     // -----------------
@@ -49,7 +49,7 @@ define(function(require){
     // -----------------
     //
     tagName : 'div',
-  //  className : 'count',
+    className : 'form-group',
 
     // -----------------
     // SET THE TEMPLATES
