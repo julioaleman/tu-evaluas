@@ -9,10 +9,48 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Blueprint;
 use App\Models\Answer;
+use App\Models\Location;
+use App\Models\City;
 
 class Frontend extends Controller
 {
   const PAGE_SIZE = 50;
+
+  public $states = [
+    "01" => "Aguascalientes",
+    "02" => "Baja California",
+    "03" => "Baja California Sur",
+    "04" => "Campeche",
+    "05" => "Coahuila de Zaragoza",
+    "06" => "Colima",
+    "07" => "Chiapas",
+    "08" => "Chihuahua",
+    "09" => "Distrito Federal",
+    "10" => "Durango",
+    "11" => "Guanajuato",
+    "12" => "Guerrero",
+    "13" => "Hidalgo",
+    "14" => "Jalisco",
+    "15" => "México",
+    "16" => "Michoacán de Ocampo",
+    "17" => "Morelos",
+    "18" => "Nayarit",
+    "19" => "Nuevo León",
+    "20" => "Oaxaca",
+    "21" => "Puebla",
+    "22" => "Querétaro",
+    "23" => "Quintana Roo",
+    "24" => "San Luis Potosí",
+    "25" => "Sinaloa",
+    "26" => "Sonora",
+    "27" => "Tabasco",
+    "28" => "Tamaulipas",
+    "29" => "Tlaxcala",
+    "30" => "Veracruz de Ignacio de la Llave",
+    "31" => "Yucatán",
+    "32" => "Zacatecas"
+  ];
+
   //
   //
   //
@@ -168,6 +206,48 @@ class Frontend extends Controller
   function result($id){
     $blueprint = Blueprint::with(["questions.options"])->find($id);
 
+    $test = function($question_type, $inegi_key){
+    if(!$inegi_key) return "-";
+    
+    switch($question_type){
+      case "location-a":
+        $key = substr($inegi_key->text_value, 0, 2);
+        $name = !empty($key) ? $this->states[$key] : "-";
+        break;
+      case "location-b":
+        $state_key = substr($inegi_key->text_value, 0, 2);
+        $state_name = !empty($state_key) ? $this->states[$state_key] : "-";
+
+        $city_key  = substr($inegi_key->text_value, 2, 3);
+        $city      = !empty($city_key) ? City::where("clave", $city_key)->where("estado_id", (int)$state_key)->first() : null;
+        $city_name = $city ? $city->nombre : "-";
+
+        $name = $city_name . ", " . $state_name;
+        break;
+
+      case "location-c":
+        $state_key  = substr($inegi_key->text_value, 0, 2);
+        $state_name = !empty($state_key) ? $this->states[$state_key] : "-";
+
+        $city_key  = substr($inegi_key->text_value, 2, 3);
+        $city      = !empty($city_key) ? City::where("clave", $city_key)->where("estado_id", (int)$state_key)->first() : null;
+        $city_name = $city ? $city->nombre : "-";
+
+        $location_key  = substr($inegi_key->text_value, 5, 4);
+        $location = !empty($location_key) ? Location::where("clave", $location_key)->where("municipio_id", $city->id)->first() : null;
+        $location_name = $location ? $location->nombre : "-";
+
+        $name =  $location_name . ", " . $city_name . ", " . $state_name;
+        break;
+
+      default:
+        $name = "-";
+        break;
+    }
+
+    return $name;
+  };
+
 
     if(!$blueprint) die("Este formulario no existe!");
 
@@ -176,6 +256,7 @@ class Frontend extends Controller
     $data['title']       = 'Resultados | Tú Evalúas';
     $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
     $data['body_class']  = 'results';
+    $data['test']  = $test;
     return view("frontend.result_survey")->with($data);
   }
 
@@ -210,4 +291,6 @@ class Frontend extends Controller
   function blueprintDocsCSV(){
     echo ":D";
   }
+
+
 }

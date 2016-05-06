@@ -53,6 +53,64 @@
 									  </p>
 				    	  @endforeach
 				    	
+				    	<!-- RESPUESTA MÚLTIPLE - MÚLTIPLE -->
+				    	@elseif($question->type == "multiple-multiple")
+				    	  <h5>{{$question->question}}</h5>
+				    	  <?php 
+				    	    $options = $question->options;
+				    	    $total   = $question->answers->count();
+				    	  ?>
+				    	  @foreach($options as $option)
+				    	    <?php 
+				    	      $opt    = $option->description;
+				    	      $num    = $question->answers()->whereRaw("FIND_IN_SET({$option->value},text_value)")->count();
+				    	      $title  = $option->description;
+				    	      $amount = round(($num / $total) * 100, 2);
+				    	    ?>
+				    	     <p>
+				    	      {{$title}} <strong>{{$amount}}%</strong> <span class="total">({{$num}})</span>
+				    	    </p>
+				    	   	<p>
+				    	   	  <span class="the_bar"> 
+										  <span class="bar" style="
+										  width:{{$amount}}%;
+										  display: inline-block;
+										  background: black;
+										  height: 1em;
+										  "></span>
+										</span>
+									  </p>
+				    	  @endforeach
+				    	<!-- RESPUESTA ESTADO -->
+				    	@elseif(in_array($question->type, ["location-a", "location-b", "location-c"]))
+				    	 <h5>{{$question->question}}</h5>
+				    	  <?php 
+				    	    $options = $question->answers()->select(DB::raw('count(*) as total, text_value'))->groupBy("text_value")->get();
+				    	    $total   = $question->answers->count();
+				    	  ?>
+				    	  @foreach($options as $option)
+				    	    <?php 
+				    	      $opt    = $option->text_value;
+				    	      $num    = $option->total;
+				    	      $title  = $test($question->type, $option);
+				    	      $amount = round(($num / $total) * 100, 2);
+				    	    ?>
+				    	     <p>
+				    	      {{$title}} <strong>{{$amount}}%</strong> <span class="total">({{$num}})</span>
+				    	    </p>
+				    	    <p>
+				    	   	  <span class="the_bar"> 
+										  <span class="bar" style="
+										  width:{{$amount}}%;
+										  display: inline-block;
+										  background: black;
+										  height: 1em;
+										  "></span>
+										</span>
+									  </p>
+				    	  @endforeach
+
+
 				    	 <!-- RESPUESTA NUMÉRICA -->
 				    	@elseif($question->type == "number") 
 				    	<h5>{{$question->question}}</h5>
