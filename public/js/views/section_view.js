@@ -35,7 +35,7 @@ define(function(require){
     // [ SET THE CONTAINER ]
     //
     //
-    tagName : 'div',
+    tagName : 'fieldset',
 
     // 
     // [ THE TEMPLATES ]

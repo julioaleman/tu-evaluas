@@ -179,7 +179,7 @@ define(function(require){
       // [5] hace hueco para el siguiente contenido.
       //     aquí es donde podría haber "magia" en la interacción
         // this.$('#survey').html('');
-        this.$('#survey .form-group').remove();
+        this.$('#survey fieldset').remove();
         this.$('#annoying-message').hide();
       // [6] renderea la siguiente sección
         this.$('#survey').append(this.sections[position].el);
