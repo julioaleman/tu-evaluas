@@ -36,7 +36,7 @@
 				    	       $opt    = $option->description;
 				    	       $num    = $question->answers->where("text_value", $opt)->count(); 
 				    	       $title  = $option->description;
-				    	       $amount =  round(($num / $total) * 100, 2);
+				    	       $amount = $total ? round(($num / $total) * 100, 2) : 0;
 				    	     ?>
 				    	    <p>
 				    	      {{$title}} <strong>{{$amount}}%</strong> <span class="total">({{$num}})</span>
@@ -65,7 +65,7 @@
 				    	      $opt    = $option->description;
 				    	      $num    = $question->answers()->whereRaw("FIND_IN_SET({$option->value},text_value)")->count();
 				    	      $title  = $option->description;
-				    	      $amount = round(($num / $total) * 100, 2);
+				    	      $amount = $total ? round(($num / $total) * 100, 2) : 0;
 				    	    ?>
 				    	     <p>
 				    	      {{$title}} <strong>{{$amount}}%</strong> <span class="total">({{$num}})</span>
@@ -81,7 +81,7 @@
 										</span>
 									  </p>
 				    	  @endforeach
-				    	<!-- RESPUESTA ESTADO -->
+				    	<!-- RESPUESTA UBICACIÓN -->
 				    	@elseif(in_array($question->type, ["location-a", "location-b", "location-c"]))
 				    	 <h5>{{$question->question}}</h5>
 				    	  <?php 
@@ -93,7 +93,7 @@
 				    	      $opt    = $option->text_value;
 				    	      $num    = $option->total;
 				    	      $title  = $test($question->type, $option);
-				    	      $amount = round(($num / $total) * 100, 2);
+				    	      $amount = $total ? round(($num / $total) * 100, 2) : 0;
 				    	    ?>
 				    	     <p>
 				    	      {{$title}} <strong>{{$amount}}%</strong> <span class="total">({{$num}})</span>
