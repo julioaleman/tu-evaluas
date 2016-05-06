@@ -36,7 +36,6 @@ define(function(require){
     //
     //
     tagName : 'div',
-    className : 'form-group',
 
     // 
     // [ THE TEMPLATES ]

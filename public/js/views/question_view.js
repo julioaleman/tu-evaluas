@@ -49,7 +49,7 @@ define(function(require){
     // -----------------
     //
     tagName : 'div',
-  //  className : 'count',
+    className : 'form-group',
 
     // -----------------
     // SET THE TEMPLATES
