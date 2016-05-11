@@ -5,7 +5,6 @@
 * Mysql
 * Composer
 * Bower
-* nodejs
 
 1: copiar los archivos del siguiente repositorio:
 [github] (https://github.com/GobiernoFacil/tu-evaluas.git)
