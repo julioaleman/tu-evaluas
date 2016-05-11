@@ -1,11 +1,11 @@
 # Guía de instalación de Tú evaúas 3.0
 
 # Requerimientos técnicos:
-PHP >= 5.5.9 
-Mysql
-Composer
-Bower
-nodejs
+* PHP >= 5.5.9 
+* Mysql
+* Composer
+* Bower
+* nodejs
 
 1: copiar los archivos del siguiente repositorio:
 [github] (https://github.com/GobiernoFacil/tu-evaluas.git)
