@@ -1,27 +1,76 @@
-# Laravel PHP Framework
+# Guía de instalación de Tú evaúas 3.0
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+# Requerimientos técnicos:
+PHP >= 5.5.9 
+Mysql
+Composer
+Bower
+nodejs
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+1: copiar los archivos del siguiente repositorio:
+[github] (https://github.com/GobiernoFacil/tu-evaluas.git)
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+2: en la carpeta raíz, hay que correr el siguiente comando:
+```bash
+composer install
+```
 
-## Official Documentation
+3: en la carpeta raíz, hay que copiar el archivo .env.example a .env
+```bash
+cp .env.example .env
+```
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+4: crear la base de datos que se va a ocupar
 
-## Contributing
+5: editar el archivo .env, en el que se debe poner la información de conexión a la DB, la información del api  de mailgun, en caso de que se quiera enviar correos, y definir en APP_URL el host
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+aquí un ejemplo del archivo .env:
+```bash
+APP_ENV=local
+APP_DEBUG=true
+APP_KEY=somerandomkey
 
-## Security Vulnerabilities
+DB_HOST=http://plataformadetransparencia.org.mx
+DB_DATABASE=thedb
+DB_USERNAME=thedbuser
+DB_PASSWORD=thedbpass
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+APP_URL=http://plataformadetransparencia.org.mx
 
-## License
+CACHE_DRIVER=file
+SESSION_DRIVER=file
+QUEUE_DRIVER=sync
+ 
+MAIL_DRIVER=mailgun
+MAIL_HOST=smtp.mailgun.org
+MAIL_PORT=587
+MAIL_USERNAME=postmaster@plataformadetransparencia.org.mx
+MAIL_PASSWORD=themailgunpass
+MAIL_ENCRYPTION=null
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+MAILGUN_DOMAIN=themailgundomain
+MAILGUN_KEY=key-themailginkey
+MAILGUN_SECRET=key-themailgunsecret
+```
+ 
+6: Despues de guardar y cerrar el archivo .env, hay que generar la llave de encriptación con:
+```bash
+php artisan key:generate
+```
+
+7: Acto siguiente, hay que crear las tablas en la base de datos, con el siguiente comando:
+```bash
+php artisan migrate
+```
+
+8: hay que copiar la info de municipios y localidadespara las preguntas de ubicación
+```bash
+php artisan db:seed
+```
+
+9: hay que descargar las librerías de Javascript necesarias. Dentro de la carpeta de public/js, hay que ejecutar el siguiente comando:
+```bash
+bower install
+```
+
+y eso es todo amigos!
