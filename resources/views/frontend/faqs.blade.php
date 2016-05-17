@@ -15,7 +15,7 @@
 				<div class="bottom-buffer">
 						<div class="row">
 							<div class="col-md-8">
-								<h2>Preguntas Frecuentes sobre la plataforma <strong>Tú Evalúas</strong></h2>
+								<h2>Preguntas Frecuentes</h2>
                                 <hr class="red">
                                 <h3>¿Cómo van a usar mis respuestas?</h3>
                                 <p>El portal tiene por objetivo recabar la opinión ciudadana sobre los programas públicos federales. Los resultados de los cuestionarios serán de carácter público en tiempo real y en bases de datos en formato abierto. </p>
