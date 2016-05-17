@@ -39,18 +39,17 @@
           	</tr>
   		  @endforeach
           </tbody>
-  		  <ul id="pagination" class="pagination">
-            @for($i = 1; $i <= $pages; $i++)
-            <li>
-              <a href="{{url('datos-abiertos/' . $i) . '?' . http_build_query($request->all())}}" {{$page == $i ? 'class="current"' : ''}}>{{$i}}</a>
-            </li>
-            @endfor
-          </ul>
         </table>
+  		<ul id="pagination" class="pagination">
+          @for($i = 1; $i <= $pages; $i++)
+          <li>
+            <a href="{{url('datos-abiertos/' . $i) . '?' . http_build_query($request->all())}}" {{$page == $i ? 'class="current"' : ''}}>{{$i}}</a>
+          </li>
+          @endfor
+        </ul>
         @else
         <p>Aún no hay datos abiertos disponibles :(</p>
         @endif
-        <hr>
 	</div>
 </div>
 @endsection
