@@ -1,28 +1,22 @@
 @extends('layouts.master')
 
 @section('content')
-<!--breadcrumb-->
+
 <div class="row">
-	<div class="col-sm-8">
-	  <ol class="breadcrumb">
-	    <li><a href="#"><i class="icon icon-home"></i></a></li>
-	    <li><a href="https://www.gob.mx">Inicio</a></li>
-	    <li><a href="{{ url('')}}">Tú Evalúas</a></li>
-        <li class="active">Resultados</li>
-	  </ol>
+	<div class="col-md-8">
+		<p><strong>Tú Evalúas</strong> es una plataforma digital que <strong>tiene como objetivo evaluar el desempeño</strong> de los programas públicos federales mediante la participación ciudadana. A través de <strong>Tú Evalúas</strong> podrás calificar los procesos seguidos  por cada programa y expresar tu 
+       <strong>satisfacción con los productos y servicios</strong> que ofrecen.</p>
 	</div>
 </div>
-<div class="bottom-buffer">
-	<div class="row">
-		<div class="col-md-8">
-			<h2>Resultados en cuestionarios <strong>Tú Evalúas</strong></h2>
-			<hr class="red">
-		</div>
+<div class="row">
+	<div class="col-md-8">
+		<h2>Resultados</h2>
+		<hr class="red">
 	</div>
 </div>
 @if ($surveys->count() > 0)
-
-<div class="col-md-8">
+<div class="bottom-buffer">
+	<div class="col-md-8">
 		<form id="fbp" name="filter-blueprints" method="get" action="{{url('resultados')}}" class="form_search">
 			<?php $category = $request->input('category') ? $categories->where("name", $request->input('category'))->first() : null; ?>
 			{!! csrf_field() !!}
@@ -31,7 +25,7 @@
 				<div class="panel-heading">
 			  		<h4 class="panel-title">
 			  			<a data-parent="#accordion" data-toggle="collapse" href="#panel-01" aria-expanded="true" aria-controls="panel-01">
-			  			Filtrar Resultados
+			  			Filtrar
         				</a>
       				</h4>
 	  				<button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-01"></button>
@@ -39,8 +33,8 @@
 				<div class="panel-collapse collapse in" id="panel-01">
 					<div class="panel-body">
   						<div class="row">
-  							<div  align="center" class="col-md-2">Busca por atención: </div>
-  							<div class="col-md-9">
+  							<div class="col-md-2">Busca por atención: </div>
+  							<div class="col-md-10">
 
 	  							<input class="form-control" name="title" placeholder="Palabra clave" type="text" value="{{$request->input('title')}}" >
 	  						</div>
@@ -98,8 +92,8 @@
 						</div>        
 						<hr>
 						<div class="bottom-buffer">
-							<div align="right" class="col-md-2">
-								<button type="button" class="btn btn-primary">Filtrar Resultados</button>
+                            <div class="pull-left">
+								<button type="button" class="btn btn-primary">Filtrar resultados</button>
 						    </div>
 						</div>
 					</div>
@@ -107,16 +101,29 @@
 			</div>
         </div>
 		</form>
+                        <hr>
+	</div>
 </div>
-<div class="bottom-buffer">
-    <div class="col-md-8">
-        @foreach($surveys as $survey)
-    	<h2 class="vertical-buffer"><a href="{{ url('resultado/'. $survey->id)}}">{{ $survey->title}}</a></h2>
-  		<button type="button" class="btn btn-primary">Consultar Resultados</button>
-        <hr>
-  		@endforeach
-        
-    </div>
+<!-- tabala de resultados-->
+<div class="col-md-8">
+	<table class="table table-striped table-hover">
+		<thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Estatus</th>
+          </tr>
+        </thead>
+        <tbody>
+    		@foreach($surveys as $survey)
+    		<tr onclick="location='{{ url('resultado/'. $survey->id)}}'">
+	    		<td>{{ $survey->title }}</td>
+                <td>{{ $survey->category }}</td>
+                <td>{{ $survey->is_closed == 0 ? 'Abierta' : 'Cerrada' }}</td>
+    		</tr>
+			@endforeach
+        </tbody>
+	</table>
 </div>
 
 @else

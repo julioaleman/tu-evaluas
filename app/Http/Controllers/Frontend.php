@@ -110,9 +110,9 @@ class Frontend extends Controller
     $categories = file_get_contents(public_path() . "/". "js/categories.json");
     $data = [];
     $data['surveys']     = $blueprints;
-    $data['title']       = 'Resultados | Tú Evalúas';
-    $data['description'] = 'Resultados de cuestionarios en Tú Evalúas';
-    $data['body_class']  = 'results';
+    $data['title']       = 'Tú Evalúas';
+    $data['description'] = 'Tu opinión sobre los programas públicos federales ayuda a mejorarlos.';
+    $data['body_class']  = 'home results';
     $data['categories']  = collect(json_decode($categories));
     $data['request']     = $request;
     $data['page']        = $page;
