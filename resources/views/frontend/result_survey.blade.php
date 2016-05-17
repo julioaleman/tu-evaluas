@@ -46,7 +46,7 @@
 										  <span class="bar" style="
 										  width:{{$amount}}%;
 										  display: inline-block;
-										  background: black;
+										  background: #DDDDDD;
 										  height: 1em;
 										  "></span>
 										</span>
