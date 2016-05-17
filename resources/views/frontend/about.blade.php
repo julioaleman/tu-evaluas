@@ -61,4 +61,37 @@
 							</div>
 						</div>
 				</div>
+<!-- equipo-->
+<div class="row">
+	<div class="col-md-12">		
+		<h2>Equipo</h2>
+		<hr class="red">
+		<div class="row">
+		   <p class="col-xs-4"><a href="http://www.gob.mx/presidencia/"><img src="{{ url('img/presidencia_.png') }}"  alt="Presidencia de la República"></a></p>
+	        <p class="col-xs-4"><a href="http://www.transparenciapresupuestaria.gob.mx" alt="Transparencia Presupuestaria"><img src="{{ url('img/transparencia_presupuestaria_.png') }}" alt="Secretaría de Hacienda y Crédito Público"></a></p>
+		   <p class="col-xs-4"><a href="http://www.gob.mx/hacienda"><img src="{{ url('img/shcp_.png') }}"></a></p>
+		</div>
+		<div class="row">
+		   <p class="col-xs-4 col-xs-offset-2"><a href="http://www.crea.org.mx"><img src="{{ url('img/crea_emp_.png') }}" alt="CREA. Comunidad de Emprendedores Sociales"></a></p>
+		   <p class="col-xs-4"><a href="http://www.gobiernofacil.com"><img src="{{ url('img/gobierno_facil_.png') }}" alt="Gobierno Fácil"></a></p>
+		</div>
+	</div>
+</div>
+
+<!-- participantes-->
+<div class="row">
+	<div class="col-md-12">
+		<h2>Participantes</h2>
+		<hr class="red">
+		<div class="row">
+			<p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/sedesol_.png') }}"  alt="SEDESOL"></a></p>
+            <p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/prospera_.png') }}" alt="PROSPERA"></a></p>
+			<p class="col-xs-4"><a href="http://www.inadem.gob.mx"><img src="{{ url('img/inadem_.png') }}" alt="Inadem"></a></p>
+		</div>
+		<div class="row">
+		   <p class="col-xs-4 col-xs-offset-2"><a href="http://www.imjuventud.gob.mx/"><img src="{{ url('img/imjuve_.png') }}" alt="IMJUVE"></a></p>
+		   <p class="col-xs-4"><a href="http://www.conacyt.mx/"><img src="{{ url('img/conacyt_.png') }}" alt="CONACYT"></a></p>
+		</div>
+	</div>
+</div>
 @endsection
