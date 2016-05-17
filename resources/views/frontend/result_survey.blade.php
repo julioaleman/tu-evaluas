@@ -1,18 +1,30 @@
-ç@extends('layouts.master')
+@extends('layouts.master')
 
 @section('content')
-<hr>
-<div class="container">
+<div class="row">
+  <div class="col-sm-8">
+    <ol class="breadcrumb">
+      <li><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+      <li><a href="{{ url('') }}">Tú Evalúas</a></li>
+      <li class="active">Resultados</li>
+    </ol>
+  </div>
+</div>
+				
+<article class="data_hm">
 	<div class="row">
-		<article class="data_hm">
-			<div class="col-sm-8 col-sm-offset-2">
-				<h1>Resultados de Cuestionario: <strong>{{ $blueprint->title }}</strong></h1>
-		<hr class="red">
+		<div class="col-md-8">
+			<h2>{{ $blueprint->title }}</h2>
+			<hr class="red">
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-8">
 				<div class="answers">
-					<h2>Respuestas</h2>
-						
+					<h4>Respuestas</h4>
 					<!-- comienza lista de preguntas-->
-					<ul>
+					<ol>
 				    @foreach($blueprint->questions as $question)
 				    <li>
 				      <!-- DESCRIPCIONES -->
@@ -75,7 +87,7 @@
 										  <span class="bar" style="
 										  width:{{$amount}}%;
 										  display: inline-block;
-										  background: black;
+										  background: #DDDDDD;
 										  height: 1em;
 										  "></span>
 										</span>
@@ -103,7 +115,7 @@
 										  <span class="bar" style="
 										  width:{{$amount}}%;
 										  display: inline-block;
-										  background: black;
+										  background: #DDDDDD;
 										  height: 1em;
 										  "></span>
 										</span>
@@ -125,13 +137,16 @@
 				    	  <p>[ las preguntas abiertas estarán disponibles al terminar la encuesta en formato abierto ]</p>
 				    	@endif
 				    </li>
-				
+					<hr>
 				    @endforeach
-					</ul>
+					</ol>
 				</div>
-			</div>			
-		</article>
+			</div>	
+	</div>		
+	<div class="row">
+		<div class="col-md-8">
+			<a href="{{ $blueprint->ptp }}" class="btn btn-primary">Conoce el desempeño del programa presupuestario</a>
+		</div>
 	</div>
-</div>
-
+</article>
 @endsection
