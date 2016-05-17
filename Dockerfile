@@ -1,7 +1,8 @@
 FROM eboraas/laravel 
 MAINTAINER  Miguel Angel Gordian <miguel.angel@kaltia.org>
 
-RUN apt-get -y install php5-mysql wget
+RUN apt-get update && \\
+    apt-get -y install php5-mysql wget
 
 COPY . /var/www/laravel/
 COPY docker/00* /etc/apache2/sites-enabled/
