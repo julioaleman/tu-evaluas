@@ -68,8 +68,8 @@
 		<hr class="red">
 		<div class="row">
 		   <p class="col-xs-4"><a href="http://www.gob.mx/presidencia/"><img src="{{ url('img/presidencia_.png') }}"  alt="Presidencia de la República"></a></p>
-	        <p class="col-xs-4"><a href="http://www.transparenciapresupuestaria.gob.mx" alt="Transparencia Presupuestaria"><img src="{{ url('img/transparencia_presupuestaria_.png') }}" alt="Secretaría de Hacienda y Crédito Público"></a></p>
-		   <p class="col-xs-4"><a href="http://www.gob.mx/hacienda"><img src="{{ url('img/shcp_.png') }}"></a></p>
+	        <p class="col-xs-4"><a href="http://www.transparenciapresupuestaria.gob.mx"><img src="{{ url('img/transparencia_presupuestaria_.png') }}" alt="Transparencia Presupuestaria"></a></p>
+		   <p class="col-xs-4"><a href="http://www.gob.mx/hacienda"><img src="{{ url('img/shcp_.png') }}" alt="Secretaría de Hacienda y Crédito Público"></a></p>
 		</div>
 		<div class="row">
 		   <p class="col-xs-4 col-xs-offset-2"><a href="http://www.crea.org.mx"><img src="{{ url('img/crea_emp_.png') }}" alt="CREA. Comunidad de Emprendedores Sociales"></a></p>
