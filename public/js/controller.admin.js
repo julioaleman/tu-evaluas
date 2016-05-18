@@ -71,7 +71,10 @@ define(function(require){
       "change input[name='survey-tags[]']" : "limit_tags",
 
       // [ END SURVEY ]
-      "click #finish-survey-btn" : "finish_survey_alert"
+      "click #finish-survey-btn" : "finish_survey_alert",
+
+      // [ FAST SAVE ]
+      "submit form[name='survey-app']" : "_save_question" //_save_question
       
     },
 
@@ -797,6 +800,11 @@ define(function(require){
           that.render_section(Number(model.get('section_id')));
         }
       });
+    },
+
+    __save_question : function(e){
+      e.preventDefault();
+      console.log("yahoo!!!");
     },
 
     // [ REMOVE QUESTION ]
