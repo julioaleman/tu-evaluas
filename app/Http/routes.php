@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', "Frontend@index");
+Route::get('/', "Frontend@results");
 
 
 /*
