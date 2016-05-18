@@ -59,37 +59,6 @@
   <div class="row">
     <!-- [ THE BLUEPRINT ] -->
     <div class="col-sm-4">
-	    
-	    @if($user->level == 2)
-		<!-- THE AUTH BUTTON -->
-		<section id="survey-app-title" class="box">
-			@if($blueprint->pending)
-			<a href="{{url('dashboard/encuestas/cancelar/' . $blueprint->id)}}" class="btn_test preview">cancelar autorización!</a>
-			<div class="row">
-			    <div class="col-sm-10 col-sm-offset-1">  
-			      <p>La encuesta está en proceso de ser autorizada</p>
-			    </div>
-			</div>     
-			@elseif($blueprint->is_public)
-			<a href="{{url('dashboard/encuestas/ocultar/' . $blueprint->id)}}" class="btn_test preview">Ocultar la encuesta</a>
-			<div class="row">
-			  <div class="col-sm-10 col-sm-offset-1">
-			      <p>Si ocultas la encuesta, ni los resultados ni las preguntas estarán disponibles en línea.</p>
-			  </div>
-			</div>
-			@else
-			<a href="{{url('dashboard/encuestas/autorizar/' . $blueprint->id)}}" class="btn_test preview">Publica la encuesta</a>
-			<div class="row">
-				<div class="col-sm-10 col-sm-offset-1">  
-					<p>Un administrador debe autorizar la publicación de la encuesta</p>
-				</div>
-			</div>
-			@endif
-  		</section>
-  		<!-- THE AUTH BUTTON ENDS -->
-  		@endif
-	    
-	    
       <section id="survey-app-title" class="box">
 		<a href="{{url('dashboard/encuesta/test/' . $blueprint->id)}}" class="btn_test preview">Previsualizar encuesta</a>
         <h2>Datos</h2>
@@ -190,19 +159,32 @@
         <div class="divider"></div>
 
         <!-- BLUEPRINT CONTROL -->
-        @if($user->level ==3)
         <h2>Controles</h2>
         @if($blueprint->type == "regular" || $blueprint->type == "generated")
-          <!-- PUBLICAR  / TERMINAR ENCUESTA : ADMIN  -->
+          <!-- PUBLICAR  / TERMINAR ENCUESTA   -->
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
               <p>
-              @if($blueprint->is_public)
-                <a data-title="Deseas terminar la encuesta? Para reiniciarla es necesario pedir autorización. También es posible ocultar la encuesta con el botón de 'ocultar encuesta'." id="finish-survey-btn" href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Terminar encuesta</a>
-              @elseif($blueprint->is_closed)
-                <a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Iniciar encuesta nuevamente</a>
+              @if($user->level ==3)
+                @if($blueprint->is_public)
+                  <a data-title="Deseas terminar la encuesta? Para reiniciarla es necesario pedir autorización. También es posible ocultar la encuesta con el botón de 'ocultar encuesta'." id="finish-survey-btn" href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Terminar encuesta</a>
+                @elseif($blueprint->is_closed)
+                  <a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Iniciar encuesta nuevamente</a>
+                @else
+                  <a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Iniciar encuesta</a>
+                @endif
+             
               @else
-                <a href="{{url('dashboard/encuestas/autorizar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Iniciar encuesta</a>
+                @if($blueprint->is_public)
+                  <a data-title="Deseas terminar la encuesta? Para reiniciarla es necesario pedir autorización. También es posible ocultar la encuesta con el botón de 'ocultar encuesta'." id="finish-survey-btn" href="{{url('dashboard/encuestas/cerrar/confirmar/' . $blueprint->id)}}/1" class="create-survey-btn">Terminar encuesta</a>
+                @elseif($blueprint->pending)
+                  <a href="{{url('dashboard/encuestas/cancelar/' . $blueprint->id)}}" class="btn_test preview">cancelar autorización!</a>
+                  <br>(La encuesta está en proceso de ser autorizada)  
+                @elseif($blueprint->is_closed)
+                  <a href="{{url('dashboard/encuestas/autorizar/' . $blueprint->id)}}" class="create-survey-btn">Iniciar encuesta nuevamente</a>
+                @else
+                  <a href="{{url('dashboard/encuestas/autorizar/' . $blueprint->id)}}" class="btn_test preview">Publica la encuesta</a>
+                @endif
               @endif
               </p>
             </div>
@@ -210,6 +192,7 @@
           <div class="divider"></div>
         @endif
 
+        @if($user->level ==3)
         <!-- GENERAR ARCHIVOS PARA DESCARGA : ADMIN  -->
         <div class="row">
           <div class="col-sm-10 col-sm-offset-1">
@@ -230,13 +213,16 @@
         </div>
         <div class="divider"></div>
 
+        @endif
+
+
         <!-- OCULTAR / MOSTRAR LA ENCUESTA : ADMIN  -->
         @if($blueprint->is_closed || $blueprint->is_public)
          <div class="row">
           <div class="col-sm-10 col-sm-offset-1">
           <p>
             @if($blueprint->is_visible)
-              <a href="{{url('dashboard/encuestas/ocultar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Cancelar encuesta</a>
+              <a href="{{url('dashboard/encuestas/ocultar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Ocultar encuesta</a>
             @else
               <a href="{{url('dashboard/encuestas/mostrar/confirmar/' . $blueprint->id)}}" class="create-survey-btn">Mostrar encuesta</a>
             @endif
@@ -247,7 +233,7 @@
         @endif
 
 
-        @endif
+       
 
 
 
