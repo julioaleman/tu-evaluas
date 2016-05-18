@@ -419,6 +419,8 @@ class Blueprints extends Controller
   //
   public function closeAuthBlueprint(Request $request, $id, $single = false){
     $user = Auth::user();
+    $id = (int)$id;
+    
     if($user->level == 3){
       $blueprint = Blueprint::find($id);
     }
@@ -432,6 +434,11 @@ class Blueprints extends Controller
     $blueprint->is_closed  = 1;
     $blueprint->pending    = 0;
     $blueprint->update();
+
+    $path = base_path();
+    exec("php {$path}/artisan blueprint:file {$id} xlsx > /dev/null &");
+    exec("php {$path}/artisan blueprint:file {$id} csv > /dev/null &");
+
     $request->session()->flash('status', ['type' => 'finish create', 'name' => $blueprint->title]);
     
     if($single){
