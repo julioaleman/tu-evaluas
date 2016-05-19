@@ -13,9 +13,9 @@
 		  </div>
 		  <div class="collapse navbar-collapse" id="subenlaces">
 		    <ul class="nav navbar-nav navbar-right">
-		      <li><a href="{{ URL::route('que-es') }}">¿Qué es?</a></li>
+		      <li><a href="{{url('que-es')}}">¿Qué es?</a></li>
 		      <li><a href="{{url('datos-abiertos')}}">Datos Abiertos</a></li>
-		      <li><a href="{{ URL::route('preguntas-frecuentes') }}">Preguntas Frecuentes</a></li>
+		      <li><a href="{{url('preguntas-frecuentes')}}">Preguntas Frecuentes</a></li>
 		    </ul>
 		  </div>
 		</div>
