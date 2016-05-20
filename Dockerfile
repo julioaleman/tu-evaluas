@@ -1,7 +1,7 @@
 FROM eboraas/laravel 
 MAINTAINER  Miguel Angel Gordian <miguel.angel@kaltia.org>
 
-RUN apt-get update && \\
+RUN apt-get update && \
     apt-get -y install php5-mysql wget
 
 COPY . /var/www/laravel/
