@@ -6,7 +6,11 @@
     RewriteEngine On
 
     # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond $1 tuevaluas
+    RewriteRule ^(.*) tuevaluas/index.php [L]
+    
+    RewriteCond %{REQUEST_FILENAME} !-d [OR]
+    RewriteCond $1 tuevaluas
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
     RewriteCond %{DOCUMENT_ROOT}$1 -d
