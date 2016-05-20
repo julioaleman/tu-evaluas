@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 // LIBRARIES
 use Hash;
 use Auth;
+use Mailgun\Mailgun;
 use Mail;
 
 // MODELS
@@ -78,6 +79,13 @@ class Users extends Controller
     $user->branch   = $request->branch;
     $user->unit     = $request->unit;
     $user->save();
+
+
+    Mail::send('email.welcome', ['user' => $user], function ($m) use ($user) {
+      $m->from('howdy@tuevaluas.com.mx', 'Tú evalúas');
+      $m->to($user->email, "amigo")->subject('Invitación a utilizar tú evalúas!');
+    });
+
 
     $request->session()->flash('status', ['type' => 'create', 'name' => $user->name]);
     return redirect("dashboard/usuario/" . $user->id);
