@@ -5,6 +5,9 @@
 
     RewriteEngine On
 
+    RewriteCond $1 ^(/|/index.php)?$
+    RewriteRule ^(.*)$ /tuevaluas [L,R=301]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond $1 ^tuevaluas/?$
     RewriteRule ^(.*) tuevaluas/index.php [L]
