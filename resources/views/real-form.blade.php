@@ -40,7 +40,7 @@
 </div>
 <div class="row bottom-buffer">
 	<div class="col-md-8">
-		<h1>{{$blueprint->title}}</h1>
+		<h2>{{$blueprint->title}}</h2>
 		<hr class="red">
 	</div>
 </div>
