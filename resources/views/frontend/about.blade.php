@@ -83,7 +83,8 @@
 		<h2>Participantes</h2>
 		<hr class="red">
 		<div class="row">
-			<p class="col-xs-4"><a href="http://www.gob.mx/sedesol"><img src="{{ url('img/sedesol_.png') }}"  alt="SEDESOL"></a></p>
+			<p class="col-xs-4"><a href="http://www.gob.mx/sedesol"><img src="{{ url('img/sedesol_.png') }}"  alt="SEDESOL"></a>
+			</p>
             <p class="col-xs-4"><a href="http://www.prospera.gob.mx"><img src="{{ url('img/prospera_.png') }}" alt="PROSPERA"></a></p>
 			<p class="col-xs-4"><a href="http://www.inadem.gob.mx"><img src="{{ url('img/inadem_.png') }}" alt="Inadem"></a></p>
 		</div>
