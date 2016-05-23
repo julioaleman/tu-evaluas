@@ -22,8 +22,7 @@
 <div class="row">
 	<div class="col-sm-8">
 	  <ol class="breadcrumb">
-	    <li><a href="#"><i class="icon icon-home"></i></a></li>
-	    <li><a href="https://www.gob.mx">Inicio</a></li>
+	    <li><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
 	    <li><a href="{{ url('')}}">Tú Evalúas</a></li>
         <li class="active">Encuesta:  {{$blueprint->title}}</li>
 	  </ol>
