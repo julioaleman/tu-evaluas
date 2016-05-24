@@ -30,13 +30,6 @@
 </div>
 
 
-<div class="row">
-	<div class="col-md-12 bottom-buffer">
-		<!--egb_div class="contenedor vertical-buffer"-->
-			<image src="{{url('img/logov0_.png')}}"></image>
-		<!--egb_/div-->
-	</div>
-</div>
 <div class="row bottom-buffer">
 	<div class="col-md-8">
 		<h2>{{$blueprint->title}}</h2>
